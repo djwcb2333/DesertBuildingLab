@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "models": 52,
+  "textures": 31,
+  "FBX_data_preservation_and_string_paths": true,
+  "texture_hashes": true,
+  "all_52_FBX_units_and_runtime_cm_bounds_verified": true,
+  "scope": "Blender FBX logical data and PNG files, not Unreal rendering or art acceptance",
+  "unit_metadata_update_left_FBX_and_PNG_bytes_unchanged": true
+}

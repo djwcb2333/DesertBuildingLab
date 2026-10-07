@@ -1,0 +1,31 @@
+# Unreal-generated files
+Binaries/
+Intermediate/
+Saved/
+DerivedDataCache/
+.vs/
+*.sln
+*.suo
+*.pdb
+*.obj
+*.pch
+*.log
+*.tmp
+
+# Local publication audits contain private source paths and are not repository assets.
+ArtProvenanceAudit.json
+SourcePublicationAudit.json
+.private/
+
+# Local tooling
+__pycache__/
+*.pyc
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Credentials and local configurations
+.env
+.env.*
+*.pem
+*.key

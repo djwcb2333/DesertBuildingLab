@@ -1,0 +1,660 @@
+{
+  "success": true,
+  "version": "0.4.7-assets.1",
+  "virtual_root": "/Game/DesertBuildingLabOpenSource",
+  "style": "/Game/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Styles/DA_ExampleHouse_Style.DA_ExampleHouse_Style",
+  "design": "/Game/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Data/DA_ExampleHouse.DA_ExampleHouse",
+  "resource_count": 103,
+  "authored_wood_replacements": 6,
+  "public_texture_count": 30,
+  "dependencies": [
+    "/Engine/EngineMaterials/Good64x64TilingNoiseHighFreq",
+    "/Engine/EngineResources/WhiteSquareTexture",
+    "/Engine/Functions/Engine_MaterialFunctions02/Texturing/ScreenAlignedPixelToPixelUVs",
+    "/Engine/Functions/Engine_MaterialFunctions02/Utility/DitherTemporalAA",
+    "/Game/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Blueprints/BP_ExampleHouse",
+    "/Game/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Data/DA_ExampleHouse",
+    "/Game/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Styles/DA_ExampleHouse_Style",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Basket_43e6dc23455e",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Dark_68256d5f3af2",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_PotteryPlain_8ad74ce02702",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Pottery_5d5f22b1e8a8",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Rope_54f68cc9bbce",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART08_FoundationStone_0227ad71576a",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART09_RedGoldCanvasV3_6ad8bf860f1e",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART09_SoftRedGoldCloth_5f563b0e5ddd",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/MI_ART09_WarmPeelingPlaster_27b5cdb64442",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Basket_d4420d0bc034",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Dark_afa92d1f46e0",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_PotteryPlain_47e9027a11c6",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Pottery_210e33a0f0e5",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Rope_e816cd14d719",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART07_Stone_e75a780010bf",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART08_ExposedStone_b541d5982b32",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART08_WoodEnd_fe9409036510",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART08_Wood_15adeeb548fc",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART09_CanvasReferenceV3_91dcded1fce2",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART09_PeelingPlaster_e602cb7a9504",
+    "/Game/DesertBuildingLabOpenSource/Resources/Materials/M_ART09_SoftRedGoldCloth_1fe7ced54fdb",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_Asymmetric_a228563d1d8e",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_BarrelArch_279d17acf9a3",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_PitchedRidge_6be1b23222af",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_SinglePitch_3beeba121701",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningModule_1c5aa8bd98da",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Basket_0a8fe2e3b039",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Column_e12bfad93ccc",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Crate_a44af89ccc99",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Dome_367ae49ecd45",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Foundation_399b7873d8ec",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_LShapeStairs_609a17faba1d",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Parapet_697cecf54550",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_A_8752c96d61aa",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_B_c9249ab61095",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_C_7df1b48942ea",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_bbdb2b039f24",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_DoubleHandle_78066af94e13",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_LowBowl_7b3ebdda5f8b",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_NarrowNeck_345aebf2980f",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_RoundBelly_9797f2d55860",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_WideNeck_b55be41607fd",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_b6c4aaaf8243",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofCrown_c4601bde5938",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofDressing_BoardsAndPots_e005f8f905ed",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofDressing_Boards_0db557fbe4f9",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofPavilion_debae170a2de",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofTile_4530ef8c5d49",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RubbleCluster_6c71e137b214",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Stairs_b4f804f9988f",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_UShapeStairs_23c4d4aabb0c",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoorOuterSoftBoth_2639bb62be6e",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoorOuterSoftLeft_e5a881a8410f",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoorOuterSoftRight_0e504e977a42",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_19e4961c19ab",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_TrimBoth_f705de757c65",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_TrimLeft_0891c9ca7c04",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_TrimRight_31edb3551a09",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolidOuterSoftBoth_ddd61a8f2a2e",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolidOuterSoftLeft_1493c48bb478",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolidOuterSoftRight_9970c6a3569b",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_204cc43975e4",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_TrimBoth_ac6f960b6275",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_TrimLeft_ac5a587784af",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_TrimRight_96bd5c4b6b93",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallStairs_43b027364405",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindowOuterSoftBoth_13f769b0ac36",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindowOuterSoftLeft_d1399a885313",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindowOuterSoftRight_f746ba78166d",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_83381baafc61",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_TrimBoth_d7a1f7ccfe1c",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_TrimLeft_cbecdb8e7e1e",
+    "/Game/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_TrimRight_55588b9a1127",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Plaster_BaseColor_cd8c64495c2c",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Plaster_Normal_f3e1ec90d0ba",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Plaster_OcclusionRoughnessMetallic_ff0f130db2fe",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Stone_BaseColor_514aa29c8232",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Stone_Normal_4020f0d105d3",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Stone_OcclusionRoughnessMetallic_f7c8f50ae715",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_WoodEnd_BaseColor_07f81740f4ce",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_WoodEnd_Normal_de9df15cea09",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_WoodEnd_OcclusionRoughnessMetallic_bb9c0729ebf0",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Wood_BaseColor_36ec058df9b1",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Wood_Normal_00d766b975a1",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Wood_OcclusionRoughnessMetallic_3d652ea31b27",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Basket_BaseColor_c90dfbc7c2f3",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Basket_Normal_UE_DirectX_6894f966c377",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Basket_ORM_4c156953cc74",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_PotteryPlain_BaseColor_87dff729e47c",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_PotteryPlain_Normal_UE_DirectX_d6af28ee1872",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_PotteryPlain_ORM_e440cd5609c5",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Pottery_BaseColor_7a1261a696c3",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Pottery_Normal_UE_DirectX_68690377203a",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Pottery_ORM_b42e35405c34",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_RedGoldCloth_BaseColor_622bbeec5b10",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_RedGoldCloth_Normal_UE_DirectX_768c2eb03f04",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_RedGoldCloth_ORM_e08f4046e1a5",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Rope_BaseColor_d2a304961f76",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Rope_Normal_UE_DirectX_31369be2575f",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Rope_ORM_8ce3faebd86d",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART09_Cloth_Weave_Normal_DX_0ee6f9ba97a5",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART09_Cloth_Weave_Roughness_bd0c9397e4de",
+    "/Game/DesertBuildingLabOpenSource/Resources/Textures/T_ART09_RedGoldCanvas_AI_BaseColor_a848bbc0060e",
+    "/Script/DesertBuildingLab",
+    "/Script/NavigationSystem"
+  ],
+  "files": [
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Blueprints/BP_ExampleHouse.uasset",
+      "bytes": 53504,
+      "sha256": "a6066855daa9c7b745980f954dfaaba303b3072d5084569ba4ccbc068f0bcf36"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Data/DA_ExampleHouse.uasset",
+      "bytes": 20969,
+      "sha256": "5faff2721b76679321be6feac3eeca03d489f80fa9aa43d5477199a6e50449b1"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Styles/DA_ExampleHouse_Style.uasset",
+      "bytes": 17621,
+      "sha256": "9fe99b817a7c0dc44daac85a6adf65a48740fbf050fdad071804dae42a44e0f8"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Basket_d4420d0bc034.uasset",
+      "bytes": 17711,
+      "sha256": "f957a6da23c72d707fdbbbe9ab0c0e9703e09ac21cf3198309a9bd833742c0cb"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Dark_afa92d1f46e0.uasset",
+      "bytes": 11050,
+      "sha256": "3fcadd0f0160d56c0b620459b5a45325d1d201e4af929964d8b296ba93b7b06d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Pottery_210e33a0f0e5.uasset",
+      "bytes": 17728,
+      "sha256": "bea32e1f2d9ef6aae8a2fa8e86f0f29c06c5d405da22c870c4d2768ac7d1c41a"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_PotteryPlain_47e9027a11c6.uasset",
+      "bytes": 17813,
+      "sha256": "2778f555bfb114da914fe74fe92dc6f3404de7dc2c46c6a11109c311220df109"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART06_Rope_e816cd14d719.uasset",
+      "bytes": 17677,
+      "sha256": "9d361f50358b7486b15faa9fc4c46962d292453ab692f28201c598ba8826bca6"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART07_Stone_e75a780010bf.uasset",
+      "bytes": 46529,
+      "sha256": "37112cf869f4fba65a342073f18888b7d2ff6279ce5fff6270bceb06fc7d3f05"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART08_ExposedStone_b541d5982b32.uasset",
+      "bytes": 46103,
+      "sha256": "a4b80236d194bf36afb9bda37022563f683da701be268f0058418d17d9476142"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART08_Wood_15adeeb548fc.uasset",
+      "bytes": 36221,
+      "sha256": "2d993871d55e3d30665312baead3bc6002e11b17026e15e1dec746f86140ae02"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART08_WoodEnd_fe9409036510.uasset",
+      "bytes": 31448,
+      "sha256": "fb95a9de88c2708b8f19d29d8d033a130830aacf89b2d426eb1d44ea212c35aa"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART09_CanvasReferenceV3_91dcded1fce2.uasset",
+      "bytes": 22097,
+      "sha256": "34fc6edfc0b4c41e4155bff2fb400057796f3aa2f627b7b329d318d6cd72f932"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART09_PeelingPlaster_e602cb7a9504.uasset",
+      "bytes": 59839,
+      "sha256": "741cfbeaaf6d2e88131deace575ff465e0148afb2a2ea485fd5e924b8d16dd9c"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/M_ART09_SoftRedGoldCloth_1fe7ced54fdb.uasset",
+      "bytes": 22620,
+      "sha256": "d9d8a4b1ce9638bcf79440f8d0dcd9a583a088e47ab2cb3138687b4ec9446f6a"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Basket_43e6dc23455e.uasset",
+      "bytes": 7467,
+      "sha256": "08dbb04ce7d2d4684ce76e1545d355022d23dd91cb726a78e91c7f23bfdc4a8f"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Dark_68256d5f3af2.uasset",
+      "bytes": 7395,
+      "sha256": "f9f7f4f9606e1e22208acf7eb20aeac011d6e3c7758a51408bc66d9ac8c515d7"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Pottery_5d5f22b1e8a8.uasset",
+      "bytes": 7479,
+      "sha256": "639628bfc14aebfe242aa3f93d8adb53e070612e4fca734a77d662b1a79d4315"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_PotteryPlain_8ad74ce02702.uasset",
+      "bytes": 7539,
+      "sha256": "4ef46edb424542e8a30ccece0f5184f9b0867e2de059678beb840caae56f2672"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART07_Rope_54f68cc9bbce.uasset",
+      "bytes": 7443,
+      "sha256": "a356eb8b154eacf9d166428ea2bd71b352baab33f806148aa28f4252379a79cd"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART08_FoundationStone_0227ad71576a.uasset",
+      "bytes": 9001,
+      "sha256": "54419d56ccfd1bc3f4bd8cf85cfe9602f0a85209ae5ff3fe77ec306dd1f7130d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART09_RedGoldCanvasV3_6ad8bf860f1e.uasset",
+      "bytes": 7772,
+      "sha256": "0b9b1486e212ab4558ad705e674e1d893e44629c95332d836df91897b970872d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART09_SoftRedGoldCloth_5f563b0e5ddd.uasset",
+      "bytes": 9200,
+      "sha256": "bbfabf6510faf7bf3a4eb7cc7d911b17cd7a92c8c286c2639ddf0f17b3015712"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Materials/MI_ART09_WarmPeelingPlaster_27b5cdb64442.uasset",
+      "bytes": 14162,
+      "sha256": "f640f12b22ea563afabf2085419b495886b297992e1cf43400d0f59ee79fd6c8"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_Asymmetric_a228563d1d8e.uasset",
+      "bytes": 1238778,
+      "sha256": "47221f2486f056032a130fbd19b723be58580e72d82fa169870c7580ce585ec1"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_BarrelArch_279d17acf9a3.uasset",
+      "bytes": 2485936,
+      "sha256": "58a59a56bf0d352863ca58105f36d24896c16ca5e9fb9ecb323b00bbca7a8653"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_PitchedRidge_6be1b23222af.uasset",
+      "bytes": 1729316,
+      "sha256": "cb77880ff7ad7cda146a41303627458bdac1464d9d166b73c3e15a1c4c7b6cf4"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningBay_SinglePitch_3beeba121701.uasset",
+      "bytes": 1262524,
+      "sha256": "7c9837c1bc167044e65044963dca2bca1f35ca3a70e2c58411069a1e4da85ddc"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_AwningModule_1c5aa8bd98da.uasset",
+      "bytes": 2318711,
+      "sha256": "f00fd384c2cb76082e52a8830fd265b1e47b4f2487eb449966c802fdb669f195"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Basket_0a8fe2e3b039.uasset",
+      "bytes": 202217,
+      "sha256": "5ba9843ac419e8ce0cac2aef60718d3c8bd4eb8251661368ccf3053a2fa5ab29"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Column_e12bfad93ccc.uasset",
+      "bytes": 110219,
+      "sha256": "e4767376d880998bb3a5655b98987d5b75c86da4f23bf09dbd71c3257144fcec"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Crate_a44af89ccc99.uasset",
+      "bytes": 403922,
+      "sha256": "ce7b5b74160712a1267aaf478b49ad82e8ff74532b89c25646519c7ebe6dacba"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Dome_367ae49ecd45.uasset",
+      "bytes": 1040823,
+      "sha256": "407dd4c5cadbb761b9b264f0cee2522ad386ebda66012b272930af9646bda14d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Foundation_399b7873d8ec.uasset",
+      "bytes": 18358,
+      "sha256": "a6ec3606bf05fa01be89b30e7f7124a547f3658b93b405d5f985b95dd5ad38ac"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_LShapeStairs_609a17faba1d.uasset",
+      "bytes": 176214,
+      "sha256": "7afc74f8b22444c0a7c4aea8005e821bec7bd9998c02bc3a05b3aeae52a9195d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Parapet_697cecf54550.uasset",
+      "bytes": 18831,
+      "sha256": "b7a0f7ed4305e9a30714eddbef4c2de4732f296d07d40ed038b49208abc94b43"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_b6c4aaaf8243.uasset",
+      "bytes": 139525,
+      "sha256": "20a45f26a0156ff41643106c49fc512d5bea3def5ac76888682927ca496714d1"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_DoubleHandle_78066af94e13.uasset",
+      "bytes": 126691,
+      "sha256": "594c942612e22e6afe1934c5dd49afa083526574b94c0d9bd64dfddf2ac72201"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_LowBowl_7b3ebdda5f8b.uasset",
+      "bytes": 61258,
+      "sha256": "d142f1da30f54f039181c9d7112c58e4987083e3f8ad1aa0ca4886eea06f63cc"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_NarrowNeck_345aebf2980f.uasset",
+      "bytes": 76991,
+      "sha256": "97f78a5f2415827f478a8543b9d78ac4912d0de3d31b74f35241b4a454f7abfe"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_RoundBelly_9797f2d55860.uasset",
+      "bytes": 76944,
+      "sha256": "7c08e25e97329a3dc07a7866c3ee76941819ce35a2df8348d0cd92cefb2fd1a7"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Pot_WideNeck_b55be41607fd.uasset",
+      "bytes": 75768,
+      "sha256": "e2c78d44b76cb3b14265a20ac33f9266a021794343d43e17ea259451a5f6577f"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_A_8752c96d61aa.uasset",
+      "bytes": 188896,
+      "sha256": "74053ed1446a88694e6b2274d7649ec8192647313cdbb7915fa8b0c6f96b15d7"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_B_c9249ab61095.uasset",
+      "bytes": 252670,
+      "sha256": "c0ebed56029d4b0981006f5e94ba85f98c4ed9fac92cd92c6619bb0d635f282a"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_bbdb2b039f24.uasset",
+      "bytes": 544323,
+      "sha256": "2127f51993621adca94e81498034fb664fc5ed1842366c918a8f74d382b96a60"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_PotCluster_C_7df1b48942ea.uasset",
+      "bytes": 327855,
+      "sha256": "7daeafe9453e9afc7c8c1fe30bc0a372bc09a7b8bfcc7a9b06be6ec8bd8921d5"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofCrown_c4601bde5938.uasset",
+      "bytes": 582786,
+      "sha256": "5e01684c30b2ea4b82bb073e162fa2f7952d3cf8316cc19ce955b40cc3f98eb4"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofDressing_Boards_0db557fbe4f9.uasset",
+      "bytes": 61447,
+      "sha256": "fe317abb671ed383935888a9645c6107b283dbdcd4fc023214a0b128b0944bfa"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofDressing_BoardsAndPots_e005f8f905ed.uasset",
+      "bytes": 250694,
+      "sha256": "00f85dbb6e3e6dc15d7244285513aeb3aae112b856f74701042e3c0c5ed803c5"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofPavilion_debae170a2de.uasset",
+      "bytes": 3200226,
+      "sha256": "53999dc5b9f03241e7059ff29fad8f6fe35a6c58dc380edef754a6f9b5c214d6"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RoofTile_4530ef8c5d49.uasset",
+      "bytes": 21895,
+      "sha256": "c8b7e394989c6a5f8ba2ae90b15353047f64689dc8c9fcf5550512386bfc4047"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_RubbleCluster_6c71e137b214.uasset",
+      "bytes": 149661,
+      "sha256": "032c769bc8e916f75e5499aacdef450639faffad02560446879a7900e27b8c2d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_Stairs_b4f804f9988f.uasset",
+      "bytes": 107297,
+      "sha256": "4d949ba3b7770fe046e31a8c8e63ed41d60bb97b4e959982407211d2709cf479"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_UShapeStairs_23c4d4aabb0c.uasset",
+      "bytes": 177967,
+      "sha256": "0f7e954b6cf5619af2085db9c05e0962e39dbfb0357043a92cb7c4da3774db51"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_19e4961c19ab.uasset",
+      "bytes": 473458,
+      "sha256": "56c9b989632b8f8e616ee41255848383e926bca8ede8e2431f5379c389bb1711"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_TrimBoth_f705de757c65.uasset",
+      "bytes": 461851,
+      "sha256": "123876e193389d972430bdd56d27498c3337049b95cf3fd05dddacd5a23e5e34"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_TrimLeft_0891c9ca7c04.uasset",
+      "bytes": 473340,
+      "sha256": "2f72b4665f7d0df7f23a3596d8c1ed8ee2c2332b81c8d2cb9f2b5e78f3d1c4d1"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoor_TrimRight_31edb3551a09.uasset",
+      "bytes": 474624,
+      "sha256": "64c028c9fcdd0febe7b6e9b69f10283dc07d57286399a941676c88959c180461"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoorOuterSoftBoth_2639bb62be6e.uasset",
+      "bytes": 478309,
+      "sha256": "7fc6d7bbe03d21ecdd0544d9bc67a8faca89b139e07eb4abd1e1c8121a7bf44b"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoorOuterSoftLeft_e5a881a8410f.uasset",
+      "bytes": 472746,
+      "sha256": "2845ee596fbdba2dfa4c5eadea6d54ccb3df9d94019959712df9203b7e9c9e53"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallDoorOuterSoftRight_0e504e977a42.uasset",
+      "bytes": 469242,
+      "sha256": "926ba3d584e272b050b037d71ad9a7237dac9486c6e722313d87da99732ac657"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_204cc43975e4.uasset",
+      "bytes": 242235,
+      "sha256": "7b28a22edd37a1c77bdffcf00ce70845cd55577b1a261ac655d8eabcf2707f65"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_TrimBoth_ac6f960b6275.uasset",
+      "bytes": 245948,
+      "sha256": "bb10b287357e349e4a70e4390b4d8e720ef0d06b93eb921f284e50876fe6d4dd"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_TrimLeft_ac5a587784af.uasset",
+      "bytes": 239614,
+      "sha256": "d29e3099a6f29c8c87bac9970a1aaa7a634b4b1dce61bcda0636b6e542781ee6"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolid_TrimRight_96bd5c4b6b93.uasset",
+      "bytes": 240349,
+      "sha256": "f87287c62d988d21a1b21ac6d9c2e9628b55131c0e8ec90a11cd0ff23f2d58cf"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolidOuterSoftBoth_ddd61a8f2a2e.uasset",
+      "bytes": 285226,
+      "sha256": "113cd32f17b3c88afaf7e5813b87b87bc1fce0e3d80e6f6874115379a67d8d4e"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolidOuterSoftLeft_1493c48bb478.uasset",
+      "bytes": 278912,
+      "sha256": "12213a554a499ef9b5f20c8cc2cb1555c59d39797a3dbdcbb05fa8f16838b85a"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallSolidOuterSoftRight_9970c6a3569b.uasset",
+      "bytes": 276656,
+      "sha256": "09370b044103d80d6d647eb33f73fa99fcaa2b36e2f37c2a24c7ee3a8db3eaba"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallStairs_43b027364405.uasset",
+      "bytes": 122216,
+      "sha256": "47aa651e18bb253c576bcfe3fccbcc78a890ee663bdc3ab11d27b061cd17de5f"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_83381baafc61.uasset",
+      "bytes": 938731,
+      "sha256": "349a8808c386d1a9872ec51f0c98b4966cf8522fc86c9d3677a83cdcfb48f07a"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_TrimBoth_d7a1f7ccfe1c.uasset",
+      "bytes": 917682,
+      "sha256": "7e413a266cee4da91b5b58d0fbda2858b11c4050ee9333d1b2bc3e63ec2d4cd6"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_TrimLeft_cbecdb8e7e1e.uasset",
+      "bytes": 927366,
+      "sha256": "04354cb16886116e1aaff0e5cb705bf38ba49019982604979f34457526e9e178"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindow_TrimRight_55588b9a1127.uasset",
+      "bytes": 926398,
+      "sha256": "813922051a41953187cea1fe353de85917a3a459b3c895ff64940091c3de808d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindowOuterSoftBoth_13f769b0ac36.uasset",
+      "bytes": 945016,
+      "sha256": "13eb38e108706a828af4c373db5999be46a74f82927993983eb17b1accebdb75"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindowOuterSoftLeft_d1399a885313.uasset",
+      "bytes": 913558,
+      "sha256": "d03c090afc01b7f218efa6120102f9d7cef7639b782885fccaab2be6153513c2"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Meshes/SM_ART09_WallWindowOuterSoftRight_f746ba78166d.uasset",
+      "bytes": 913560,
+      "sha256": "0ad2e68c33634ecd06c0a22eb17e157fbabbbf65938141e8620a9fe278f959bf"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Plaster_BaseColor_cd8c64495c2c.uasset",
+      "bytes": 31184,
+      "sha256": "9d11b88ac151fe1854701f96b6dd22145ea2bd06eb866e6c06eb168bdcaf4424"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Plaster_Normal_f3e1ec90d0ba.uasset",
+      "bytes": 1016696,
+      "sha256": "b39f32a93faf5fb95b2a7f6a56e527288bdc7681344be0e3a9d0a826808c1552"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Plaster_OcclusionRoughnessMetallic_ff0f130db2fe.uasset",
+      "bytes": 10871,
+      "sha256": "77febdc3a5d721d16ced1cbe18bb54cd39609ace02de29b9d1edaecd70dbd6a7"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Stone_BaseColor_514aa29c8232.uasset",
+      "bytes": 26317,
+      "sha256": "b1cc69d3b557459667f724506c14312f2ea5b41d1471fcaffebb49a5a93eb0f6"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Stone_Normal_4020f0d105d3.uasset",
+      "bytes": 1016682,
+      "sha256": "0c0a3fe6f136a780bf2d4bac504c8fead79e938bc78bcc821b3594c6c9850120"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Stone_OcclusionRoughnessMetallic_f7c8f50ae715.uasset",
+      "bytes": 10857,
+      "sha256": "e7fcc9648cf70e9762f8ee881b881a778010eed8db720fb10dd3ed326af89bb8"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Wood_BaseColor_36ec058df9b1.uasset",
+      "bytes": 24499,
+      "sha256": "7586095c2a2a6df5f8f34e233eb2f55692c02541c29ff5696b957ea1815ddab8"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Wood_Normal_00d766b975a1.uasset",
+      "bytes": 21753,
+      "sha256": "c599a8f014cbf21ea8ddaddd20014e6b1bfd99a60a01d50612fb2f57afb6838d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_Wood_OcclusionRoughnessMetallic_3d652ea31b27.uasset",
+      "bytes": 10850,
+      "sha256": "07435cf3f4df7a04b88c27b304b87f2b02dc4c6dd0203bef351f2b6766d1b6dc"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_WoodEnd_BaseColor_07f81740f4ce.uasset",
+      "bytes": 59576,
+      "sha256": "2009457c11da36f91bce10dda047844239c020edecaf538d2b05de0a1e80fdb8"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_WoodEnd_Normal_de9df15cea09.uasset",
+      "bytes": 10950,
+      "sha256": "53614cca55e782ee61e7b5a5546c3fe527d9f4a4899e4cfdf15caf3006fb2d42"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/ART07_SharedSurface_Canvas_WoodEnd_OcclusionRoughnessMetallic_bb9c0729ebf0.uasset",
+      "bytes": 10873,
+      "sha256": "f91e06e0204944e127058348c9b7da707672ce3b31c9ba8860e7ef88f51b78a2"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Basket_BaseColor_c90dfbc7c2f3.uasset",
+      "bytes": 26934,
+      "sha256": "331b808994729c5823b3671db0adaf5979a5e93ceeb0c54c7de995a25f6ce051"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Basket_Normal_UE_DirectX_6894f966c377.uasset",
+      "bytes": 14461,
+      "sha256": "b07192400b9b722a1d280321abdf51c16efe13c2f5ad5e25e75fc0ff5dd840d5"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Basket_ORM_4c156953cc74.uasset",
+      "bytes": 11538,
+      "sha256": "f283e2c3afb76d6452dbed9c57a50fa081ba449882d37db1d2bcacbd6fa0a7c1"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Pottery_BaseColor_7a1261a696c3.uasset",
+      "bytes": 20969,
+      "sha256": "756a6327e127f4a38b791f7c2b0603b35284d3970f2ed30eaa87fa177d77ee10"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Pottery_Normal_UE_DirectX_68690377203a.uasset",
+      "bytes": 9731,
+      "sha256": "38f86c123a13e3fdbd14661fd50a5f85d2eaa84cb1957fb5b2380465ccd97495"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Pottery_ORM_b42e35405c34.uasset",
+      "bytes": 8495,
+      "sha256": "6c60d5b6901eb45227d45bef01d291d9dbc5fe852bcb7a61e70ce470b93f7e6f"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_PotteryPlain_BaseColor_87dff729e47c.uasset",
+      "bytes": 12733,
+      "sha256": "3e0a700b0b232194eec41c8881d42114df3314e3d0ee90b1f0a542607cf3e913"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_PotteryPlain_Normal_UE_DirectX_d6af28ee1872.uasset",
+      "bytes": 9766,
+      "sha256": "9858e1bb18af64d18b56584d1781504730c0e005430e9e77996564250b8f9e36"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_PotteryPlain_ORM_e440cd5609c5.uasset",
+      "bytes": 8530,
+      "sha256": "843879b0dc1bafc3de3abdb1cb8f581e53491e8df8239b198d4f8943193d9281"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_RedGoldCloth_BaseColor_622bbeec5b10.uasset",
+      "bytes": 187624,
+      "sha256": "44addfd37b3edcff5e6381b620d426884f4773080ac0bd19654a5f0b6988f824"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_RedGoldCloth_Normal_UE_DirectX_768c2eb03f04.uasset",
+      "bytes": 19536,
+      "sha256": "42170eb0b5a10fdc00683db89ee31d3314fec952022f90e53d72a17478c567eb"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_RedGoldCloth_ORM_e08f4046e1a5.uasset",
+      "bytes": 25764,
+      "sha256": "e201f1f4b464d48a84946dc888d8f375f6423c6abeccaf25de834a3323d6155d"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Rope_BaseColor_d2a304961f76.uasset",
+      "bytes": 22034,
+      "sha256": "9313fa222ad1634cb9b1d94991fc6870b89dcd433e39eb6bc015b4d60221a4c3"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Rope_Normal_UE_DirectX_31369be2575f.uasset",
+      "bytes": 13870,
+      "sha256": "4dd9e1540b6255628810350bc295d24fd56ef2989676fd9b5ce0e9159d9793e1"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART06_Rope_ORM_8ce3faebd86d.uasset",
+      "bytes": 7932,
+      "sha256": "8ab40c0da37601570eab461b336c2bd9da610ad668cc88c736dc9e87155dce1f"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART09_Cloth_Weave_Normal_DX_0ee6f9ba97a5.uasset",
+      "bytes": 151944,
+      "sha256": "65dc36007c0b118a85aa6bb0ec6f05bc910323cad831a5bea25177133c7edb21"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART09_Cloth_Weave_Roughness_bd0c9397e4de.uasset",
+      "bytes": 70863,
+      "sha256": "de67ed4489c1ad885e5a678b0b5b58990f8a2b7c213a06e8324a9ddf27430002"
+    },
+    {
+      "path": "Examples/Content/DesertBuildingLabOpenSource/Resources/Textures/T_ART09_RedGoldCanvas_AI_BaseColor_a848bbc0060e.uasset",
+      "bytes": 3451360,
+      "sha256": "e68dbb1735601ab9eb387d59e4fd9266aa4988fe317e48fb3966181e5cd3815c"
+    }
+  ],
+  "source_import_paths_removed": true,
+  "new_project_install_tested": false,
+  "gui_mouse_tested": false,
+  "note": "Separate authored-wood publication kit. Native dependency closure checked in the original UE5.8.2 installation."
+}

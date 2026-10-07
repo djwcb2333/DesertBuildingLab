@@ -1,0 +1,15 @@
+* text=auto eol=lf
+*.h text eol=lf
+*.cpp text eol=lf
+*.cs text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.uplugin text eol=lf
+*.yml text eol=lf
+*.fbx binary
+*.png binary
+*.uasset binary
+*.uexp binary
+*.ubulk binary
+*.uptnl binary

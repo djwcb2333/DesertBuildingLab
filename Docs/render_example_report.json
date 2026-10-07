@@ -1,0 +1,83 @@
+{
+  "success": true,
+  "utc": "2026-10-07T15:44:23.398771+00:00",
+  "asset_or_map_saved": false,
+  "method": "Actual UE SceneCapture RHI with the optional authored-wood kit; not plugin UI screenshots.",
+  "checks": [
+    {
+      "name": "use fresh command-line editor process",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "PublicKit_CombinationExample valid rooms",
+      "passed": true,
+      "actual": 3
+    },
+    {
+      "name": "PublicKit_CombinationExample all combination blocks accepted",
+      "passed": true,
+      "actual": [
+        "有效体块 3；无效房间输入 0；有效组合块 6；无效组合块 0；自动支柱 0。修改地形后请Rebuild重新检测。"
+      ]
+    },
+    {
+      "name": "PublicKit_Canopy0 valid rooms",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "PublicKit_Canopy0 all combination blocks accepted",
+      "passed": true,
+      "actual": [
+        "有效体块 1；无效房间输入 0；有效组合块 1；无效组合块 0；自动支柱 0。修改地形后请Rebuild重新检测。"
+      ]
+    },
+    {
+      "name": "PublicKit_Canopy1 valid rooms",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "PublicKit_Canopy1 all combination blocks accepted",
+      "passed": true,
+      "actual": [
+        "有效体块 1；无效房间输入 0；有效组合块 1；无效组合块 0；自动支柱 0。修改地形后请Rebuild重新检测。"
+      ]
+    },
+    {
+      "name": "PublicKit_Canopy2 valid rooms",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "PublicKit_Canopy2 all combination blocks accepted",
+      "passed": true,
+      "actual": [
+        "有效体块 1；无效房间输入 0；有效组合块 1；无效组合块 0；自动支柱 0。修改地形后请Rebuild重新检测。"
+      ]
+    },
+    {
+      "name": "PublicKit_Canopy3 valid rooms",
+      "passed": true,
+      "actual": 1
+    },
+    {
+      "name": "PublicKit_Canopy3 all combination blocks accepted",
+      "passed": true,
+      "actual": [
+        "有效体块 1；无效房间输入 0；有效组合块 1；无效组合块 0；自动支柱 0。修改地形后请Rebuild重新检测。"
+      ]
+    },
+    {
+      "name": "public-kit-hero RHI image exists",
+      "passed": true,
+      "actual": null
+    },
+    {
+      "name": "public-kit-canopies RHI image exists",
+      "passed": true,
+      "actual": null
+    }
+  ]
+}
