@@ -12,10 +12,11 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 </style></head>
 <body><div class="layout"><aside class="sidebar"><h2>沙漠建筑实验室</h2><p>Desert Building Lab<br>0.4.7-assets.1 · UE 5.8.2</p><nav aria-label="手册目录"><a href="#chapter-overview">01 · 项目介绍与公开版本</a><a href="#chapter-guide">02 · 操作指南</a><a href="#chapter-logic">03 · 生成逻辑与代码结构</a><a href="#chapter-art">04 · 模型、材质与替换规范</a><a href="#chapter-assets">05 · 保存与项目管理</a><a href="#chapter-sources">06 · 美术来源与发布范围</a><a href="#chapter-sourceart">07 · 可编辑源资源</a><a href="#chapter-assetlicense">08 · 美术资源许可</a><a href="#chapter-license">09 · MIT License</a></nav><p style="margin-top:24px">本地阅读无需联网。图片及源码链接需要与仓库一起保留。</p></aside>
 <main><div id="top" class="eyebrow">PUBLIC EDITION · OFFLINE MANUAL</div><h1>从模块到可编辑建筑</h1><p class="lead">介绍、安装、操作、规则与美术接口，整合为一份可随仓库阅读的中文手册。</p>
-<div class="notice"><p><strong>图像与验证边界：</strong>本页建筑图片为公开套件在 Unreal 中实际生成、由 SceneCapture 输出的渲染，属于模型效果展示，不是插件 UI 操作截图。公开样例 204/204 项准备检查与原开发配置 264/264 项保存流程检查分别说明；新项目、真实角色／导航、游戏打包与性能仍需单独验收。</p></div>
+<div class="notice"><p><strong>图像与验证边界：</strong>本页两张当前公开套件效果图由 Unreal SceneCapture 渲染，不是插件 UI 操作截图；另三张历史真实 UI 实拍分别标明 2026-10-05／0.4.1 或 V3，旧侧栏、美术和保存位置不代表当前 0.4.7 完整界面。模块独立小预览和 Buildings/Resources 收纳以当前文字说明为准。公开样例 204/204 项准备检查与原开发配置 264/264 项保存流程检查分别说明；新项目、真实角色／导航、游戏打包与性能仍需单独验收。</p></div>
 <section class="chapter" id="chapter-overview"><div class="chapter-number">CHAPTER 01</div><p class="chapter-source">可编辑源：<a href="../README.md">README.md</a></p><h2 id="overview--desert-building-lab-沙漠建筑实验室">Desert Building Lab · 沙漠建筑实验室</h2>
 <p>用于 <strong>Unreal Engine 编辑阶段</strong>的模块化建筑工具。先选择房间、楼梯、篷布、屋顶和装饰组合，在独立三维视口里点击格子搭建，再保存为可重复使用、可继续修改的建筑素材。</p>
 <p>这套工具从风格化沙漠建筑的制作需求出发：艺术家负责模块造型与材质，插件负责邻接、承托、通路、占用、保存和实例同步。同一套生成逻辑可以接入不同的模型与材质。</p>
+<p><strong>最初灵感来源：</strong><a href="https://oskarstalberg.com/" rel="noopener noreferrer">Oskar Stålberg</a> 的交互房屋实验 <a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Brick Block</a>（原始 <code>house</code> 页面）。本项目受到“点击增减单元格、邻接结果随布局自动更新”的操作方式启发，再针对 Unreal 编辑阶段的场景制作扩展支撑、楼梯、附件和资产管理。当前 Unreal 插件与模块规则由本项目独立编写，公开仓库未移植或收录原作代码与美术资源。</p>
 <p>当前版本：<code>0.4.7-assets.1</code>。开发与实际编译验证环境：<strong>Unreal Engine 5.8.2 / Windows 64 位</strong>。这是持续迭代的实验工具，当前未建立其他引擎版本兼容矩阵。</p>
 <p><img src="Images/public-kit-hero.png" alt="使用公开套件组合的建筑" loading="lazy"></p>
 <p>上图由公开套件在 Unreal 中实际生成并通过 SceneCapture 渲染。它展示了房间、支撑楼梯、屋顶棚亭、墙冠和篷布组合；不是设计器界面截图。制作该图的脚本见 <a href="../Tools/render_example.py">Tools/render_example.py</a>，不会保存或改写 Unreal 的建筑素材。</p>
@@ -31,6 +32,12 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <li>在用户选择的目录下分类收纳模型、材质、材质函数和贴图依赖。</li>
 <li>输出独立的地基与楼层组件，提供整栋／单层淡化接口，便于连接已有的遮挡检测组件。</li>
 </ul>
+<h3 id="overview--真实编辑器操作历史实拍">真实编辑器操作（历史实拍）</h3>
+<p>以下截图来自 <strong>2026-10-05、插件 0.4.1</strong> 的真实 Unreal 编辑器操作，用来说明“选择模块 → 悬浮检查 → 左键确认”以及冲突反馈。当前 <code>0.4.7-assets.1</code> 已增加模块独立小预览和新的 <code>Buildings/Resources</code> 资源收纳流程；图中的旧侧栏、占位美术和保存入口不代表当前完整界面。上方与文末的公开套件效果图则是当前 SceneCapture 渲染，两类图片用途不同。</p>
+<p><img src="Images/ue-designer-valid-v0.4.1.jpg" alt="历史实拍：有效候选与绿色放置预览" loading="lazy"></p>
+<p>2026-10-05 / 0.4.1 历史 UI 实拍：绿色候选表示规则允许放置，点击前可以查看位置；正式生成和临时预览分开处理。</p>
+<p><img src="Images/ue-designer-conflict-v0.4.1.jpg" alt="历史实拍：冲突候选与拒绝提示" loading="lazy"></p>
+<p>2026-10-05 / 0.4.1 历史 UI 实拍：红色候选与状态文字说明冲突，无效点击不会保存隐藏模块。当前操作步骤以<a href="#chapter-guide">操作指南</a>为准。</p>
 <h3 id="overview--从哪里开始">从哪里开始</h3>
 <div class="table-wrap"><table><thead><tr><th>想做的事</th><th>文档</th></tr></thead><tbody>
 <tr><td>安装插件，做并保存第一栋建筑</td><td><a href="#chapter-guide">操作指南</a></td></tr>
@@ -125,6 +132,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>留空槽位的基础几何是测试入口。最终效果取决于导入的模型与材质。某些槽位有严格例外：例如斜顶墙冠没有模型就拒绝生成；启用墙端规则后缺少端版会提示并显示对应的基础让位几何。不要把所有警告都理解为“没关系，自动找个别的模型”。</p>
 <h3 id="guide--4-认识两个预览">4. 认识两个预览</h3>
 <p>左上方的小三维窗用于查看当前组合块的形状、方向和材质。右侧大视口用于搭建建筑，并检查放置位置是否有效。资源缩略图是原模型预览，不能证明这件模型在某个位置可以放下。</p>
+<p>可以先看 <a href="#overview--真实编辑器操作历史实拍">README 的真实编辑器操作图</a>，理解绿色候选与红色拒绝反馈。那两张是 2026-10-05／0.4.1 的历史实拍，尚未出现本节所说的模块独立小预览；当前侧栏和美术以实际 <code>0.4.7-assets.1</code> 界面为准。</p>
 <div class="table-wrap"><table><thead><tr><th>操作</th><th>大预览视口行为</th></tr></thead><tbody>
 <tr><td>鼠标悬浮</td><td>显示候选组合块，绿色可放，红色不可放；下方显示原因</td></tr>
 <tr><td>左键</td><td>确认有效放置；房间工具点已有房间会选中它</td></tr>
@@ -172,6 +180,9 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p><strong>屋顶装饰：</strong>启用木板／陶罐装饰后，可固定下标或按格随机。结构楼板仍保留；有其他组合块或露台开口的格会避开装饰，防止堵住楼梯出口。</p>
 <p><strong>外围散石：</strong>是手动放置的整组模型，放在首层外墙外围，避开门和楼梯。当前没有逐颗石头适应地形的自动散布器。</p>
 <h3 id="guide--9-保存并放入场景">9. 保存并放入场景</h3>
+<p>下图是 <strong>V3 阶段标准保存对话框的历史实拍</strong>，用于认识目录选择与命名操作。当前插件会按本文的 <code>Buildings/Resources</code> 规范整理输出，不能按旧图判断最终资产位置。</p>
+<p><img src="Images/ue-save-dialog-v3.jpg" alt="V3 历史实拍：选择目录和资产名称的标准保存对话框" loading="lazy"></p>
+<p>V3 历史 UI 实拍：标准保存窗口的目录和名称选择。当前保存的 <code>Buildings/Resources</code> 子目录与更新规则以以下文字和<a href="#chapter-assets">资产保存规范</a>为准。</p>
 <ol>
 <li>确认主视窗下方没有无效输入；旧草稿可使用“清理旧的无效条目”。</li>
 <li>点击“另存新素材／复制变体…”。</li>
@@ -199,6 +210,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 </tbody></table></div>
 <p>本指南列的是实际界面和规则。公开 ExampleHouse 已完成 204/204 项生成与资源检查，原开发配置另有 264/264 项保存流程检查；两组不是同一测试范围。样例在原开发项目的独立目录验证，新项目安装、角色／导航、最终游戏打包与性能仍需要在自己的项目中验收。</p></section><section class="chapter" id="chapter-logic"><div class="chapter-number">CHAPTER 03</div><p class="chapter-source">可编辑源：<a href="GenerationLogic.md">Docs/GenerationLogic.md</a></p><h2 id="logic--生成逻辑与代码结构">生成逻辑与代码结构</h2>
 <p>本文说明当前实现如何把“有意义的建筑块”转成实例几何。修改规则时，应同时保护编辑预览、最终生成、保存重开和关联实例，而不只是让一个示例看起来正确。</p>
+<p>最初的交互灵感来自 <a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Oskar Stålberg 的 Brick Block</a>（<code>house</code> 页面）：通过增减格子搭建房屋，并让邻接外观随输入更新。以下承托、占用、门窗、楼梯、组合块及保存规则是本项目面向 Unreal 场景制作编写的独立实现，未移植或收录原作代码与资源；本章描述的是本插件的实现，不推断原网页使用的底层算法。<a href="https://oskarstalberg.com/" rel="noopener noreferrer">作者官网</a>。</p>
 <h3 id="logic--制作输入和输出">制作输入和输出</h3>
 <p>一栋建筑主要有三类制作输入：</p>
 <div class="table-wrap"><table><thead><tr><th>输入</th><th>职责</th><th>主要类型</th></tr></thead><tbody>
@@ -426,6 +438,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>公开版另已在独立 <code>/Game/DesertBuildingLabOpenSource</code> 目录完成 204/204 项示例生成与资源检查。ExampleHouse 包含三件管理资产和 103 件美术依赖，共 106 件 Unreal 资产；30 张实际使用贴图从本项目自制／AI 来源重新导入，包含六张自制木材替代。具体公开文件、路径与哈希见 <a href="../Examples/manifest.json">Examples/manifest.json</a>。</p>
 <p>两组结果的范围不同。这些证据证明对应测试配置中的原生 API 与资源行为，不能替代新项目安装、GUI 鼠标操作、最终游戏打包、角色／导航或性能测量。示例在原开发项目的独立目录生成，原插件 Content 哈希核对保持一致。</p></section><section class="chapter" id="chapter-sources"><div class="chapter-number">CHAPTER 06</div><p class="chapter-source">可编辑源：<a href="美术来源与发布范围.md">Docs/美术来源与发布范围.md</a></p><h2 id="sources--美术来源与发布范围">美术来源与发布范围</h2>
 <p>DesertBuildingLab 是编辑阶段使用的模块化建筑工具。源码、模块规则和资源替换接口可以独立阅读；美术套件用于演示这些接口。公开版使用本项目制作的模型、程序绘制的表面贴图以及明确标注的 AI 颜色贴图。</p>
+<p>项目最初受到 <a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Oskar Stålberg 的 Brick Block</a> 交互房屋实验启发，主要参考单元格增减与邻接自动更新的操作思路；网址中的 <code>house</code> 是该作品页面路径。当前 Unreal 插件、模块规则和公开美术套件由本项目实现与制作，未移植或收录原作代码、模型或贴图。该链接作为灵感来源致谢，原作品的资源不纳入本项目 MIT 发布范围。<a href="https://oskarstalberg.com/" rel="noopener noreferrer">作者官网</a>。</p>
 <h3 id="sources--当前套件的制作方式">当前套件的制作方式</h3>
 <div class="table-wrap"><table><thead><tr><th>内容</th><th>制作方式</th><th>发布与替换说明</th></tr></thead><tbody>
 <tr><td>房间墙片、门窗、地基、屋顶、支柱</td><td>Blender 中通过本项目 Python 脚本建立与修整；不是下载的第三方模型</td><td>保留模块尺寸、轴向、接缝保护区和材质槽后可替换</td></tr>
@@ -448,7 +461,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>私有开发版中的通用木材贴图来自 Painter 的 <code>Stylized Wood Rough</code> 与 <code>Wood Slice</code> starter 材质。项目记录了修改参数和导出过程，但没有提供把这些可独立提取的通用贴图再许可为开源资产的明确许可证据。因此公开版使用自制替代，不分发相关 SBSAR、SPP 或导出贴图，也不直接上传此前的完整二进制插件 ZIP。Adobe 的资产条款对独立提取和分发设置了限制；具体使用应核对所获资源适用的条款。<a href="https://www.adobe.com/go/substance3dassets" rel="noopener noreferrer">Adobe Substance 3D Assets 条款</a></p>
 <p>用户上传的概念参考、游戏截图、试玩视频及美术网站图片仅用于观察结构与风格，不纳入公开仓库。参考的场景美术不意味着本项目得到相关游戏或作者授权。以下内容保持为外部参考链接，不复制其模型、贴图或纹样：</p>
 <ul>
-<li><a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Oskar Stålberg 的交互房屋实验</a>：观察单元格与邻接规则。</li>
+<li><a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Oskar Stålberg 的 Brick Block（house 页面）</a>：最初的交互灵感，参考单元格增减与邻接自动更新的操作方式。</li>
 <li><a href="https://www.renderhub.com/dereza/royal-trade-fair-tent-stalls-bazaar-stall-market" rel="noopener noreferrer">Dereza 的市集棚参考</a>：观察宽褶、支撑和前沿垂布。</li>
 </ul>
 <h3 id="sources--资源接口与重建边界">资源接口与重建边界</h3>

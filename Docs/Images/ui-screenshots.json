@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "screenshot_count": 3,
+  "images": [
+    {
+      "file": "ue-designer-valid-v0.4.1.jpg",
+      "kind": "actual Unreal Editor UI screenshot",
+      "capture_date": "2026-10-05",
+      "captured_plugin_version": "0.4.1",
+      "current_release_version_at_documentation_update": "0.4.7-assets.1",
+      "historical": true,
+      "caption": "Design window and valid green placement preview",
+      "sha256": "35dd2e3622fe5251b639e7ddc77eb96267d3cde478b6e52caf1f152ef5d0b255",
+      "bytes": 94428,
+      "pixels_edited": false
+    },
+    {
+      "file": "ue-designer-conflict-v0.4.1.jpg",
+      "kind": "actual Unreal Editor UI screenshot",
+      "capture_date": "2026-10-05",
+      "captured_plugin_version": "0.4.1",
+      "current_release_version_at_documentation_update": "0.4.7-assets.1",
+      "historical": true,
+      "caption": "Occupied-cell rejection with red placement preview",
+      "sha256": "0c14e4379d019eba64df7ddd6a99cb26e7b6e63e8861c80ea426d1df042f36cb",
+      "bytes": 97809,
+      "pixels_edited": false
+    },
+    {
+      "file": "ue-save-dialog-v3.jpg",
+      "kind": "actual Unreal Editor UI screenshot",
+      "capture_date": "2026-10-05",
+      "captured_plugin_version": "V3 prototype",
+      "current_release_version_at_documentation_update": "0.4.7-assets.1",
+      "historical": true,
+      "caption": "Actual Unreal save dialog: project folder and asset name",
+      "sha256": "40c67208f3a2805863c75e3571867b3b95fc43b8f51446bbe1a5a25d2b0ecf33",
+      "bytes": 41734,
+      "pixels_edited": false
+    }
+  ],
+  "capture_boundary": "Historical actual editor windows; current UI/layout and resource organization are documented separately.",
+  "new_screenshots_taken": false,
+  "new_engine_execution": false
+}

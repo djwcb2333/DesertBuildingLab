@@ -333,7 +333,7 @@ def main() -> None:
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Desert Building Lab 公开插件离线操作、生成逻辑与美术接入手册"><title>沙漠建筑实验室 · 公开插件手册</title><style>{CSS}</style></head>
 <body><div class="layout"><aside class="sidebar"><h2>沙漠建筑实验室</h2><p>Desert Building Lab<br>0.4.7-assets.1 · UE 5.8.2</p><nav aria-label="手册目录">{navigation}</nav><p style="margin-top:24px">本地阅读无需联网。图片及源码链接需要与仓库一起保留。</p></aside>
 <main><div id="top" class="eyebrow">PUBLIC EDITION · OFFLINE MANUAL</div><h1>从模块到可编辑建筑</h1><p class="lead">介绍、安装、操作、规则与美术接口，整合为一份可随仓库阅读的中文手册。</p>
-<div class="notice"><p><strong>图像与验证边界：</strong>本页建筑图片为公开套件在 Unreal 中实际生成、由 SceneCapture 输出的渲染，属于模型效果展示，不是插件 UI 操作截图。公开样例 204/204 项准备检查与原开发配置 264/264 项保存流程检查分别说明；新项目、真实角色／导航、游戏打包与性能仍需单独验收。</p></div>
+<div class="notice"><p><strong>图像与验证边界：</strong>本页两张当前公开套件效果图由 Unreal SceneCapture 渲染，不是插件 UI 操作截图；另三张历史真实 UI 实拍分别标明 2026-10-05／0.4.1 或 V3，旧侧栏、美术和保存位置不代表当前 0.4.7 完整界面。模块独立小预览和 Buildings/Resources 收纳以当前文字说明为准。公开样例 204/204 项准备检查与原开发配置 264/264 项保存流程检查分别说明；新项目、真实角色／导航、游戏打包与性能仍需单独验收。</p></div>
 {''.join(sections)}<div class="footer">手册由 <a href="../Tools/build_manual.py">Tools/build_manual.py</a> 从仓库内 Markdown 与许可生成。修改正文后重新生成。保留 Docs/Images、Source、Tools、Examples、SourceArt 和许可文件，离线链接才完整。<a href="#top">返回顶部</a></div></main></div></body></html>'''
     report = validate(document)
     OUTPUT.write_text(document, encoding="utf-8", newline="\n")
