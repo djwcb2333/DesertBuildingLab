@@ -16,6 +16,10 @@
 #include "Framework/Docking/TabManager.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Docking/SDockTab.h"
+#include "ImageUtils.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+#include "HAL/FileManager.h"
 
 #define LOCTEXT_NAMESPACE "DesertEditorLibrary"
 
@@ -100,6 +104,89 @@ FDesertModulePreviewData UDesertBuildingEditorLibrary::GetBuildingDesignerPrevie
 {
     if (TSharedPtr<SDesertBuildingDesigner> Designer=DesertOpenDesigner.Pin()) return Designer->GetDisplayedModulePreviewData();
     FDesertModulePreviewData Data; Data.Description=TEXT("未通过安全入口打开设计器"); return Data;
+}
+
+bool UDesertBuildingEditorLibrary::SetBuildingDesignerAutoSupport(bool bEnabled)
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->SetAutoSupportColumns(bEnabled);
+    return false;
+}
+bool UDesertBuildingEditorLibrary::GetBuildingDesignerAutoSupport()
+{
+    const ADesertBuilding* Draft=GetBuildingDesignerDraft();
+    return Draft && Draft->bAutoSupportColumns;
+}
+FDesertPlacementCheck UDesertBuildingEditorLibrary::GetBuildingDesignerPlacementCheck(FIntVector Cell)
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->PreviewPlacementAt(Cell);
+    FDesertPlacementCheck Check; Check.Reason=TEXT("设计器未打开"); return Check;
+}
+int32 UDesertBuildingEditorLibrary::GetBuildingDesignerHoverSupportCount()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->GetHoverSupportCount();
+    return 0;
+}
+bool UDesertBuildingEditorLibrary::SaveBuildingDesignerCurrentDesign()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->SaveCurrentDesign();
+    return false;
+}
+ADesertBuilding* UDesertBuildingEditorLibrary::GetBuildingDesignerDraft()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->GetPreviewBuilding();
+    return nullptr;
+}
+FString UDesertBuildingEditorLibrary::GetBuildingDesignerStatusMessage()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->GetLastActionMessage();
+    return TEXT("设计器未打开");
+}
+bool UDesertBuildingEditorLibrary::SetBuildingDesignerInteractionMode(int32 Mode)
+{
+    if (Mode<0 || Mode>2 || (GEditor && GEditor->PlayWorld)) return false;
+    if (auto Designer=DesertOpenDesigner.Pin()) {Designer->SetInteractionMode(Mode); return true;}
+    return false;
+}
+int32 UDesertBuildingEditorLibrary::GetBuildingDesignerInteractionMode()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->GetInteractionMode();
+    return INDEX_NONE;
+}
+bool UDesertBuildingEditorLibrary::ClickBuildingDesignerCell(FIntVector Cell,bool bDelete)
+{
+    if (GEditor && GEditor->PlayWorld) return false;
+    if (auto Designer=DesertOpenDesigner.Pin()) {Designer->HandleCellClick(Cell,bDelete); return true;}
+    return false;
+}
+
+bool UDesertBuildingEditorLibrary::CaptureBuildingDesignerScreenshot(FString PngFile)
+{
+    const auto Designer=DesertOpenDesigner.Pin();
+    if (!Designer || !FSlateApplication::IsInitialized() || FPaths::GetExtension(PngFile).ToLower()!=TEXT("png")) return false;
+    TArray<FColor> Pixels; FIntVector Size;
+    if (!FSlateApplication::Get().TakeScreenshot(Designer.ToSharedRef(),Pixels,Size) || Size.X<=0 || Size.Y<=0) return false;
+    TArray64<uint8> Png;
+    FImageUtils::PNGCompressImageArray(Size.X,Size.Y,MakeArrayView64(Pixels),Png);
+    if (Png.IsEmpty()) return false;
+    PngFile=FPaths::ConvertRelativePathToFull(PngFile);
+    IFileManager::Get().MakeDirectory(*FPaths::GetPath(PngFile),true);
+    return FFileHelper::SaveArrayToFile(Png,*PngFile);
+}
+
+bool UDesertBuildingEditorLibrary::StartNewBuildingDesignerDraft()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->StartNewDraft();
+    return false;
+}
+bool UDesertBuildingEditorLibrary::UndoBuildingDesignerEdit()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->UndoDraft();
+    return false;
+}
+bool UDesertBuildingEditorLibrary::RedoBuildingDesignerEdit()
+{
+    if (auto Designer=DesertOpenDesigner.Pin()) return Designer->RedoDraft();
+    return false;
 }
 
 static UWorld* DesertEditorWorld()

@@ -27,6 +27,7 @@ class SDesertBuildingDesigner : public SCompoundWidget, public FGCObject, public
 public:
     SLATE_BEGIN_ARGS(SDesertBuildingDesigner) {} SLATE_END_ARGS()
     void Construct(const FArguments& InArgs);
+    virtual FReply OnKeyDown(const FGeometry& Geometry, const FKeyEvent& Event) override;
     virtual ~SDesertBuildingDesigner() override;
     virtual void AddReferencedObjects(FReferenceCollector& Collector) override;
     virtual FString GetReferencerName() const override { return TEXT("SDesertBuildingDesigner"); }
@@ -47,17 +48,32 @@ public:
     bool SelectModulePreview(int32 Tool,EDesertStairLayout Layout,int32 VariantIndex,int32 InFacing);
     bool SetPotPlacementSelection(EDesertPotPlacement Position);
     FDesertModulePreviewData GetDisplayedModulePreviewData() const {return DisplayedModuleData;}
+    bool SetAutoSupportColumns(bool bEnabled);
+    bool SaveCurrentDesign() { return SaveDesign(true); }
+    FDesertPlacementCheck PreviewPlacementAt(FIntVector Cell);
+    int32 GetHoverSupportCount() const { return HoverCheck.Supports.Num(); }
+    FString GetLastActionMessage() const { return LastAction; }
+    void SetInteractionMode(int32 Mode);
+    int32 GetInteractionMode() const { return InteractionMode; }
+    bool StartNewDraft();
+    bool UndoDraft();
+    bool RedoDraft();
 
 private:
     // 0房间；1屋顶棚亭；2穹顶；3瓦罐组；4篷布支架；5楼梯；8外围散石；9斜顶墙冠。6/7保留地基/柱模型槽。
     int32 ActiveTool = 0;
+    // 0放置，1选择，2删除。只改变操作路由，不进入建筑资产。
+    int32 InteractionMode = 0;
     int32 EditFloor = 0;
     int32 Facing = 0;
     EDesertStairLayout StairLayout = EDesertStairLayout::AlongWall;
     int32 AwningVariantIndex = -1;
     int32 PotVariantIndex = -1;
+    int32 RoofDecorationVariantIndex = 0;
     EDesertPotPlacement PotPlacement = EDesertPotPlacement::Automatic;
     TOptional<FIntVector> SelectedPotCell;
+    TOptional<FIntVector> SelectedAttachmentCell;
+    int32 SelectedAttachmentTool = INDEX_NONE;
     TOptional<FIntVector> HoveredCell;
     TOptional<FIntVector> SelectedRoomCell;
     FDesertPlacementCheck HoverCheck;
@@ -83,7 +99,27 @@ private:
     bool bModulePreviewNeedsRefresh=true;
     FIntVector LastModuleContextCell=FIntVector::ZeroValue;
     int32 LastModuleResolvedVariant=INDEX_NONE;
+    TSet<FGuid> TransactionsBeforeDraft;
+    bool bApplyingDraftHistory = false;
 
+    TSharedRef<SWidget> MakeTopToolbar();
+    TSharedRef<SWidget> MakeModuleLibrary();
+    TSharedRef<SWidget> MakeViewportToolbar();
+    TSharedRef<SWidget> MakeContextPanel();
+    TSharedRef<SWidget> MakeRulesPanel();
+    TSharedRef<SWidget> MakeAdvancedResourcesPanel();
+    TSharedRef<SWidget> MakeModeButton(int32 Mode, const FText& Label);
+    TSharedRef<SWidget> MakeLoadMenu();
+    FText GetDocumentText() const;
+    FText GetActionStatusText() const;
+    FText GetToolName() const;
+    bool HasCurrentTypeAt(FIntVector Cell) const;
+    int32 FindSelectableToolAt(FIntVector Cell) const;
+    bool ApplySelectedAttachment(int32 Tool, EDesertStairLayout Layout, int32 VariantIndex, int32 InFacing);
+    void BeginDraftHistory();
+    bool CanUseDraftHistory(bool bRedo) const;
+    void SelectAtCell(FIntVector Cell);
+    bool ConfirmDiscardDraft() const;
     TSharedRef<SWidget> MakeToolButton(int32 Tool, const FText& Label);
     UStaticMesh* GetToolThumbnailMesh(int32 Tool) const;
     TSharedRef<SWidget> MakeModulePreviewPanel();
@@ -102,6 +138,8 @@ private:
     bool HasPlacedPot(FIntVector Cell) const;
     TSharedRef<SWidget> MakeRoofDressingPanel();
     TSharedRef<SWidget> MakeRoofDressingMenu();
+    TSharedRef<SWidget> MakeManualRoofDecorationMenu();
+    FDesertRoofDecoration MakeRoofDecoration(FIntVector Cell) const;
     TSharedRef<SWidget> MakeStairLayoutMenu();
     FText GetStairLayoutText() const;
     TSharedRef<SWidget> MakeRoomAppearancePanel();

@@ -10,30 +10,38 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 @media(max-width:480px){main{padding:22px 16px 44px}table{font-size:12px}td,th{padding:10px 8px}.lead{font-size:16px}pre{padding:12px;font-size:12px}.notice{padding:13px 14px}}
 @media print{.layout{display:block}.sidebar{display:none}main{max-width:none;padding:0;background:white}.chapter{break-before:page}pre{white-space:pre-wrap}a{color:inherit}.table-wrap{overflow:visible}img{max-height:21cm;object-fit:contain}}
 </style></head>
-<body><div class="layout"><aside class="sidebar"><h2>沙漠建筑实验室</h2><p>Desert Building Lab<br>0.4.7-assets.1 · UE 5.8.2</p><nav aria-label="手册目录"><a href="#chapter-overview">01 · 项目介绍与公开版本</a><a href="#chapter-guide">02 · 操作指南</a><a href="#chapter-logic">03 · 生成逻辑与代码结构</a><a href="#chapter-art">04 · 模型、材质与替换规范</a><a href="#chapter-assets">05 · 保存与项目管理</a><a href="#chapter-sources">06 · 美术来源与发布范围</a><a href="#chapter-sourceart">07 · 可编辑源资源</a><a href="#chapter-assetlicense">08 · 美术资源许可</a><a href="#chapter-license">09 · MIT License</a></nav><p style="margin-top:24px">本地阅读无需联网。图片及源码链接需要与仓库一起保留。</p></aside>
+<body><div class="layout"><aside class="sidebar"><h2>沙漠建筑实验室</h2><p>Desert Building Lab<br>0.4.9-ui.1 · UE 5.8.2</p><nav aria-label="手册目录"><a href="#chapter-overview">01 · 项目介绍与公开版本</a><a href="#chapter-release">02 · 0.4.9 更新与验证</a><a href="#chapter-guide">03 · 操作指南</a><a href="#chapter-logic">04 · 生成逻辑与代码结构</a><a href="#chapter-art">05 · 模型、材质与替换规范</a><a href="#chapter-assets">06 · 保存与项目管理</a><a href="#chapter-changelog">07 · 版本变更记录</a><a href="#chapter-sources">08 · 美术来源与发布范围</a><a href="#chapter-sourceart">09 · 可编辑源资源</a><a href="#chapter-assetlicense">10 · 美术资源许可</a><a href="#chapter-license">11 · MIT License</a></nav><p style="margin-top:24px">本地阅读无需联网。图片及源码链接需要与仓库一起保留。</p></aside>
 <main><div id="top" class="eyebrow">PUBLIC EDITION · OFFLINE MANUAL</div><h1>从模块到可编辑建筑</h1><p class="lead">介绍、安装、操作、规则与美术接口，整合为一份可随仓库阅读的中文手册。</p>
-<div class="notice"><p><strong>图像与验证边界：</strong>本页两张当前公开套件效果图由 Unreal SceneCapture 渲染，不是插件 UI 操作截图；另三张历史真实 UI 实拍分别标明 2026-10-05／0.4.1 或 V3，旧侧栏、美术和保存位置不代表当前 0.4.7 完整界面。模块独立小预览和 Buildings/Resources 收纳以当前文字说明为准。公开样例 204/204 项准备检查与原开发配置 264/264 项保存流程检查分别说明；新项目、真实角色／导航、游戏打包与性能仍需单独验收。</p></div>
+<div class="notice"><p><strong>图像与验证边界：</strong>新增两张 0.4.9 原生 Slate 界面截图，拍摄于 2026-10-09；来自原开发工程，美术外观与公开套件可能不同。另保留两张公开套件 SceneCapture 效果图及三张明确标注版本的历史 UI。0.4.9 的 168/168 项是实际 Slate API 回归；0.4.8 的 869 项与旧版 204/264 项记录属于历史证据，没有在本轮重跑。物理鼠标逐项操作、其他项目安装、角色导航、打包和性能不由这些记录证明。</p></div>
 <section class="chapter" id="chapter-overview"><div class="chapter-number">CHAPTER 01</div><p class="chapter-source">可编辑源：<a href="../README.md">README.md</a></p><h2 id="overview--desert-building-lab-沙漠建筑实验室">Desert Building Lab · 沙漠建筑实验室</h2>
 <p>用于 <strong>Unreal Engine 编辑阶段</strong>的模块化建筑工具。先选择房间、楼梯、篷布、屋顶和装饰组合，在独立三维视口里点击格子搭建，再保存为可重复使用、可继续修改的建筑素材。</p>
 <p>这套工具从风格化沙漠建筑的制作需求出发：艺术家负责模块造型与材质，插件负责邻接、承托、通路、占用、保存和实例同步。同一套生成逻辑可以接入不同的模型与材质。</p>
 <p><strong>最初灵感来源：</strong><a href="https://oskarstalberg.com/" rel="noopener noreferrer">Oskar Stålberg</a> 的交互房屋实验 <a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Brick Block</a>（原始 <code>house</code> 页面）。本项目受到“点击增减单元格、邻接结果随布局自动更新”的操作方式启发，再针对 Unreal 编辑阶段的场景制作扩展支撑、楼梯、附件和资产管理。当前 Unreal 插件与模块规则由本项目独立编写，公开仓库未移植或收录原作代码与美术资源。</p>
-<p>当前版本：<code>0.4.7-assets.1</code>。开发与实际编译验证环境：<strong>Unreal Engine 5.8.2 / Windows 64 位</strong>。这是持续迭代的实验工具，当前未建立其他引擎版本兼容矩阵。</p>
+<p>当前版本：<code>0.4.9-ui.1</code>。开发与实际编译验证环境：<strong>Unreal Engine 5.8.2 / Windows 64 位</strong>。这是持续迭代的实验工具，当前未建立其他引擎版本兼容矩阵。它属于规则驱动的编辑期 PCG，使用自定义 C++／Slate 设计器，并非 Unreal PCG Graph。</p>
+<p>本次累积更新包含相邻楼层楼梯、独立屋顶点缀和上层门槛，以及设计器分区、三种编辑模式和自动支柱恢复。详见<a href="#chapter-changelog">更新记录</a>与<a href="#chapter-release">0.4.9 发布说明</a>。连续墙段与 Houdini 仍是评估方向，本次未实施。</p>
 <p><img src="Images/public-kit-hero.png" alt="使用公开套件组合的建筑" loading="lazy"></p>
 <p>上图由公开套件在 Unreal 中实际生成并通过 SceneCapture 渲染。它展示了房间、支撑楼梯、屋顶棚亭、墙冠和篷布组合；不是设计器界面截图。制作该图的脚本见 <a href="../Tools/render_example.py">Tools/render_example.py</a>，不会保存或改写 Unreal 的建筑素材。</p>
 <h3 id="overview--可以做什么">可以做什么</h3>
 <ul>
 <li>在预览视口里逐格添加房间，按邻接关系生成外墙、门窗、屋顶和女儿墙。</li>
-<li>添加贴墙直梯、L 形双跑梯、U 形双跑梯，以及完整的“篷布＋支架”组合变体。</li>
-<li>放置屋顶棚亭、穹顶、斜顶墙冠、瓦罐组和建筑外围散石组。</li>
+<li>添加贴墙直梯、L 形双跑梯、U 形双跑梯，以及完整的“篷布＋支架”组合变体；新楼梯连接相邻楼层表面。</li>
+<li>放置屋顶棚亭、穹顶、斜顶墙冠、瓦罐组和建筑外围散石组；屋顶点缀的六种配方复用木板与罐组，独立保存、不占建筑格。</li>
 <li>悬浮时显示候选模型和红／绿放置反馈；无效点击不会存下一件以后突然出现的隐藏模块。</li>
-<li>检查空间冲突、楼梯通路、屋顶承托和地面支撑；悬空房间可自动生成支柱。</li>
+<li>检查空间冲突、楼梯通路、屋顶承托和地面支撑；悬空房间可自动生成四角支柱，右栏固定显示开关与恢复入口。</li>
+<li>用“放置／选择／删除”区分操作；已有附件可原位校验并更改变体、梯型或朝向。</li>
 <li>为每个房间设置门的朝向、是否有门、四面的窗位；为瓦罐组设置自动靠墙或九方向排布。</li>
 <li>保存建筑数据、独立风格配置和可拖入场景的蓝图；修改素材时同步关联实例；另存可以创建布局变体。</li>
 <li>在用户选择的目录下分类收纳模型、材质、材质函数和贴图依赖。</li>
 <li>输出独立的地基与楼层组件，提供整栋／单层淡化接口，便于连接已有的遮挡检测组件。</li>
 </ul>
+<h3 id="overview--当前设计器界面">当前设计器界面</h3>
+<p>以下两张是 <strong>0.4.9-ui.1、2026-10-09（香港时间）</strong> 的真实 Unreal Slate 界面，由 <code>FSlateApplication::TakeScreenshot</code> 捕获。截图证明捕获时的界面状态，不代表物理鼠标逐项验收，也不是 SceneCapture 效果图。</p>
+<p><img src="Images/ue-designer-overview-v0.4.9.png" alt="0.4.9 当前设计器：模块库、编辑视口与规则参数" loading="lazy"></p>
+<p>顶栏管理素材与场景操作，左栏选择模块并查看组合预览，中央切换模式与高度，右栏固定显示自动支柱与当前对象参数。</p>
+<p><img src="Images/ue-designer-decoration-v0.4.9.png" alt="0.4.9 当前设计器：选择并原位修改屋顶点缀" loading="lazy"></p>
+<p>选择模式右栏标明“正在编辑”；切回放置清除选择，设置变为“新放置默认”。步骤见<a href="#guide--4-认识界面模式和两个预览">操作指南</a>。这两张使用原工程 Art09 美术，木纹等外观可能与公开 ExampleHouse 的自制替代资源不同；本次没有复制或替换美术套件。</p>
 <h3 id="overview--真实编辑器操作历史实拍">真实编辑器操作（历史实拍）</h3>
-<p>以下截图来自 <strong>2026-10-05、插件 0.4.1</strong> 的真实 Unreal 编辑器操作，用来说明“选择模块 → 悬浮检查 → 左键确认”以及冲突反馈。当前 <code>0.4.7-assets.1</code> 已增加模块独立小预览和新的 <code>Buildings/Resources</code> 资源收纳流程；图中的旧侧栏、占位美术和保存入口不代表当前完整界面。上方与文末的公开套件效果图则是当前 SceneCapture 渲染，两类图片用途不同。</p>
+<p>以下截图来自 <strong>2026-10-05、插件 0.4.1</strong> 的真实 Unreal 编辑器操作，用来说明“选择模块 → 悬浮检查 → 左键确认”以及冲突反馈。从 <code>0.4.7-assets.1</code> 起已增加模块小预览和 <code>Buildings/Resources</code> 资源收纳，<code>0.4.9-ui.1</code> 又整理了界面分区；图中的旧侧栏、占位美术和保存入口不代表当前界面。上方与文末的公开套件效果图来自 0.4.7 阶段的 SceneCapture 渲染，本次未重新制作样例美术。</p>
 <p><img src="Images/ue-designer-valid-v0.4.1.jpg" alt="历史实拍：有效候选与绿色放置预览" loading="lazy"></p>
 <p>2026-10-05 / 0.4.1 历史 UI 实拍：绿色候选表示规则允许放置，点击前可以查看位置；正式生成和临时预览分开处理。</p>
 <p><img src="Images/ue-designer-conflict-v0.4.1.jpg" alt="历史实拍：冲突候选与拒绝提示" loading="lazy"></p>
@@ -44,6 +52,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <tr><td>理解格子、邻接、支撑和放置校验</td><td><a href="#chapter-logic">生成逻辑与代码结构</a></td></tr>
 <tr><td>接入自己的 Blender／Painter 资源</td><td><a href="#chapter-art">模型、材质与槽位接入规范</a></td></tr>
 <tr><td>理解保存目录、共享资源、更新和复制变体</td><td><a href="#chapter-assets">资产保存与项目管理</a></td></tr>
+<tr><td>查看版本更新和验证边界</td><td><a href="#chapter-changelog">更新记录</a> · <a href="#chapter-release">0.4.9 发布说明</a></td></tr>
 <tr><td>离线查看整合图文手册</td><td><a href="#top">公开插件操作手册 HTML</a>（下载仓库后用浏览器打开）</td></tr>
 <tr><td>确认公开代码与美术文件的使用许可</td><td><a href="#chapter-license">代码许可</a> · <a href="#chapter-assetlicense">美术资源许可说明</a> · <a href="#chapter-sources">制作来源与发布范围</a></td></tr>
 </tbody></table></div>
@@ -77,11 +86,14 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
    └─ Other/</code></pre>
 <p><code>DA_House01</code> 记录制作输入；<code>DA_House01_Style</code> 记录模型与材质槽；<code>BP_House01</code> 是拖入关卡的可编辑对象。这里保存的建筑仍需要插件的运行时类型。分类收纳不是把整栋建筑合并成一件静态网格。</p>
 <h3 id="overview--验证范围">验证范围</h3>
-<div class="table-wrap"><table><thead><tr><th>验证范围</th><th>已完成的检查</th></tr></thead><tbody>
-<tr><td>原开发配置</td><td>实际编译；264/264 项保存流程检查，覆盖分类目录、硬／软引用、材质替换表、同目录复用、跨目录复制、冲突拒绝、旧数据更新、保存重开和关联实例同步</td></tr>
-<tr><td>本次公开 ExampleHouse</td><td>204/204 项示例生成与资源检查；103 件美术依赖、30 张实际使用贴图；六张自制木材通道替换，检查依赖、导入记录和公开资产中的私有路径；原插件 Content 哈希未改变</td></tr>
+<div class="table-wrap"><table><thead><tr><th>版本／范围</th><th>实际检查</th></tr></thead><tbody>
+<tr><td>0.4.9-ui.1 本轮</td><td>UE5.8.2 Editor 实际编译成功、源码同步；真实 Slate 设计器 API <strong>168/168</strong>：支柱开关、四角柱链、三模式、原位点缀编辑、草稿撤销边界、保存再载入及真实关卡承托射线；两张原生 Slate 截图</td></tr>
+<tr><td>0.4.8-stairs.1 历史</td><td>楼梯 <strong>250/250</strong>、门槛 <strong>491/491</strong>、点缀 <strong>128/128</strong>，合计历史 <strong>869</strong> 项；本轮未声明重跑</td></tr>
+<tr><td>0.4.7-assets.1 原开发配置历史</td><td>保存流程 <strong>264/264</strong>：分类目录、引用、材质替换、同根复用、跨根复制、冲突拒绝、旧数据、保存重开与实例同步</td></tr>
+<tr><td>0.4.7-assets.1 公开 ExampleHouse 历史</td><td><strong>204/204</strong> 项示例生成与资源检查；103件美术依赖、30张实际使用贴图、六张自制木材替代、导入记录和私有路径检查；本次未重新生成样例</td></tr>
 </tbody></table></div>
-<p>公开示例是在原开发项目的独立 Content 目录生成和检查的。这不代替其他新项目接入、最终游戏打包、角色与 NavMesh 通行、目标平台性能，或本轮新增保存流程的人工鼠标操作验收。换用其他资产时，应按接入规范重新检查拼接、洞口、碰撞和楼梯通行。</p>
+<p><a href="Verification_0.4.9-ui.1.json">本次验证摘要与源码哈希</a>。不同版本数字不能相加称为本轮全流程测试。Slate API不是物理鼠标操作；保存再载入不等于磁盘卸载／编辑器重启；原生射线与胶囊扫描不等于实际角色行走。</p>
+<p>未验证新项目完整接入、PIE CharacterMovement、NavMesh、最终游戏打包、性能、其他引擎版本及最终美术接受。换用资源后仍需检查拼接、洞口、碰撞与楼梯，详细边界见<a href="#chapter-release">发布说明</a>。</p>
 <h3 id="overview--开发结构">开发结构</h3>
 <ul>
 <li><code>Source/DesertBuildingLab</code>：建筑数据、规则、实例组件、分层和淡化接口。</li>
@@ -92,8 +104,48 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 </ul>
 <p><img src="Images/public-kit-canopies.png" alt="四种篷布支架组合" loading="lazy"></p>
 <p>四种棚架使用同一套红金布料材质，由模型轮廓、布面松垂和前沿形状区分。模型与材质可替换，放置规则保持由插件处理。</p>
-<p>提交问题时，请提供引擎版本、使用的模块、操作步骤、截图，以及界面下方的规则提示。修改规则时，优先让悬浮预览和确认放置继续共用同一套求解结果；修改美术时，优先保护模块连接面和洞口净尺寸。</p></section><section class="chapter" id="chapter-guide"><div class="chapter-number">CHAPTER 02</div><p class="chapter-source">可编辑源：<a href="GettingStarted.md">Docs/GettingStarted.md</a></p><h2 id="guide--操作指南从安装到一栋可修改的建筑">操作指南：从安装到一栋可修改的建筑</h2>
-<p>本文对应 <code>0.4.7-assets.1</code>。先完成一栋小建筑，再增加附件和美术细节，会更容易判断是哪一项规则阻止了放置。</p>
+<p>提交问题时，请提供引擎版本、使用的模块、操作步骤、截图，以及界面下方的规则提示。修改规则时，优先让悬浮预览和确认放置继续共用同一套求解结果；修改美术时，优先保护模块连接面和洞口净尺寸。</p></section><section class="chapter" id="chapter-release"><div class="chapter-number">CHAPTER 02</div><p class="chapter-source">可编辑源：<a href="ReleaseNotes_0.4.9-ui.1.md">Docs/ReleaseNotes_0.4.9-ui.1.md</a></p><h2 id="release--沙漠建筑实验室-049-ui1">沙漠建筑实验室 0.4.9-ui.1</h2>
+<p>面向Unreal <strong>编辑阶段</strong>的规则驱动模块化建筑工具：选择模型组合，在网格预览中搭建，再保存可持续修改的Design／Style／Blueprint。C++／Slate设计器处理邻接、承托、占用、通路与保存，美术可替换；不是玩家局内建造系统，也不是UE PCG Graph。</p>
+<p>本次累积收录0.4.8-stairs.1功能，重点修复自动支柱设置不明显、新草稿继承关闭状态，整理设计器操作。实际编译环境为 <strong>UE5.8.2／Win64</strong>。代码、文档和公开资源按<a href="#chapter-license" rel="noopener noreferrer">MIT许可</a>与<a href="#chapter-assetlicense" rel="noopener noreferrer">美术许可</a>使用；AI辅助范围和第三方排除项见<a href="#chapter-sources" rel="noopener noreferrer">来源说明</a>。</p>
+<h3 id="release--049设计器与自动支柱">0.4.9：设计器与自动支柱</h3>
+<ul>
+<li>右栏固定“建筑规则 → 自动生成四角支柱”；关闭时黄色提示和恢复按钮。新建默认开、载入保留作者值。</li>
+<li>关闭前试算已有房间、附件和门窗；新增失效依赖就拒绝，不改草稿。实际关卡仍检查四角有效承托，不借用设计器制作平面。</li>
+<li>明确放置／选择／删除。选择自动识别已有房间、附件或点缀，共存优先当前类型，点击空单元格只清除选择。0／1／2是内部编号，不是新增数字快捷键。</li>
+<li>右栏区分“正在编辑”与“新放置默认”。附件可原位换变体、梯型、朝向，点缀可换配方与旋转；非法修改保留原件。回放置清所有选择。</li>
+<li>撤销／重做限定当前素材连续草稿编辑，不跨载入／新建或场景操作，不清空其他UE窗口的全局历史；恢复后同步参数与小预览。</li>
+<li>顶栏管理文件与场景，左栏模块分类与组合预览，中央编辑工具，右栏规则与参数，高级资源槽折叠，底部统一反馈。原右键导航和Shift＋点击／Delete保留。</li>
+</ul>
+<h3 id="release--累积048结构与点缀">累积0.4.8：结构与点缀</h3>
+<p><strong>相邻楼层楼梯：</strong>新梯以目标屋顶Z=k为锚点，跨一层连接Z=k−1 → Z=k。高层每跑、平台、后半跑与最低入口前80 cm需本栋同高连续屋顶；检查头顶与出口，不自动补悬空平台。首层查实际地面。旧<code>GroundLegacy</code>保留，旧梯不升级后自动移楼。</p>
+<p><strong>独立屋顶点缀：</strong>木板平台、木板与陶罐、角落罐组、双角罐组、沿边三组、小木台与角罐六种配方，复用现有资源。单独保存、不占建筑格、同格替换。已有配置被房间、合法附件、开口、门前露台或梯路覆盖时隐藏并保留，可在恢复安全屋顶后重现；首次非法点击不存未来条目。手工组优先同格全屋自动组。</p>
+<p><strong>上层门槛：</strong>有效外门自动补与本层楼板同高、厚度向下的可碰撞门槛。有同高露台时处理女儿墙开口、墙厚桥接与点缀避让，无露台不生成悬空平台。</p>
+<p><strong>连续墙／Houdini仅评估、未实施：</strong>没有新增任意长度连续墙、焊接或Houdini集成。建议先同机位对照材质层，再决定是否开发连续段控制或局部改几何。</p>
+<h3 id="release--当前界面">当前界面</h3>
+<p><img src="Images/ue-designer-overview-v0.4.9.png" alt="0.4.9实际Slate界面分区" loading="lazy"></p>
+<p><img src="Images/ue-designer-decoration-v0.4.9.png" alt="0.4.9选择屋顶点缀并原位编辑" loading="lazy"></p>
+<p>2026-10-09（香港时间），由<code>FSlateApplication::TakeScreenshot</code>捕获。它们证明截图时界面状态，不是物理鼠标逐项测试。使用原工程Art09美术，木纹等可能与公开ExampleHouse自制替代资源不同；本次未复制或替换资源套件。README保留的0.4.1／V3截图继续标历史，0.4.7 SceneCapture图也不充当新版UI。</p>
+<h3 id="release--保存与升级">保存与升级</h3>
+<ol>
+<li>先保存建筑草稿、材质、关卡并关闭编辑器；更换源码后重新编译项目Editor目标。未建立其他UE版本兼容矩阵。</li>
+<li>载入保留旧支柱设置和楼梯连接，旧点缀数组为空；需要新连接时明确在新的目标表面重放。</li>
+<li>首次“保存…”或“另存变体…”选择根目录。<code>Buildings</code>存Design／Style／BP，<code>Resources</code>分类收纳整份Style依赖。</li>
+<li>保存更新同步同Design实例，另存新名字才独立；同根同来源美术共享、异根复制。材质与关卡分别保存。旧目录原位更新，另存才采用新分类。</li>
+</ol>
+<p>本次未新建UE工程、迁移用户建筑或修改可选公开样例模型／材质。公开适配保留基础回退与可替换Style，避免依赖开发环境的私人资产路径。</p>
+<h3 id="release--已验证与未验证">已验证与未验证</h3>
+<div class="table-wrap"><table><thead><tr><th>范围</th><th>实际结果</th></tr></thead><tbody>
+<tr><td>本轮编译／同步</td><td>UE5.8.2 Editor目标实际编译成功、源码同步核对；Content未由同步改动</td></tr>
+<tr><td>本轮设计器</td><td><strong>168/168</strong>真实Slate API：支柱开关和柱链、拒绝隐藏输入、三模式、原位点缀编辑、撤销边界、保存再载入、实际关卡承托射线</td></tr>
+<tr><td>本轮界面记录</td><td>两张原生Slate截图，未声称物理鼠标测试</td></tr>
+<tr><td>0.4.8历史楼梯</td><td><strong>250/250</strong>：相邻层规则、实际模型与原生碰撞、归层、保存绑定</td></tr>
+<tr><td>0.4.8历史门槛</td><td><strong>491/491</strong>：地板射线、胶囊扫描与源资源保持</td></tr>
+<tr><td>0.4.8历史点缀</td><td><strong>128/128</strong>：配方、安全范围、避让、预览、保存和关联实例</td></tr>
+</tbody></table></div>
+<p><a href="Verification_0.4.9-ui.1.json" rel="noopener noreferrer">本次验证摘要与31份源码哈希</a>。0.4.8三组合计869，<strong>本轮未声明重跑</strong>；0.4.7的264保存／204样例也是历史范围，不相加称为0.4.9全流程通过。</p>
+<p>未验证物理鼠标逐项操作、0.4.9磁盘卸载／编辑器重启持久性、PIE CharacterMovement／实际角色尺寸、NavMesh、最终游戏打包、性能、新项目完整接入、其他引擎版本与最终美术接受。原生胶囊扫描不是角色实走，截图不是操作覆盖。</p>
+<p><a href="#chapter-guide" rel="noopener noreferrer">操作指南</a> · <a href="#chapter-logic" rel="noopener noreferrer">生成逻辑</a> · <a href="#chapter-art" rel="noopener noreferrer">美术接入</a> · <a href="#chapter-assets" rel="noopener noreferrer">资源管理</a> · <a href="#top" rel="noopener noreferrer">离线手册</a></p></section><section class="chapter" id="chapter-guide"><div class="chapter-number">CHAPTER 03</div><p class="chapter-source">可编辑源：<a href="GettingStarted.md">Docs/GettingStarted.md</a></p><h2 id="guide--操作指南从安装到一栋可修改的建筑">操作指南：从安装到一栋可修改的建筑</h2>
+<p>本文对应 <code>0.4.9-ui.1</code>，包含0.4.8相邻层楼梯、点缀与门槛修复。先完成一栋小建筑，再增加附件和美术细节，会更容易判断是哪一项规则阻止了放置。</p>
 <h3 id="guide--1-安装到已有项目">1. 安装到已有项目</h3>
 <ol>
 <li>保存项目和当前关卡，关闭虚幻编辑器。</li>
@@ -113,15 +165,15 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <li>将这个文件夹整个复制到项目的 <code>Content</code> 中，结果应为 <code>YourProject/Content/DesertBuildingLabOpenSource</code>。</li>
 <li>保留 <code>DesertBuildingLabOpenSource</code> 名称和内部 <code>Buildings</code>、<code>Resources</code> 层级。不要只复制单个 <code>.uasset</code>，不要在资源管理器里重命名内部目录；这些文件按固定 Unreal 包路径引用彼此。</li>
 <li>打开项目，等模型和材质加载／编译完成。</li>
-<li>在设计器的“载入美术风格配置”中搜索 <code>DA_ExampleHouse_Style</code> 并选择它。其完整路径为 <code>/Game/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Styles/DA_ExampleHouse_Style</code>。</li>
+<li>展开右栏“高级：资源槽与美术风格”，在 Style 选择器中搜索 <code>DA_ExampleHouse_Style</code> 并选择它。其完整路径为 <code>/Game/DesertBuildingLabOpenSource/Buildings/ExampleHouse/Styles/DA_ExampleHouse_Style</code>。</li>
 <li>要直接看样例建筑，可以“载入建筑素材…”选择 <code>DA_ExampleHouse</code>，或从内容浏览器拖入 <code>DesertBuildingLabOpenSource/Buildings/ExampleHouse/Blueprints/BP_ExampleHouse</code>。</li>
 <li>放入你的关卡后，重新检查地面支撑并保存关卡。示例中检查通过的地面和光照不能替代你的实际场景。</li>
 </ol>
-<p>如果同名目标目录已经存在，先核对其是否就是这份样例及是否有你的修改，不要直接覆盖。想在新的管理目录做自己的建筑，载入样例后用“另存新素材／复制变体…”选择新根目录与新名称。</p>
+<p>如果同名目标目录已经存在，先核对其是否就是这份样例及是否有你的修改，不要直接覆盖。想在新的管理目录做自己的建筑，载入样例后用“另存变体…”选择新根目录与新名称。</p>
 <p>公开版木材使用自制贴图，外观与私有开发版的 Adobe 材质比较结果不同。篷布颜色贴图包含明确标注的 AI 辅助资源；制作来源和许可见<a href="#chapter-sources">来源说明</a>与<a href="#chapter-assetlicense">美术许可</a>。不需要重新购买开发阶段测试过的第三方材质才能加载公开样例。</p>
 <h3 id="guide--3-使用自己的持久-style">3. 使用自己的持久 Style</h3>
 <p><code>Style</code> 是“这栋建筑用什么模型和材质”的配置资产，不是格子布局。设计器会将选中的 Style 复制到草稿，修改草稿后再保存建筑。</p>
-<p>如果安装包带有可用的风格配置，在“载入美术风格配置”处选择它。若仅安装源码，先制作一份自己的配置：</p>
+<p>如果安装包带有可用的风格配置，展开右栏“高级：资源槽与美术风格”，在 Style 选择器中选择它。若仅安装源码，先制作一份自己的配置：</p>
 <ol>
 <li>在内容浏览器创建目录，如 <code>Content/BuildingArt</code>。</li>
 <li>右键 →“杂项／Miscellaneous → 数据资产／Data Asset”，选择 <strong>DesertBuildingStyle</strong>。</li>
@@ -130,54 +182,76 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <li>保存 Style 和材质，再回到设计器载入 <code>DA_MyBuildingStyle</code>。</li>
 </ol>
 <p>留空槽位的基础几何是测试入口。最终效果取决于导入的模型与材质。某些槽位有严格例外：例如斜顶墙冠没有模型就拒绝生成；启用墙端规则后缺少端版会提示并显示对应的基础让位几何。不要把所有警告都理解为“没关系，自动找个别的模型”。</p>
-<h3 id="guide--4-认识两个预览">4. 认识两个预览</h3>
-<p>左上方的小三维窗用于查看当前组合块的形状、方向和材质。右侧大视口用于搭建建筑，并检查放置位置是否有效。资源缩略图是原模型预览，不能证明这件模型在某个位置可以放下。</p>
-<p>可以先看 <a href="#overview--真实编辑器操作历史实拍">README 的真实编辑器操作图</a>，理解绿色候选与红色拒绝反馈。那两张是 2026-10-05／0.4.1 的历史实拍，尚未出现本节所说的模块独立小预览；当前侧栏和美术以实际 <code>0.4.7-assets.1</code> 界面为准。</p>
-<div class="table-wrap"><table><thead><tr><th>操作</th><th>大预览视口行为</th></tr></thead><tbody>
-<tr><td>鼠标悬浮</td><td>显示候选组合块，绿色可放，红色不可放；下方显示原因</td></tr>
-<tr><td>左键</td><td>确认有效放置；房间工具点已有房间会选中它</td></tr>
-<tr><td>Shift＋左键，或 Delete</td><td>删除当前工具类型在该格的输入</td></tr>
-<tr><td>按住右键＋WASD</td><td>前后左右移动相机</td></tr>
-<tr><td>按住右键＋Q/E</td><td>相机下降／上升</td></tr>
-<tr><td>按住右键移动鼠标</td><td>转向；右键导航期间暂停放置</td></tr>
-<tr><td>右键＋滚轮</td><td>调整相机速度</td></tr>
-<tr><td>Alt＋鼠标</td><td>按虚幻视口的导航方式环绕</td></tr>
-<tr><td>F／“居中预览”</td><td>将视图居中</td></tr>
-<tr><td>“撤销”“重做”</td><td>撤销／恢复草稿操作</td></tr>
+<h3 id="guide--4-认识界面模式和两个预览">4. 认识界面、模式和两个预览</h3>
+<p>先看 <a href="#overview--当前设计器界面">README 的当前设计器截图</a>。0.4.9两张图是真实 Slate 截图，采用原工程Art09美术，外观可能与公开替代木材不同；README另保留0.4.1历史实拍，不能按旧侧栏定位当前按钮。</p>
+<div class="table-wrap"><table><thead><tr><th>分区</th><th>用途</th></tr></thead><tbody>
+<tr><td>顶栏</td><td>新建、载入、保存／保存更新、另存变体、场景操作、撤销／重做；<code>* 未保存</code>表示草稿有改动</td></tr>
+<tr><td>左栏</td><td>结构／装饰模块分类、真实组合的独立三维预览和缩略图</td></tr>
+<tr><td>中央</td><td>建筑编辑视口，模式、高度Z、旋转90°、居中与相机速度</td></tr>
+<tr><td>右栏</td><td>固定建筑规则、当前对象参数、折叠的高级资源槽</td></tr>
+<tr><td>底部</td><td>当前格、模式和合法／拒绝原因</td></tr>
 </tbody></table></div>
-<p>先点击“新建空白草稿”。未保存草稿在更换内容前需要处理；关闭编辑器前应“另存”或“保存更新”。</p>
+<p>小三维窗显示组合形状与材质，大视口检查实际落点；缩略图不能证明某个位置可放。模型尚在编译时，小预览等待并在完成后刷新。</p>
+<div class="table-wrap"><table><thead><tr><th>模式</th><th>左键行为</th></tr></thead><tbody>
+<tr><td>放置</td><td>绿色候选确认新增；红色候选不写入隐藏输入。点已有房间或瓦罐自动切到选择</td></tr>
+<tr><td>选择</td><td>自动识别房间、附件、点缀；同格共存优先当前工具类型。点击空单元格只清除选择</td></tr>
+<tr><td>删除</td><td>删除当前类型和失去承托的依赖，可撤销；先核对类型和高度</td></tr>
+</tbody></table></div>
+<p>右栏“正在编辑 (x,y,z)”作用于已有对象；“新放置默认”只影响下一次放置。选中附件后更改变体、梯型或朝向会原位校验，不合法时保留原模型。切回“放置”清除全部选择，避免暗改旧块。内部0／1／2是模式编号，不是新增数字快捷键。</p>
+<div class="table-wrap"><table><thead><tr><th>操作</th><th>行为</th></tr></thead><tbody>
+<tr><td>Shift＋左键／Delete</td><td>保留原删除操作，按当前类型处理</td></tr>
+<tr><td>右键＋WASD／Q、E</td><td>前后左右／下降上升</td></tr>
+<tr><td>右键＋鼠标转向／滚轮</td><td>转向／调相机速度；导航时暂停放置</td></tr>
+<tr><td>Alt＋鼠标</td><td>虚幻式环绕</td></tr>
+<tr><td>F／“居中 F”</td><td>居中</td></tr>
+<tr><td>顶栏撤销／重做</td><td>当前草稿连续编辑，不跨越载入／新建或场景操作</td></tr>
+</tbody></table></div>
+<p>设计器撤销不清空或拦截其他UE窗口的全局历史；其他操作回对应编辑器处理。恢复后参数与小预览读回实际数据，对象不存在时清选择。</p>
+<p>顶栏“新建”创建空白草稿。更换未保存内容前有提示，关闭编辑器前应保存或另存。</p>
 <h3 id="guide--5-搭第一层和第二层">5. 搭第一层和第二层</h3>
 <ol>
-<li>选择“房间体块”，将编辑层设为 <code>0</code>，在相邻地面格点击放两间房。</li>
+<li>顶栏“新建”，左栏选“房间”，中央选“放置”，高度Z设为 <code>0</code>，在相邻地面格放两间房。</li>
 <li>看两间房的公共边：墙片路线会隐藏内部墙，屋顶中间不会有两段相互覆盖的女儿墙。</li>
 <li>把编辑层设为 <code>1</code>，在其中一间上方点击放第二层房间。这里的 <code>1</code> 指第二层房间的底面，不是“第一层楼”的名称。</li>
-<li>若房间下方没有房间，开启自动支柱时会查找下层屋面或场景地面；找不到全部承托面就不能放置。</li>
+<li>若下方没有房间，查看右栏“建筑规则 → 自动生成四角支柱”。开启时查找下层屋面或场景地面，找不到全部四角承托就拒绝。</li>
 </ol>
+<p>新建默认开启；载入保留作者保存值。关闭时出现黄色提示，可点“开启自动支柱”恢复。关闭会让现有房间、附件或门窗失效时拒绝，先补下层房间或删除依赖。四根柱链可分层分段，段数不等于角柱数；制作平面不是实际关卡地面，放入场景后仍需检查。</p>
 <p>默认格宽与层高均为 300 cm。房格当前代码范围为 X、Y 各 <code>-3…3</code>、Z 为 <code>0…4</code>；侧栏允许选择更高编辑平面不代表那里一定可以放房间。</p>
 <h3 id="guide--6-改门与窗">6. 改门与窗</h3>
 <ol>
-<li>保持“房间体块”工具，左键点击已有房间。</li>
-<li>在左侧“已选房间”区域选择门：自动、无门、前、右、后、左。</li>
+<li>选择已有房间，或用房间放置工具点击已有房间切到选择。</li>
+<li>在右侧“正在编辑”的房间参数选门：自动、无门、前、右、后、左。</li>
 <li>启用窗位覆盖，再勾选四面的窗。</li>
 <li>看主预览和状态提示。门窗只出现在外露墙面；相邻房间之间不创建隔墙，不能在共享内部面强行指定门。</li>
 </ol>
 <p>方向是建筑局部方向：前 <code>-Y</code>、右 <code>+X</code>、后 <code>+Y</code>、左 <code>-X</code>。转动整个建筑 Actor 后，方向跟随建筑一起转。门所在面优先使用门墙，不能要求同一个墙片同时套两种洞口模型。</p>
-<h3 id="guide--7-添加楼梯">7. 添加楼梯</h3>
+<p>上层有效外门自动补真实门槛，顶面与室内地板同高、厚度向下。门外有同高露台时处理矮墙开口和点缀避让，无露台则不生悬空平台。这是几何修复，不在材质中找开关；实际角色通行仍需检查。</p>
+<h3 id="guide--7-添加相邻楼层楼梯">7. 添加相邻楼层楼梯</h3>
+<p>新梯的格坐标是<strong>上方目标屋顶表面</strong>，每座连接一层。目标Z=k时连接 <code>(k−1)×层高 → k×层高</code>；Z=1底部仍检测实际地面。</p>
+<div class="table-wrap"><table><thead><tr><th>高度Z</th><th>新楼梯连接</th></tr></thead><tbody>
+<tr><td>0</td><td>不是有效终点，先建房间与屋顶</td></tr>
+<tr><td>1</td><td>地面 → 第一层屋顶</td></tr>
+<tr><td>2</td><td>第一层屋顶 → 第二层屋顶</td></tr>
+<tr><td>3</td><td>第二层屋顶 → 第三层屋顶</td></tr>
+</tbody></table></div>
+<p>先练习屋顶到屋顶：</p>
 <ol>
-<li>选择“楼梯＋平台”。</li>
-<li>选择贴墙直梯、L 形双跑或 U 形双跑。菜单也保留朝外直梯，用来对照旧式布局；先按前三种练习。</li>
-<li>选择目标露台的高度：第一层屋顶使用编辑平面 <code>1</code>。</li>
-<li>悬浮到目标房间的屋顶格，调整朝向，使出口连接一个外露屋顶边。</li>
-<li>检查预览中的整梯、平台和下方地面。通过检查再左键确认。</li>
+<li>在Z=0铺较大底座，例如3×3或更宽，留足楼梯承托空间。</li>
+<li>在Z=1底座一侧放房间，其顶部是目标Z=2；外侧留连续的低层屋顶。</li>
+<li>左栏选“楼梯 + 平台”，右栏选贴墙直梯、L形或U形，朝外直梯仍保留供对照。</li>
+<li>中央设高度Z=2并旋转，在上层目标屋顶格悬浮，出口朝向外露边。</li>
+<li>阅读起终点、通路和支撑；绿色再确认，之后保存。</li>
 </ol>
-<p>楼梯的格坐标是<strong>目标露台表面</strong>，楼梯实体延伸到墙外。它会预留通路并创建露台矮墙开口，不应拿一个悬空空格当作目标。</p>
-<p>当前 L／U 固定模型只支持一层高度。每段梯、平台的地面支撑都要有效且近似平整；L 形内侧空区域不会被当成必须填满的支撑区。侧栏不提供旧折返梯作为新建选择。载入旧数据后可以显式转换为现代 U 形，转换可撤销且必须重新校验。</p>
-<p>若提示级高、净宽或踏深不合格，改变一个“假想级数”不会改变静态模型。需要修改实际模型或选择正确的合同值。</p>
+<p>高层每跑、转角平台、后半跑及最低入口前80 cm落脚区必须有<strong>本栋同高连续屋顶</strong>承托。80 cm是空间检查，不是向空中补出的平台。缺格、头顶被堵、出口被同高邻房封住时拒绝；远处地面不代替高层屋顶。L形内空区按分段路径处理，不必填满整个外框。</p>
+<p>删承托房间会移除依赖梯，可撤销。选已有梯可原位改梯型／朝向，非法修改保留原梯。固定L／U仍只跨一层，修改假想级数不会改静态模型。</p>
+<p>旧连接语义保留，不升级后自动搬梯；需要相邻层连接时明确删除并在新目标表面重放。旧折返只供读取，不是新建选项；显式转现代U形可撤销并重新校验。</p>
 <h3 id="guide--8-添加篷布瓦罐与屋顶组合">8. 添加篷布、瓦罐与屋顶组合</h3>
 <p><strong>篷布＋支架：</strong>选择外围地面格，调整朝向，让背面朝向房屋。当前规则需要恰好一面首层邻墙；两面墙夹角不符合这条规则。模型实际后缘会贴到墙面，实际最低点会对地面。四角地面高差超过 10 cm 或下面有空洞，会拒绝整组放置。先选一个明确变体，再替换该变体的模型；自动模式用于按 Seed 和坐标稳定选择完整组合。</p>
 <p><strong>瓦罐组合：</strong>可放在裸露屋顶，或与首层外墙相邻的地面。默认使用“自动靠墙／屋顶边”，同时避开门前通路和楼梯出口。也可以选前、右前、右、右后、后、左后、左、左前、中心，共九个方向，方向随 Facing 转动。点已有瓦罐组可以改变整组位置。它移动一整组，不是逐只自动排布。</p>
 <p><strong>屋顶棚亭、穹顶、斜顶墙冠：</strong>棚亭和墙冠需要裸露屋顶，穹顶可以使用屋顶或下方棚亭顶部。墙冠需要自己的模型，不会回退成棚亭。</p>
-<p><strong>屋顶装饰：</strong>启用木板／陶罐装饰后，可固定下标或按格随机。结构楼板仍保留；有其他组合块或露台开口的格会避开装饰，防止堵住楼梯出口。</p>
+<p><strong>手工屋顶点缀：</strong>左栏选“屋顶点缀”，高度设目标表面（一层屋顶Z=1）。右栏可选木板平台、木板与陶罐、角落罐组、双角罐组、沿边三组、小木台与角罐。放置模式同格点击替换，不重复叠加；选择模式原位换方案与旋转。Shift＋左键／Delete只删点缀，保留承托房间。</p>
+<p>六种是现有资源的配方，不是六套新模型。它独立保存、不占建筑格；首次非法点击拒绝。已有点缀被房间、合法附件、开口、门前露台或梯路覆盖时暂时隐藏并保留，恢复安全屋顶后可重现。这与“首次无效输入不保存”不同。</p>
+<p><strong>原全屋自动屋顶装饰：</strong>仍可固定或按格随机，不是手工点缀的前置开关。手工组优先同格自动组；删手工后自动组可能恢复。想留空屋顶时删手工并关闭全屋自动装饰，结构楼板保留。</p>
 <p><strong>外围散石：</strong>是手动放置的整组模型，放在首层外墙外围，避开门和楼梯。当前没有逐颗石头适应地形的自动散布器。</p>
 <h3 id="guide--9-保存并放入场景">9. 保存并放入场景</h3>
 <p>下图是 <strong>V3 阶段标准保存对话框的历史实拍</strong>，用于认识目录选择与命名操作。当前插件会按本文的 <code>Buildings/Resources</code> 规范整理输出，不能按旧图判断最终资产位置。</p>
@@ -185,20 +259,24 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>V3 历史 UI 实拍：标准保存窗口的目录和名称选择。当前保存的 <code>Buildings/Resources</code> 子目录与更新规则以以下文字和<a href="#chapter-assets">资产保存规范</a>为准。</p>
 <ol>
 <li>确认主视窗下方没有无效输入；旧草稿可使用“清理旧的无效条目”。</li>
-<li>点击“另存新素材／复制变体…”。</li>
+<li>首次点顶栏“保存…”，或“另存变体…”选择独立素材。</li>
 <li>选择项目 Content 中的管理目录，如 <code>MyVillage</code>，名称输入 <code>House01</code>。</li>
-<li>保存后，在 <code>MyVillage/Buildings/House01/Blueprints</code> 找到 <code>BP_House01</code>，拖入关卡；也可点击“将当前已保存素材放入场景”。</li>
+<li>保存后，在 <code>MyVillage/Buildings/House01/Blueprints</code> 找到 <code>BP_House01</code>，拖入关卡；也可点顶栏“放入场景”。需先命名且无未保存改动，否则先保存。</li>
 <li>用虚幻正常的移动／旋转工具摆放建筑，保存关卡。</li>
 <li>在目标地形上点击“重新检查规则与地面支撑”。独立预览里的平地有效，不代表目标场景的坡地或空洞也有效。</li>
 </ol>
 <p>地基默认向建筑底面下方延伸，<code>FoundationDepth</code> 控制深度；它不会自动贴合起伏地形。支柱会探测承托地面，但不允许任意倾斜的建筑，当前支撑逻辑只接受竖直且绕 Z 旋转的建筑。</p>
 <h3 id="guide--10-修改和复制">10. 修改和复制</h3>
-<p>要同时修改使用同一素材的建筑：在设计器载入 <code>DA_House01</code>，或载入场景中选中的建筑，编辑后点击“保存更新”。已打开关卡里的绑定对象会同步；其他关卡打开时检查修订并更新，之后要保存相应关卡。</p>
-<p>要创建另一种布局：载入旧素材后“另存新素材／复制变体…”，如 <code>House01_Market</code>。不要用“保存更新”期待得到独立素材。</p>
+<p>要同时修改使用同一素材的建筑：在设计器载入 <code>DA_House01</code>，或从顶栏“载入”菜单载入场景选中的建筑，编辑后点击“保存更新”。已打开关卡里的绑定对象会同步；其他关卡打开时检查修订并更新，之后要保存相应关卡。</p>
+<p>要创建另一种布局：载入旧素材后“另存变体…”，如 <code>House01_Market</code>。不要用“保存更新”期待得到独立素材。</p>
 <p>同一管理目录的变体通常共用 <code>Resources</code> 中的美术资源。若只希望一个变体换颜色，先复制材质实例，在那个变体的 Style 中改引用。修改材质后应先保存材质，摆放后应保存关卡；保存建筑并不替代这两步。</p>
 <h3 id="guide--11-常见情况">11. 常见情况</h3>
 <div class="table-wrap"><table><thead><tr><th>情况</th><th>先检查什么</th></tr></thead><tbody>
-<tr><td>空格显示红色</td><td>主视窗下方的拒绝原因、类型、编辑层、朝向、地面支撑</td></tr>
+<tr><td>悬空房间不生柱</td><td>右侧建筑规则是否关闭；点恢复按钮，再检查四角承托</td></tr>
+<tr><td>参数改到旧块</td><td>是否标“正在编辑”；切“放置”清选择，再设下次默认</td></tr>
+<tr><td>高层楼梯拒绝</td><td>目标表面Z、下层跑道／平台／入口80 cm的连续承托、头顶与出口</td></tr>
+<tr><td>删点缀又出现木板</td><td>全屋自动装饰仍开启，手工删除后自动组恢复</td></tr>
+<tr><td>空单元格显示红色</td><td>主视窗下方的拒绝原因、类型、编辑层、朝向、地面支撑</td></tr>
 <tr><td>左键删除不了某个附件</td><td>切到该附件的工具；删除按当前类型生效</td></tr>
 <tr><td>整房槽为空</td><td>墙片套件可正常留空整房槽，房间仍由实墙／门墙／窗墙／屋顶组装</td></tr>
 <tr><td>门窗被墙挡住或碰撞封住</td><td>实际模型的洞口、木框偏移、墙端变体、简单碰撞；见资源规范</td></tr>
@@ -208,14 +286,15 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <tr><td>重开后材质改动消失</td><td>材质窗口是否单独保存；建筑保存不会自动写盘所有已修改材质</td></tr>
 <tr><td>顶部楼层淡化，地基仍显示</td><td>这是结构分组的预期；地基不参与楼层淡化</td></tr>
 </tbody></table></div>
-<p>本指南列的是实际界面和规则。公开 ExampleHouse 已完成 204/204 项生成与资源检查，原开发配置另有 264/264 项保存流程检查；两组不是同一测试范围。样例在原开发项目的独立目录验证，新项目安装、角色／导航、最终游戏打包与性能仍需要在自己的项目中验收。</p></section><section class="chapter" id="chapter-logic"><div class="chapter-number">CHAPTER 03</div><p class="chapter-source">可编辑源：<a href="GenerationLogic.md">Docs/GenerationLogic.md</a></p><h2 id="logic--生成逻辑与代码结构">生成逻辑与代码结构</h2>
-<p>本文说明当前实现如何把“有意义的建筑块”转成实例几何。修改规则时，应同时保护编辑预览、最终生成、保存重开和关联实例，而不只是让一个示例看起来正确。</p>
+<p>本轮实际编译与168/168项Slate API回归，不是物理鼠标测试，保存再载入不等于磁盘卸载或重启。历史0.4.8的869项本轮未声明重跑；0.4.7的204项样例与264项保存仍属各自历史范围。新项目、角色／导航、打包、性能和最终美术需另验收，见<a href="#chapter-release">发布说明</a>。</p></section><section class="chapter" id="chapter-logic"><div class="chapter-number">CHAPTER 04</div><p class="chapter-source">可编辑源：<a href="GenerationLogic.md">Docs/GenerationLogic.md</a></p><h2 id="logic--生成逻辑与代码结构">生成逻辑与代码结构</h2>
+<p>本文对应 <code>0.4.9-ui.1</code>，说明当前实现如何把“有意义的建筑块”转成实例几何。修改规则时，应同时保护编辑预览、最终生成、保存重开和关联实例，而不只是让一个示例看起来正确。</p>
 <p>最初的交互灵感来自 <a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Oskar Stålberg 的 Brick Block</a>（<code>house</code> 页面）：通过增减格子搭建房屋，并让邻接外观随输入更新。以下承托、占用、门窗、楼梯、组合块及保存规则是本项目面向 Unreal 场景制作编写的独立实现，未移植或收录原作代码与资源；本章描述的是本插件的实现，不推断原网页使用的底层算法。<a href="https://oskarstalberg.com/" rel="noopener noreferrer">作者官网</a>。</p>
 <h3 id="logic--制作输入和输出">制作输入和输出</h3>
-<p>一栋建筑主要有三类制作输入：</p>
+<p>一栋建筑主要有四类制作输入：</p>
 <div class="table-wrap"><table><thead><tr><th>输入</th><th>职责</th><th>主要类型</th></tr></thead><tbody>
 <tr><td>房间格及门窗覆盖</td><td>哪些位置有房间，哪些外露面有门窗</td><td><code>Cells</code>、<code>FDesertRoomAppearance</code></td></tr>
 <tr><td>有语义的组合块</td><td>棚亭、瓦罐、篷布、楼梯、散石、墙冠的位置与朝向</td><td><code>FDesertBlockPlacement</code></td></tr>
+<tr><td>独立屋顶点缀</td><td>表面格、固定配方、朝向和启用；不参与建筑占位</td><td><code>RoofDecorations</code>、<code>FDesertRoofDecoration</code></td></tr>
 <tr><td>美术配置</td><td>每种角色使用的模型、材质和变体数组</td><td><code>UDesertBuildingStyle</code></td></tr>
 </tbody></table></div>
 <p><code>UDesertBuildingDesign</code> 保存这些输入、尺寸和 Seed，并链接一份可拖入关卡的建筑蓝图。<code>ADesertBuilding</code> 使用这些输入产生组件和实例。一次保存不会把生成规则删掉，也不会把建筑变成只能整体渲染的一件网格。</p>
@@ -226,7 +305,8 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>所有方向遵守建筑局部坐标：<code>Facing=0</code> 为前 <code>-Y</code>，1 为右 <code>+X</code>，2 为后 <code>+Y</code>，3 为左 <code>-X</code>。模型可不规则，模块占用和连接规则仍必须有可重复的坐标约定。</p>
 <h3 id="logic--房间承托先求解">房间承托先求解</h3>
 <p><code>ResolveSupportedCells</code> 先按高度处理房间。正下方有效房间提供直接承托；缺少下层时，开启 <code>bAutoSupportColumns</code> 可以尝试四角支柱。</p>
-<p>支柱先寻找本栋建筑的较低屋面，再向场景地面检测。只接受可承托的朝上表面，不把墙侧面当成地面。四角必须全部成功；最大柱高和射线距离也受限制。当前自动支撑要求建筑竖直，只允许绕 Z 旋转。</p>
+<p>设计器固定显示 <code>bAutoSupportColumns</code>。新建默认开启、载入保留原值；关闭前用独立对象试算房间、附件和门窗，新增失效项就拒绝，不改草稿与撤销栈。</p>
+<p>支柱先寻找本栋建筑的较低屋面，再向场景地面检测。只接受可承托的朝上表面，不把墙侧面当成地面。四角必须全部成功；最大柱高和射线距离也受限制。当前自动支撑要求建筑竖直，只允许绕 Z 旋转。四根连续柱链可分层分段参与淡化，段数不是柱链数。制作地面与实际关卡分别检查，隐藏预览地板不参与承托。</p>
 <p>原始输入和有效输出分开保存。旧数据中的不合法输入可以留作诊断，但不产生几何。交互设计器新增时会先校验，无效点击不写入数组，避免用户后来加支撑时突然出现以前没显示的楼梯。</p>
 <h3 id="logic--墙和屋顶由邻居决定">墙和屋顶由邻居决定</h3>
 <p>生成器将有效房格放入集合，检查四个横向邻格。相邻有房间时不生成那面外墙；顶部有房间时不是外露屋顶；两块露台之间不生成内部女儿墙。</p>
@@ -238,6 +318,10 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 </ol>
 <p>这些规则选择模型并摆放实例，不做运行时 Boolean、自动焊接或任意连续网格变形。模型作者仍需保护连接端截面、法线和材质尺度。大斜切若削掉共享接边，再准确的格坐标也不能补回孔洞。</p>
 <p><code>RoomCellMesh</code> 是另一条快捷路线：一件整房模型代替墙片、楼板和屋顶。它自身的内部面、门窗和顶面由美术作者负责，当前插件不会自动切掉整房模型的公共面或屋顶楼梯入口。需要可靠可变拼接时优先使用墙片套件。</p>
+<h4 id="logic--上层门槛与露台">上层门槛与露台</h4>
+<p>有效上层外门补可碰撞门槛，顶面同本层楼板、厚度向下，归门房楼层；有同高露台时处理女儿墙开口、墙厚桥接和点缀避让，无露台不生悬空平台。它修复楼板内收在门洞暴露的真实缝隙，不是封板或材质遮挡，也不证明角色已走过。</p>
+<h4 id="logic--连续墙与-houdini">连续墙与 Houdini</h4>
+<p><strong>仅评估、未实施。</strong>没有新增任意长度连续墙、Boolean／焊接或Houdini集成。现有共享建筑坐标能连续采样材质，但固定缺口、嵌砖和顶点权重仍可能周期重复；暗带未做同机位逐层关闭对照，不能断言唯一成因。建议先对照材质层，再决定连续段控制或局部几何，不列作发布功能。</p>
 <h3 id="logic--附件规则">附件规则</h3>
 <div class="table-wrap"><table><thead><tr><th>组合块</th><th>必要条件与当前限制</th></tr></thead><tbody>
 <tr><td>屋顶棚亭</td><td>有效裸露屋顶</td></tr>
@@ -245,19 +329,29 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <tr><td>斜顶墙冠</td><td>有效裸露屋顶，Style 必须有对应模型；参与空间检查</td></tr>
 <tr><td>瓦罐组</td><td>裸露屋顶或首层外墙外围地面；自动位置靠墙／屋顶边并避开门与楼梯出口</td></tr>
 <tr><td>篷布＋支架</td><td>恰好一面首层邻墙，背面朝墙；后缘贴墙、最低点贴地，四角地面高差不超过 10 cm</td></tr>
-<tr><td>楼梯</td><td>有效目标露台和外露出口；整条通路、平台、尺寸与地面承托合法</td></tr>
+<tr><td>楼梯</td><td>有效目标露台与外露出口；新梯接相邻表面，高层查连续下层屋顶，首层查地面；路径、平台和尺寸合法</td></tr>
 <tr><td>外围散石</td><td>首层外墙外围地面，避开门和楼梯，四角近似平整；手动整组放置</td></tr>
 </tbody></table></div>
 <p>组合块不仅检查锚点是否相同，还检查实际包围盒与通路区域。默认同一表面格不能占多个组合块。外侧非旧版朝外楼梯和内侧屋顶棚亭可以共享锚点，但仍要通过不重叠检查；这不是所有类型可自由叠放的通用例外。</p>
 <p>楼梯的 L 形通路使用分段空间，不能用覆盖整个 L 外框的大盒子误占内侧空区域。现代固定 L／U 模型仅支持一层高度。检查合同使用模型实际级数、净宽、踏深，约束级高不超过 22 cm、净宽至少 80 cm、踏深至少 22 cm；这些数值是工具的制作规则，不是对现实建筑法规合规性的声明。</p>
+<h4 id="logic--楼梯连接语义">楼梯连接语义</h4>
+<p><code>StairConnection=GroundLegacy</code> 的序列化值0保留旧数据地面起步；新设计器明确写 <code>AdjacentFloors</code>。目标 <code>Cell.Z=k</code> 时连接 <code>(k−1)×FloorHeight → k×FloorHeight</code>，Z=1仍查实际地面，每梯跨一层。</p>
+<p>高层承托检查覆盖实际跑道、平台、后半跑和最低入口前80 cm，检查头顶与出口；80 cm不是生成平台。L内空区分段让出。删除关键承托会移除依赖梯，旧输入不静默迁移。</p>
 <h3 id="logic--稳定随机与整组变体">稳定随机与整组变体</h3>
 <p>篷布、瓦罐和屋顶装饰变体由 <code>Seed</code> 与格坐标计算。结果不依赖数组中的放置条目序号，因此添加另一个格、删除别的模块或转动 Facing，不应让同一位置随意更换模型。</p>
 <p><code>VariantIndex=-1</code> 表示自动选择；非负下标指定具体完整组合。空数组时，部分角色可以保留旧单模型或基础几何；非空数组里的空槽、越界索引要明确拒绝，不能随机找另一项掩盖配置错误。</p>
 <p>瓦罐位置另由 <code>PotPlacement</code> 决定。<code>Automatic</code> 和九方向选项移动完整罐组，按实际包围盒留缝并保护通路。历史未存该字段的素材维持 <code>LegacyCentered=0</code>，升级不悄悄移动旧罐组。</p>
+<h3 id="logic--独立屋顶点缀">独立屋顶点缀</h3>
+<p><code>RoofDecorations</code> 保存 <code>Cell</code>、<code>VariantIndex=0…5</code>、<code>Facing=0…3</code>、<code>bEnabled</code>，不加入 <code>Cells/Blocks</code>。同格替换不叠加；六种固定配方复用Style木板与罐组，不因Seed改变。</p>
+<p><code>GetRoofDecorationParts</code> 提供同一真实网格与变换给小预览、悬浮和生成。<code>EvaluateRoofDecoration</code> 检查有效裸露屋顶、240×240 cm安全区、高≤100 cm及通路；<code>SetRoofDecoration</code>只写合法首次输入，<code>RemoveRoofDecoration</code>明确删除。</p>
+<p>已存点缀被上层房间、合法附件、人工开口、门前露台或楼梯入口／路径覆盖时暂不输出，保留设置并可恢复；首次非法点击仍不保存未来条目。手工组优先同格全屋自动组，删除手工后自动组可能重现。点缀归目标屋顶的楼层。</p>
 <h3 id="logic--预览与确认共用结果">预览与确认共用结果</h3>
 <p><code>EvaluatePlacement</code> 返回 <code>FDesertPlacementCheck</code>，其中包含：允许状态、原因、局部包围盒、支柱、最终变换、模型、变体下标和级数。预览使用这个结果画候选模块；<code>TryAddPlacement</code> 通过同一逻辑确认输入。</p>
 <p>规则不能仅在界面里写一套“绿色判断”，生成器里再写另一套。尤其篷布贴墙偏移、实际最低点对地和变体选择，必须使用同一次求解输出，否则绿色候选与点击后的模型会跳动。</p>
-<p>删除使用 <code>RemovePlacementAndDependents</code>，一并处理失去承托或冲突的依赖模块。旧无效输入可以通过 <code>RemoveInvalidAuthoringEntries</code> 清理。界面操作包在虚幻撤销事务里。</p>
+<p>删除使用 <code>RemovePlacementAndDependents</code>，一并处理失去承托或冲突的依赖模块。旧无效输入可以通过 <code>RemoveInvalidAuthoringEntries</code> 清理。界面操作包在虚幻撤销事务里。独立点缀走上述点缀校验入口，不挤入结构组合块检查。</p>
+<h4 id="logic--设计器状态与原位编辑">设计器状态与原位编辑</h4>
+<p><code>InteractionMode</code>（0放置、1选择、2删除）只控制UI路由，不存建筑。选择自动识别对象，同格共存优先当前类型，点击空单元格只清除选择。放置清全部选择，让右栏“新放置默认”只影响下次输入。</p>
+<p>附件变体／梯型／朝向先原位校验再替换，不合法保留原模型。撤销／重做只处理当前素材的连续草稿事务，不跨载入／新建或场景操作，不清空其他UE全局历史；恢复后读回右栏参数与小预览，无对象则清选。</p>
 <h3 id="logic--分层碰撞与遮挡淡化">分层、碰撞与遮挡淡化</h3>
 <p>同种网格／材质在同一层使用 <code>UInstancedStaticMeshComponent</code> 输出；不同层有独立组件。地基及地基环境组独立于楼层，附件也归入相应结构层。</p>
 <p>结构墙、屋顶、地基、支柱与楼梯组件提供碰撞；布、木装饰、陶罐装饰和散石等默认有各自的非阻挡策略。实际洞口通行仍依赖模型碰撞的正确性：给窗墙或门墙一整个凸盒会封死洞口。当前组件默认不自动影响导航，需要项目另外验证和配置 NavMesh。</p>
@@ -281,14 +375,15 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <tr><td><a href="../Source/DesertBuildingLab/DesertBuilding.cpp">DesertBuilding.cpp</a></td><td>墙、屋顶、组件、实例与重建</td></tr>
 <tr><td><a href="../Source/DesertBuildingLab/DesertBuildingBlocks.cpp">DesertBuildingBlocks.cpp</a></td><td>支撑、附件、空间检查、预览校验与删除</td></tr>
 <tr><td><a href="../Source/DesertBuildingLab/DesertBuildingRoomAppearance.cpp">DesertBuildingRoomAppearance.cpp</a></td><td>逐房门窗</td></tr>
+<tr><td><a href="../Source/DesertBuildingLab/DesertBuildingRoofDecorations.h">DesertBuildingRoofDecorations.h</a>／<a href="../Source/DesertBuildingLab/DesertBuildingRoofDecorations.cpp">.cpp</a></td><td>独立点缀、六种配方、避让与归层</td></tr>
 <tr><td><a href="../Source/DesertBuildingLab/DesertBuildingStyle.h">DesertBuildingStyle.h</a></td><td>模型合同、变体与材质替换槽</td></tr>
 <tr><td><a href="../Source/DesertBuildingLab/DesertBuildingDesign.h">DesertBuildingDesign.h</a></td><td>持久制作数据与格式字段</td></tr>
 <tr><td><a href="../Source/DesertBuildingLabEditor/DesertBuildingDesigner.cpp">DesertBuildingDesigner.cpp</a></td><td>Slate 界面、相机、操作和状态提示</td></tr>
 <tr><td><a href="../Source/DesertBuildingLabEditor/DesertBuildingDesignAssets.cpp">DesertBuildingDesignAssets.cpp</a></td><td>Design／Style／BP 保存与同步</td></tr>
 <tr><td><a href="../Source/DesertBuildingLabEditor/DesertBuildingAssetCollection.cpp">DesertBuildingAssetCollection.cpp</a></td><td>美术依赖闭包、分类复制、引用重映射</td></tr>
 </tbody></table></div>
-<p>扩展新组合块时，至少检查类型定义、Style 槽、尺寸／原点合同、占用、承托、预览配方、组件归层、碰撞、保存与重开。增加公开字段应给旧资产稳定默认值；不要把新组件插入旧楼层模板序列中导致已有下标改变。</p></section><section class="chapter" id="chapter-art"><div class="chapter-number">CHAPTER 04</div><p class="chapter-source">可编辑源：<a href="AssetIntegration.md">Docs/AssetIntegration.md</a></p><h2 id="art--模型材质与槽位接入规范">模型、材质与槽位接入规范</h2>
-<p>插件将生成规则和美术配置分开。<code>DesertBuildingStyle</code> 负责把模型与材质接到具体角色，模型作者负责真实造型、洞口、UV 和碰撞。修改外观不应靠破坏连接面或随机移动全部顶点完成。</p>
+<p>扩展新组合块时，至少检查类型定义、Style 槽、尺寸／原点合同、占用、承托、预览配方、组件归层、碰撞、保存与重开。增加公开字段应给旧资产稳定默认值；不要把新组件插入旧楼层模板序列中导致已有下标改变。</p></section><section class="chapter" id="chapter-art"><div class="chapter-number">CHAPTER 05</div><p class="chapter-source">可编辑源：<a href="AssetIntegration.md">Docs/AssetIntegration.md</a></p><h2 id="art--模型材质与槽位接入规范">模型、材质与槽位接入规范</h2>
+<p>本文对应 <code>0.4.9-ui.1</code>，本轮沿用公开模型、材质与来源范围。插件将生成规则和美术配置分开。<code>DesertBuildingStyle</code> 负责把模型与材质接到具体角色，模型作者负责真实造型、洞口、UV 和碰撞。修改外观不应靠破坏连接面或随机移动全部顶点完成。</p>
 <p>仓库已经提供一套可选样例和 52 件模型 FBX、31 张自制／AI 辅助贴图源，见 <a href="#chapter-sourceart">SourceArt</a>。它们可用于了解尺寸与替换规则；安装现成 Unreal 样例不需要先导入这些 FBX。运行样例的 30 张实际贴图与技术源数量不同，例如 Height 可以作为制作源而不被默认材质引用。</p>
 <p>公开版六张木材／端面通道使用本项目自制替代，材质角色与生成合同不变，外观与私有开发版不同。代码与本项目公开资源按 MIT 声明，AI 制作范围及未分发第三方资源见<a href="#chapter-sources">美术来源与发布范围</a>。</p>
 <h3 id="art--推荐的制作顺序">推荐的制作顺序</h3>
@@ -298,7 +393,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <li>把两间并排、L 角、上下层、楼梯出口摆在一起，检查灰模。</li>
 <li>整理 UV、法线和材质槽，制作简单碰撞，检查门窗没有被封住。</li>
 <li>Painter 制作底材和局部细节，输出项目需要的贴图；虚幻建立持久材质与实例。</li>
-<li>在 Style 填槽，打开设计器，逐一检查预览和放置。</li>
+<li>在 Style 填槽，或展开设计器右栏“高级：资源槽与美术风格”改草稿槽；逐一检查两种预览与放置。</li>
 <li>在真实关卡光照与角色尺寸下检查门宽、楼梯和材质尺度，保存并重新打开。</li>
 </ol>
 <p>先完成连接合同再精修纹理，可以减少后续反复移动木框、修门洞或重做 UV 的时间。</p>
@@ -328,7 +423,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <tr><td><code>ModuleLShapeStairs</code></td><td>510×510×300</td><td>X[-435,75]、Y[-510,0]、Z[-15,300]；16 级、净宽120、踏深30；两跑和平台均有实体支撑</td></tr>
 <tr><td><code>ModuleUShapeStairs</code></td><td>300×480×300</td><td>X[-225,75]、Y[-480,0]、Z[-15,300]；16 级、净宽120、踏深30；出口(0,0,300)</td></tr>
 </tbody></table></div>
-<p>L 形内空矩形 X[-435,-75]、Y[-360,0] 必须无实体／碰撞，避免把梯子做成一个占满内角的大盒。固定 L／U 当前仅一层高度。</p>
+<p>L 形内空矩形 X[-435,-75]、Y[-360,0] 必须无实体／碰撞，避免把梯子做成一个占满内角的大盒。固定 L／U 当前仅一层高度。新放梯以目标屋顶Z=k连接Z=k−1；首层查地面，高层需连续屋顶覆盖每跑、平台、后半跑和最低入口前80 cm。检查不补悬空平台、不拉伸成多层模型。</p>
 <p>Style 的 <code>…StepCount</code>、<code>…ClearWidth</code>、<code>…TreadDepth</code> 必须与真正建好的楼梯一致。默认值并非任何导入梯子都适用，尤其旧贴墙梯与新净宽120梯不同。规则检查这些真实制作参数，不自动修改 FBX 的级数。旧折返槽仅供兼容读取，朝外直梯仍保留在菜单作为对照；新增推荐使用贴墙直梯、L 形或 U 形。</p>
 <h3 id="art--墙端与外露圆角是一套配件">墙端与外露圆角是一套配件</h3>
 <p>启用 <code>bUseWallEndVariants</code> 后，每种墙各准备完整、左端、右端、两端，共四件。端版不改变名义原点和洞口：</p>
@@ -348,6 +443,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <li>木框应向外略偏，避免其表面和墙共面；原开发套件曾使用约 2 cm 外偏作为修正，自己的厚度仍需实际检查。</li>
 <li>门洞净宽按真实角色胶囊、动画和相机验证，不只按概念图比例判断。</li>
 <li>为墙洞两侧和门楣做独立简单碰撞，或采用适合项目的碰撞方案，避免一个整墙凸包覆盖洞口。</li>
+<li>上层门槛由生成器补同高、向下加厚的真实可碰撞体积；替换门墙仍需检查露台衔接与净宽，不能加封板填缝。</li>
 <li>光照检查应放在目标关卡进行：洞口几何正确与曝光、间接光照正确是两项验证。</li>
 </ul>
 <h3 id="art--篷布支架与变体">篷布、支架与变体</h3>
@@ -355,6 +451,18 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>当前贴墙使用整个网格包围盒的 <code>Max.Y</code>。装饰或后柱脚若超出真正挂墙线，工具会将它误认为后缘，布就可能离墙。让模型最大的 +Y 确实属于挂墙平面；杆顶外倾时保持前杆顶部比柱脚更靠外，后杆脚不要穿入墙体。</p>
 <p>布面大尺度松垂、轮廓和前沿垂布靠模型；细小褶皱、织物起伏、缝线可用法线与高度。金色图纹使用 UV，跟随布的形变，不用额外共面面片充当纹样。不能把完全平的布只靠强法线伪装成有可信重力下垂的体积。</p>
 <p>自动随机按 Seed 和坐标选择整组。数组中空项或越界会拒绝，替换时先选择明确的变体下标。</p>
+<h3 id="art--六种屋顶点缀资源合同">六种屋顶点缀资源合同</h3>
+<p>手工点缀不需开启全屋自动装饰。六种是布局配方，复用既有资源：</p>
+<div class="table-wrap"><table><thead><tr><th>下标</th><th>名称</th><th>资源</th></tr></thead><tbody>
+<tr><td>0</td><td>木板平台</td><td><code>RoofDressingVariants[0]</code></td></tr>
+<tr><td>1</td><td>木板与陶罐</td><td><code>RoofDressingVariants[1]</code></td></tr>
+<tr><td>2</td><td>角落罐组</td><td>瓦罐组合，缩小靠边</td></tr>
+<tr><td>3</td><td>双角罐组</td><td>两组瓦罐，错开角落</td></tr>
+<tr><td>4</td><td>沿边三组</td><td>三组瓦罐沿边</td></tr>
+<tr><td>5</td><td>小木台与角罐</td><td>木板数组0和瓦罐组合</td></tr>
+</tbody></table></div>
+<p>罐资源取 <code>ModulePotClusterVariants</code>，数组为空才取旧 <code>ModulePotCluster</code>。木板底面中心，XY在±120 cm内、Z0…100；罐组保留140×110×85 cm底面中心，配方另缩放与偏移。最终默认安全区240×240 cm、高≤100 cm，随格宽／层高比例缩放。</p>
+<p>缺资源或尺寸不合法时拒绝整套，不显示半套。原材质槽和替换映射共用，引用仍参加整份Style收纳；结构／通路占用时点缀让位而保留设置。</p>
 <h3 id="art--材质分工与模块间颜色一致">材质分工与模块间颜色一致</h3>
 <p>模型资产保留自身全部材质槽。Style 的 <code>ModuleMaterialOverrides</code> 以<strong>原材质资产 → 新材质资产</strong>精确匹配，覆盖建筑组件，不直接改源模型。未配置、目标为空的槽保留原样；不按显示名、槽编号猜，也不连续追踪多段替换。</p>
 <p>推荐职责分配：</p>
@@ -368,6 +476,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>做旧分三个层次：真实边角缺损由模型负责；浅表剥落和内层色可由材质遮罩负责；作者想手刷的尘土应作为独立覆盖数据或贴花处理，不要将唯一最终尘土位置永久烘死在每件独占 UV 中。</p>
 <p>原开发材质有 <code>PeelAmount</code>、<code>PeelPatchSizeCM</code>、<code>PeelDepthCM</code>、<code>PeelEdgeBias</code>、<code>PeelRimStrength</code>、<code>PeelInnerTint</code>、<code>PeelRimTint</code> 等参数。是否存在这些名字以实际导入母材质为准，Style 不强制任意第三方材质必须实现它们。法线／高度剥落不等于真实几何缺口；当前插件尚未提供完整的逐实例三维尘土笔刷与重建恢复流程。</p>
 <p>建筑为共同投影坐标保留 <strong>Custom Primitive Data 0…15</strong>。相邻墙可以读取同一建筑原点和轴，使用统一尺度的投影，以减少每块独占 UV 的颜色接缝。自定义材质使用这些索引前请看 <a href="../Source/DesertBuildingLab/DesertBuildingMaterialRootComponent.cpp">DesertBuildingMaterialRootComponent</a>，不要另作冲突用途。统一投影不修复几何裂缝，也不自动让两种不一致底材变一致。</p>
+<p>连续长墙／Houdini仅评估、未实施，本轮没有新的连续墙槽或HDA依赖。固定鼓凹、嵌砖和顶点权重仍可能重复，先同机位对照材质层，再判断是否改几何；降低对比不等于消除真实重复。</p>
 <h3 id="art--淡化与碰撞">淡化与碰撞</h3>
 <p>上部材质需要读取 <code>OcclusionFade</code> 标量，1 显示、0 淡出；可以采用项目合适的遮罩抖动或透明方案。只创建参数而不接到有效输出，不会有淡化效果。地基独立，可继续使用不受淡化影响的材质。</p>
 <p>替换模型时检查墙、地基、屋顶、支柱、楼梯有合适碰撞。布、装饰瓦罐和散石默认非阻挡，若项目要改变策略，需要明确修改对应组件配置并验收角色通行。视觉淡化不自动取消碰撞；当前默认组件也不自动影响导航。</p>
@@ -377,17 +486,17 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <li>☐ 两房直拼、L 形外角／凹角、上下叠层没有孔洞或重叠闪烁。</li>
 <li>☐ 完整墙、端版与软角版洞口位置一致，木框露在墙外。</li>
 <li>☐ 门能通过角色；窗洞无封板；简单碰撞不封洞。</li>
-<li>☐ 楼梯每跑和转角平台有支撑，净宽、级数和踏深合同正确。</li>
+<li>☐ 楼梯每跑和平台有支撑，高层入口前80 cm有连续下层屋顶；净宽、级数和踏深合同正确。</li>
 <li>☐ 篷布后缘贴墙、杆脚贴地、前沿垂布不挡入口。</li>
 <li>☐ 瓦罐及屋顶装饰不挡门、楼梯出口或屋顶通路。</li>
 <li>☐ 目标关卡光照下，木纹、墙面尺度和相邻色差合理。</li>
 <li>☐ 上部全部材质支持所需淡化；地基保持独立。</li>
 <li>☐ 保存建筑、保存材质、保存关卡，重新打开后仍一致。</li>
 </ul>
-<p>所有导入资源都要有自己的使用／再分发许可。自动复制到项目管理目录不改变第三方资产许可，公开源码库也不因此包含开发机上用过的全部商业资源。</p></section><section class="chapter" id="chapter-assets"><div class="chapter-number">CHAPTER 05</div><p class="chapter-source">可编辑源：<a href="AssetOrganization.md">Docs/AssetOrganization.md</a></p><h2 id="assets--资产保存与项目管理">资产保存与项目管理</h2>
-<p><code>0.4.7-assets.1</code> 的新建保存以用户选择的 <strong>Content 文件夹</strong>为管理根目录。工具自动在该目录内整理建筑管理资产与美术依赖。本文的 <code>MyVillage</code> 是示例名称，可以换成项目自己的目录。</p>
+<p>所有导入资源都要有自己的使用／再分发许可。自动复制到项目管理目录不改变第三方资产许可，公开源码库也不因此包含开发机上用过的全部商业资源。</p></section><section class="chapter" id="chapter-assets"><div class="chapter-number">CHAPTER 06</div><p class="chapter-source">可编辑源：<a href="AssetOrganization.md">Docs/AssetOrganization.md</a></p><h2 id="assets--资产保存与项目管理">资产保存与项目管理</h2>
+<p>自 <code>0.4.7-assets.1</code> 建立的收纳格式在 <code>0.4.9-ui.1</code> 沿用：新建保存以用户选择的 <strong>Content 文件夹</strong>为管理根目录。工具自动在该目录内整理建筑管理资产与美术依赖。本文的 <code>MyVillage</code> 是示例名称，可以换成项目自己的目录。</p>
 <h3 id="assets--一次保存创建哪些文件">一次保存创建哪些文件</h3>
-<p>在设计器点击“另存新素材／复制变体…”，选 <code>Content/MyVillage</code>，输入 <code>House01</code>：</p>
+<p>在设计器点击“另存变体…”，选 <code>Content/MyVillage</code>，输入 <code>House01</code>：</p>
 <pre><code>Content/MyVillage/
 ├─ Buildings/
 │  ├─ House01/
@@ -404,8 +513,17 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
    ├─ Textures/
    ├─ MaterialFunctions/
    └─ Other/</code></pre>
+<p>顶栏首次“保存…”也要求根目录与名称；已有“保存更新”原位更新，“另存变体…”新建独立组。未命名或草稿有改动时先保存，才可“放入场景”。</p>
 <p>Design 保存布局；Style 保存模型、材质和变体配置；Blueprint 是可拖入关卡、继续关联 Design 的对象。选中的根目录不必名为 <code>A</code>，目录分类也不需要人工输入到资产名称里。</p>
 <p>名称输入 <code>House01</code>、<code>DA_House01</code> 或 <code>BP_House01</code> 会规范化成相同正文。重复前导 <code>DA_</code>／<code>BP_</code> 被去除，之后统一加一份前缀。只有前缀而没有正文、已有建筑组冲突、配套 Style／BP 不属于目标建筑等情况会拒绝，不覆盖别人的资产。</p>
+<h3 id="assets--新字段与旧数据">新字段与旧数据</h3>
+<ul>
+<li><code>StairConnection</code>随组合块保存；旧默认 <code>GroundLegacy</code>、新输入 <code>AdjacentFloors</code>。旧梯不自动移到高层，需要明确在新目标表面重放。</li>
+<li><code>RoofDecorations</code>独立保存表面、配方、朝向和启用；旧数组为空，结构／通路覆盖既有点缀时设置保留，暂不输出。</li>
+<li><code>bAutoSupportColumns</code>随素材保存，新建默认开、载入保留作者值；关闭会破坏依赖时拒绝。</li>
+<li>编辑模式与临时选中对象是界面状态；回放置清选择，撤销不跨载入／新建。</li>
+</ul>
+<p>这些不改变 <code>AssetLayoutVersion</code>。修订同步沿用原流程；新名称才是独立布局。</p>
 <h3 id="assets--收纳整份-style-的依赖">收纳整份 Style 的依赖</h3>
 <p>收纳范围是 <strong>当前 Style 及其引用依赖</strong>，不仅是视口里已经放出的几个部件。未使用但仍配置在 Style 里的门窗、楼梯、棚架、陶罐和屋顶变体也需要随建筑保持可编辑。</p>
 <p>例如：</p>
@@ -434,9 +552,42 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>例如输入 <code>/Game/MyVillage/House01</code> 或 <code>/Game/MyVillage/House01.House01</code>，最终返回 Design 实际位于 <code>/Game/MyVillage/Buildings/House01/Data/DA_House01</code>。程序应使用返回对象的路径，不假设输出仍在输入路径的同一级。</p>
 <p>传 <code>Existing</code> 表示更新该已有对象，以其当前路径为准。程序可读取 <code>GetLastDesignSaveMessage()</code> 获取具体失败或保存结果；不能只看返回之前目录是否出现了文件。</p>
 <h3 id="assets--验证记录怎么理解">验证记录怎么理解</h3>
-<p>本版本在原开发项目中完成 264/264 项实际保存检查，包含最小模型→材质→函数→贴图链、中文来源目录、共享材质、跨根目录、冲突、旧格式、保存重开和实例同步；完整开发 Style 的依赖收纳涉及 103 件资源。</p>
-<p>公开版另已在独立 <code>/Game/DesertBuildingLabOpenSource</code> 目录完成 204/204 项示例生成与资源检查。ExampleHouse 包含三件管理资产和 103 件美术依赖，共 106 件 Unreal 资产；30 张实际使用贴图从本项目自制／AI 来源重新导入，包含六张自制木材替代。具体公开文件、路径与哈希见 <a href="../Examples/manifest.json">Examples/manifest.json</a>。</p>
-<p>两组结果的范围不同。这些证据证明对应测试配置中的原生 API 与资源行为，不能替代新项目安装、GUI 鼠标操作、最终游戏打包、角色／导航或性能测量。示例在原开发项目的独立目录生成，原插件 Content 哈希核对保持一致。</p></section><section class="chapter" id="chapter-sources"><div class="chapter-number">CHAPTER 06</div><p class="chapter-source">可编辑源：<a href="美术来源与发布范围.md">Docs/美术来源与发布范围.md</a></p><h2 id="sources--美术来源与发布范围">美术来源与发布范围</h2>
+<div class="table-wrap"><table><thead><tr><th>版本／范围</th><th>原生检查</th><th>含义</th></tr></thead><tbody>
+<tr><td>0.4.9本轮</td><td>168/168真实Slate API</td><td>支柱、模式、原位点缀、草稿撤销、保存再载入和真实关卡承托；编译／同步另有记录</td></tr>
+<tr><td>0.4.8历史</td><td>楼梯250/250、门槛491/491、点缀128/128，合计869</td><td>相邻层、新字段和碰撞查询，本轮未声明重跑</td></tr>
+<tr><td>0.4.7原开发历史</td><td>保存264/264</td><td>依赖链、同根共享、跨根、冲突、旧格式、重开、同步；完整Style103件</td></tr>
+<tr><td>0.4.7公开样例历史</td><td>ExampleHouse204/204</td><td>3管理＋103美术＝106资产，30实际贴图、六张自制木材替代</td></tr>
+</tbody></table></div>
+<p>公开路径与哈希见<a href="../Examples/manifest.json">样例清单</a>。本次未重新生成样例或更换其美术。</p>
+<p>各组范围不同。0.4.9保存再载入不覆盖磁盘卸载／编辑器重启；Slate API不是物理鼠标，原生胶囊扫描不是角色行走。新项目完整接入、GUI人工操作、PIE／导航、打包、性能和最终美术未因此证明，见<a href="Verification_0.4.9-ui.1.json">本次验证摘要</a>和<a href="#chapter-release">发布说明</a>。</p></section><section class="chapter" id="chapter-changelog"><div class="chapter-number">CHAPTER 07</div><p class="chapter-source">可编辑源：<a href="CHANGELOG.md">Docs/CHANGELOG.md</a></p><h2 id="changelog--版本更新记录">版本更新记录</h2>
+<h3 id="changelog--049-ui1-2026-10-09">0.4.9-ui.1 · 2026-10-09</h3>
+<p>本次公开更新累积收录0.4.8结构与点缀功能。0.4.8检查是历史证据，不冒充本轮重跑。实际编译环境仍为UE5.8.2／Win64。</p>
+<h4 id="changelog--新增与调整">新增与调整</h4>
+<ul>
+<li>顶栏集中新建、载入、保存更新、另存变体、场景操作、撤销／重做与未保存标记。</li>
+<li>左栏结构／装饰分类与组合预览，中央放置／选择／删除、高度与相机，右栏固定规则、上下文参数和折叠美术槽，底部统一反馈。</li>
+<li>四角支柱开关可见、关闭有提示与恢复入口；新建默认开，载入保留原值。关闭前试算现有房间、附件、门窗依赖，拒绝静默失效。</li>
+<li>选择自动识别已有对象；附件与点缀可原位换方案／方向，非法修改保留原件。回放置清选择，只改下一次默认。</li>
+<li>当前草稿连续编辑撤销不跨素材与场景操作；恢复参数与小预览，原导航和Shift＋点击／Delete保留。</li>
+</ul>
+<p>实际Editor编译成功、源码同步；真实Slate API <strong>168/168</strong>。两张原生Slate截图不是物理鼠标验收。保存再载入不等于磁盘卸载／重启持久性。见<a href="#chapter-release">发布说明</a>与<a href="Verification_0.4.9-ui.1.json">验证摘要</a>。</p>
+<h3 id="changelog--048-stairs1-累积功能与历史检查">0.4.8-stairs.1 · 累积功能与历史检查</h3>
+<ul>
+<li>新放楼梯连接相邻表面。点上方目标Z=k，高层接Z=k−1 → Z=k；实际跑道、平台和入口前80 cm必须有本栋同高连续屋顶，首层仍查地面，不补悬空平台。</li>
+<li>独立屋顶点缀输入，六种配方复用木板与罐组，不占建筑格；同格替换，结构和通路占用时让位、保留配置。</li>
+<li>有效上层外门补真实可碰撞门槛，顶面与本层地板同高、厚度向下；有露台时处理开口、墙厚桥接和点缀避让。</li>
+<li>旧楼梯<code>GroundLegacy=0</code>不自动迁移；旧点缀数组为空，不凭空生成手工装饰。</li>
+<li>连续墙、重复做旧与Houdini <strong>仅评估，未实施</strong>，未新增连续墙生成器或HDA集成。</li>
+</ul>
+<p>历史原生检查：楼梯 <strong>250/250</strong>、门槛 <strong>491/491</strong>、点缀 <strong>128/128</strong>，合计 <strong>869</strong>。涉及原生碰撞、保存和关联实例，不代表鼠标、角色、导航、新项目、打包或美术接受。本轮未声明重跑。</p>
+<h3 id="changelog--047-assets1-首次公开版本">0.4.7-assets.1 · 首次公开版本</h3>
+<ul>
+<li>编辑期房间、门窗、楼梯、篷布、屋顶与装饰，候选预览和承托／占用／通路规则。</li>
+<li>Design／Style／Blueprint持续编辑、关联修订同步、另存布局变体。</li>
+<li>所选管理根目录下<code>Buildings/Resources</code>分类收纳；同根共享、异根复制，旧格式原位更新。</li>
+<li>可选ExampleHouse与可编辑资源源文件、中文说明和离线手册。公开木纹自制替代，许可与AI范围保留来源说明。</li>
+</ul>
+<p>历史保存 <strong>264/264</strong>、公开样例 <strong>204/204</strong>，与后续检查属于不同范围。</p></section><section class="chapter" id="chapter-sources"><div class="chapter-number">CHAPTER 08</div><p class="chapter-source">可编辑源：<a href="美术来源与发布范围.md">Docs/美术来源与发布范围.md</a></p><h2 id="sources--美术来源与发布范围">美术来源与发布范围</h2>
 <p>DesertBuildingLab 是编辑阶段使用的模块化建筑工具。源码、模块规则和资源替换接口可以独立阅读；美术套件用于演示这些接口。公开版使用本项目制作的模型、程序绘制的表面贴图以及明确标注的 AI 颜色贴图。</p>
 <p>项目最初受到 <a href="https://oskarstalberg.com/game/house/index.html" rel="noopener noreferrer">Oskar Stålberg 的 Brick Block</a> 交互房屋实验启发，主要参考单元格增减与邻接自动更新的操作思路；网址中的 <code>house</code> 是该作品页面路径。当前 Unreal 插件、模块规则和公开美术套件由本项目实现与制作，未移植或收录原作代码、模型或贴图。该链接作为灵感来源致谢，原作品的资源不纳入本项目 MIT 发布范围。<a href="https://oskarstalberg.com/" rel="noopener noreferrer">作者官网</a>。</p>
 <h3 id="sources--当前套件的制作方式">当前套件的制作方式</h3>
@@ -471,7 +622,7 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>公开资源导入的最终检查应包括：所有正式模块能加载、材质槽有实际材质、没有指向开发机 <code>/Game</code> 测试资产或缺失贴图、门窗仍是贯穿的洞、楼梯与碰撞一致，以及保存后的建筑能重新打开。旧开发版的测试结果不能代替替换资源后的检查。</p>
 <h3 id="sources--对贡献者的要求">对贡献者的要求</h3>
 <p>新增资源须登记作者、制作方式、适用许可证、模块尺寸、原点、轴向、占用格、材质槽、UV/顶点色和碰撞要求。AI 辅助资源应标明使用范围。下载的付费、免费或订阅资产都要核对允许公开再分发的范围；“免费使用”与“可把原始资源开源”是不同的权限。</p>
-<p>代码许可证与美术资源许可证分别声明。引擎 API 引用、引擎内置资源路径和导入脚本不包含 Unreal Engine 本身；使用者仍需自行安装相应版本的引擎。</p></section><section class="chapter" id="chapter-sourceart"><div class="chapter-number">CHAPTER 07</div><p class="chapter-source">可编辑源：<a href="../SourceArt/README.md">SourceArt/README.md</a></p><h2 id="sourceart--可编辑的建筑源资源">可编辑的建筑源资源</h2>
+<p>代码许可证与美术资源许可证分别声明。引擎 API 引用、引擎内置资源路径和导入脚本不包含 Unreal Engine 本身；使用者仍需自行安装相应版本的引擎。</p></section><section class="chapter" id="chapter-sourceart"><div class="chapter-number">CHAPTER 09</div><p class="chapter-source">可编辑源：<a href="../SourceArt/README.md">SourceArt/README.md</a></p><h2 id="sourceart--可编辑的建筑源资源">可编辑的建筑源资源</h2>
 <p>这里包含 52 个正式模块 FBX 和 31 张 PNG。<code>manifest.json</code> 登记每个文件的尺寸、SHA、材质槽、Style 槽、碰撞和原运行资产映射。<code>verification.json</code> 是本次实际文件核查结果；它不代表 Unreal 的渲染测试或美术验收。</p>
 <h3 id="sourceart--模型导入">模型导入</h3>
 <p>FBX 保留了源模型的顶点、索引、法线、切线、UV、顶点色、材质槽、模型变换、UCX 和连接数据，只清除了制作电脑的文件路径。清理使用 Blender 内置 FBX 读写库完成，没有把模型重新构造为 Blender 网格，也没有降低模型精度。</p>
@@ -503,12 +654,12 @@ p{margin:13px 0}ul,ol{padding-left:25px}li{padding-left:4px;margin:8px 0}code{fo
 <p>安装 Blender 后，在仓库根目录运行：</p>
 <pre><code>blender --background --factory-startup --python Tools/prepare_source_art_blender.py -- --check-only</code></pre>
 <p>它重新解析 52 个 FBX，并核对所有逻辑字段、几何统计、无绝对路径、单位/轴向/模型变换、实际运行厘米包围盒，以及 31 张纹理的 SHA/PNG 信息。清单的 <code>actual_bounds_cm</code> 使用 <code>minimum_cm</code>、<code>maximum_cm</code>、<code>dimensions_cm</code>；原点使用 <code>pivot_cm</code>。该命令只读检查源资源，不会打开或修改你在 Blender 中正在编辑的场景。</p>
-<p>编辑资源后，旧 SHA 会失效；应更新 manifest 并在 Unreal 重新导入自己的资源副本。改变楼梯宽度、踏步、平台、出口位置或模块占用尺寸时，也要更新 Style 的规则参数。更换颜色贴图可只替换材质，改变模块轮廓则要同时检查接缝、碰撞和放置规则。</p></section><section class="chapter" id="chapter-assetlicense"><div class="chapter-number">CHAPTER 08</div><p class="chapter-source">可编辑源：<a href="../ASSET_LICENSE.md">ASSET_LICENSE.md</a></p><h2 id="assetlicense--美术资源许可与来源">美术资源许可与来源</h2>
+<p>编辑资源后，旧 SHA 会失效；应更新 manifest 并在 Unreal 重新导入自己的资源副本。改变楼梯宽度、踏步、平台、出口位置或模块占用尺寸时，也要更新 Style 的规则参数。更换颜色贴图可只替换材质，改变模块轮廓则要同时检查接缝、碰撞和放置规则。</p></section><section class="chapter" id="chapter-assetlicense"><div class="chapter-number">CHAPTER 10</div><p class="chapter-source">可编辑源：<a href="../ASSET_LICENSE.md">ASSET_LICENSE.md</a></p><h2 id="assetlicense--美术资源许可与来源">美术资源许可与来源</h2>
 <p>本仓库的插件源码、工具与文档采用 <a href="#chapter-license">MIT License</a>。本项目制作并包含在 <code>SourceArt/</code> 与 <code>Examples/Content/DesertBuildingLabOpenSource/</code> 中的模型、贴图、材质和建筑定义，同样按 MIT 许可提供；使用这些文件时保留本仓库的许可与版权说明。</p>
 <p>公开套件包含 52 个模块模型的 FBX 源文件、31 张纹理源文件，以及可以导入 UE 5.8.2 项目的示例资产。六张木材贴图使用本项目独立制作的替代图。原开发项目中使用过的 Adobe 内置木材输出和 Fab 材质没有被包含在这个公开套件内。示例资产只引用套件中的自制资源、UE 自带资源和本插件的类。</p>
 <p>制作过程中使用了 C++、Blender 自动化、绘制与烘焙工具，部分概念和纹理使用 AI 辅助生成。这里提供的是这些文件的可编辑源资源与技术实现，不宣称它们全部由人工手工建模或手绘。</p>
 <p>本许可不覆盖 Unreal Engine、Blender、Substance 3D 软件本身及其内置或商业资源。运行和编辑示例需要自行安装并获得相应软件的使用权。以后接入的第三方模型、材质和贴图，应遵守各自原始许可；插件的自动收纳功能不会改变它们的授权。</p>
-<p>资源的文件、尺寸、UV、法线和替换约定见 <a href="../SourceArt/manifest.json">SourceArt 清单</a>、<a href="#chapter-sourceart">源资源说明</a> 和 <a href="#chapter-art">美术接入规范</a>。</p></section><section class="chapter" id="chapter-license"><div class="chapter-number">CHAPTER 09</div><p class="chapter-source">可编辑源：<a href="../LICENSE">LICENSE</a></p><pre class="license"><code>MIT License
+<p>资源的文件、尺寸、UV、法线和替换约定见 <a href="../SourceArt/manifest.json">SourceArt 清单</a>、<a href="#chapter-sourceart">源资源说明</a> 和 <a href="#chapter-art">美术接入规范</a>。</p></section><section class="chapter" id="chapter-license"><div class="chapter-number">CHAPTER 11</div><p class="chapter-source">可编辑源：<a href="../LICENSE">LICENSE</a></p><pre class="license"><code>MIT License
 
 Copyright (c) 2026 Fred
 

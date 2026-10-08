@@ -72,6 +72,7 @@ namespace DesertBuildingRules
 ADesertBuilding::ADesertBuilding()
 {
     SelectedBlock.PotPlacement=EDesertPotPlacement::Automatic;
+    SelectedBlock.StairConnection=EDesertStairConnection::AdjacentFloors;
     PrimaryActorTick.bCanEverTick = false;
     BuildingRoot = CreateDefaultSubobject<USceneComponent>(TEXT("BuildingRoot"));
     SetRootComponent(BuildingRoot);
@@ -277,6 +278,7 @@ void ADesertBuilding::ResetDemo()
     SetDemoCells();
     RoofOpenings.Reset();
     Blocks.Reset();
+    RoofDecorations.Reset();
     RoomAppearanceOverrides.Reset();
     Rebuild();
 }
@@ -731,6 +733,27 @@ void ADesertBuilding::BuildWall(const FIntVector& Cell, int32 Side, EWallType Ty
         RightTrim = ((Side == 1) ? bBackWall : bFrontWall) ? Thickness : 0.0f;
     }
 
+    if (Type == EWallType::Door && Cell.Z > 0)
+    {
+        // 外墙内收后的楼板在门洞处缺少整个墙厚，必须补真正有碰撞的门槛，
+        // 不能用暗面遮缝。门槛与本层楼板、相邻露台都以Cell底面为可行走顶面。
+        // 整段墙脚承托可兼容不同宽度的自定义门洞；仅向下加厚，不封门或窗。
+        const float FloorThickness = FloorHeight * (12.0f / 300.0f);
+        const FIntVector Below = Cell - FIntVector(0, 0, 1);
+        const FIntVector Terrace = Below + DesertBuildingRules::Sides[Side];
+        const bool bHasTerrace = Occupied.Contains(Terrace) &&
+            !Occupied.Contains(Terrace + FIntVector(0, 0, 1));
+        const bool bInsetTerrace = !RoofModules->GetStaticMesh() ||
+            (Style && Style->bInsetCustomRoofToWalls);
+        // 有下层邻室时屋顶公共边原本已贯通；只有门房悬挑、邻露台外缘内收
+        // 的情况才补露台一侧的20cm。不向没有露台的空中额外伸出平台。
+        const float TerraceBridge = bHasTerrace && bInsetTerrace && !Occupied.Contains(Below)
+            ? Thickness : 0.0f;
+        AddFaceBox(TrimParts, Origin, Rotation,
+            FVector((LeftTrim - RightTrim) * 0.5f, -TerraceBridge * 0.5f, -FloorThickness * 0.5f),
+            FVector(CellSize - LeftTrim - RightTrim, Thickness + TerraceBridge, FloorThickness));
+    }
+
     UInstancedStaticMeshComponent* Module = Type == EWallType::Door ? DoorWallModules.Get()
         : (Type == EWallType::Window ? WindowWallModules.Get() : SolidWallModules.Get());
     const int32 EndMask = (LeftTrim > 0.0f ? 1 : 0) | (RightTrim > 0.0f ? 2 : 0);
@@ -899,6 +922,9 @@ void ADesertBuilding::BuildRoof(const FIntVector& Cell)
 
 void ADesertBuilding::BuildRoofDressing(const FIntVector& Cell)
 {
+    // A manual layout supersedes automatic dressing on this roof only.
+    for(const FDesertRoofDecoration& Decoration:RoofDecorations)
+        if(Decoration.bEnabled && Decoration.Cell==Cell+FIntVector(0,0,1)) return;
     if(!Style || !Style->bEnableRoofDressing || Occupied.Contains(Cell+FIntVector(0,0,1)) ||
         RoofDressingBlockedCells.Contains(Cell)) return;
     for(const FDesertRoofOpening& Opening:EffectiveRoofOpenings) if(Opening.Cell==Cell) return;
@@ -1066,6 +1092,20 @@ void ADesertBuilding::Rebuild()
     ResolveAndBuildBlocks();
     ResolveInvalidRoomAppearances(Occupied,StairReservations,InvalidRoomAppearanceIndices,ValidationMessages);
     TArray<FDesertDoorFace> DoorFaces; ResolveDoorFaces(Occupied,StairReservations,DoorFaces);
+    // 高层门前的同高露台必须在造屋顶前预留入口。尤其悬挑房间下方为空时，
+    // 露台这一边仍被视为外露边，若不预留就会把女儿墙横在门槛外。
+    // 仅使用已通过规则的门面；窗和无门墙面不改变。显式开口仍由BuildRoof取最大宽度。
+    for (const FDesertDoorFace& Door : DoorFaces)
+    {
+        if (Door.Cell.Z <= 0 || Door.Side < 0 || Door.Side > 3) continue;
+        const FIntVector Terrace = Door.Cell + DesertBuildingRules::Sides[Door.Side] - FIntVector(0, 0, 1);
+        if (!Occupied.Contains(Terrace) || Occupied.Contains(Terrace + FIntVector(0, 0, 1))) continue;
+        FDesertRoofOpening& Opening = EffectiveRoofOpenings.AddDefaulted_GetRef();
+        Opening.Cell = Terrace;
+        Opening.Side = (Door.Side + 2) % 4;
+        Opening.Width = CellSize * 0.6f;
+        RoofDressingBlockedCells.Add(Terrace);
+    }
     CellCount = Occupied.Num();
     VisibleWallCount = RoofCount = ParapetCount = 0;
     AwningCount = 0;
@@ -1114,7 +1154,8 @@ void ADesertBuilding::Rebuild()
         if (Cell.Z > 0)
         {
             const float FloorThickness = FloorHeight * (12.0f / 300.0f);
-            FVector FloorCenter = Base + FVector(0, 0, FloorThickness * 0.5f);
+            // 上层房间地板与同高露台齐平；厚度向下，避免门内凭空抬高12cm。
+            FVector FloorCenter = Base - FVector(0, 0, FloorThickness * 0.5f);
             FVector FloorSize(CellSize, CellSize, FloorThickness);
             const float WallThickness = CellSize * (20.0f / 300.0f);
             DesertBuildingRules::InsetSlabToWalls(Occupied, Cell, CellSize, WallThickness, FloorCenter, FloorSize);
@@ -1138,6 +1179,8 @@ void ADesertBuilding::Rebuild()
             BuildRoof(Cell);
         }
     }
+    GenerationFloorIndex = 1;
+    BuildManualRoofDecorations();
     GenerationFloorIndex = 1;
     if (RoomCellModules->GetStaticMesh() && !EffectiveRoofOpenings.IsEmpty())
         ValidationMessages.Add(TEXT("使用整房间模型时门窗与屋面入口由模型提供；程序楼梯仍检查占地，但不能自动切开模型里的女儿墙，请准备带入口的房间模型。"));

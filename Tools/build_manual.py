@@ -18,10 +18,12 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "Docs" / "Manual.html"
 CHAPTERS = [
     ("overview", "项目介绍与公开版本", "README.md"),
+    ("release", "0.4.9 更新与验证", "Docs/ReleaseNotes_0.4.9-ui.1.md"),
     ("guide", "操作指南", "Docs/GettingStarted.md"),
     ("logic", "生成逻辑与代码结构", "Docs/GenerationLogic.md"),
     ("art", "模型、材质与替换规范", "Docs/AssetIntegration.md"),
     ("assets", "保存与项目管理", "Docs/AssetOrganization.md"),
+    ("changelog", "版本变更记录", "Docs/CHANGELOG.md"),
     ("sources", "美术来源与发布范围", "Docs/美术来源与发布范围.md"),
     ("sourceart", "可编辑源资源", "SourceArt/README.md"),
     ("assetlicense", "美术资源许可", "ASSET_LICENSE.md"),
@@ -63,13 +65,28 @@ def relative_url(target: Path) -> str:
 def link_url(url: str, source: str, image: bool = False) -> str:
     url = url.strip().removeprefix("<").removesuffix(">")
     parsed = urlsplit(url)
+    # Release notes also render on GitHub, so their links are absolute there.
+    # Resolve only this repository's main-branch files into the offline copy.
+    local_prefixes = {
+        "github.com": "/djwcb2333/DesertBuildingLab/blob/main/",
+        "raw.githubusercontent.com": "/djwcb2333/DesertBuildingLab/main/",
+    }
+    prefix = local_prefixes.get(parsed.netloc, "")
+    local_file = (
+        parsed.scheme == "https" and prefix and parsed.path.startswith(prefix)
+        and not parsed.query
+    )
+    if local_file:
+        path = ROOT / unquote(parsed.path[len(prefix):])
+    else:
+        path = (ROOT / source).parent / unquote(parsed.path) if parsed.path else ROOT / source
     if parsed.scheme in ("http", "https", "mailto"):
-        if image:
+        if image and not local_file:
             raise ValueError("Manual images must be repository-local")
-        return url
-    if parsed.scheme or re.match(r"^[A-Za-z]:", url) or url.startswith(("/", "\\")):
+        if not local_file:
+            return url
+    if not local_file and (parsed.scheme or re.match(r"^[A-Za-z]:", url) or url.startswith(("/", "\\"))):
         raise ValueError("Absolute or non-public link in manual input")
-    path = (ROOT / source).parent / unquote(parsed.path) if parsed.path else ROOT / source
     path = path.resolve()
     try:
         repo_name = path.relative_to(ROOT).as_posix()
@@ -331,9 +348,9 @@ def main() -> None:
                         f'<p class="chapter-source">可编辑源：<a href="{html.escape(relative_url(ROOT / source), quote=True)}">{html.escape(source)}</a></p>{content}</section>')
     document = f'''<!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Desert Building Lab 公开插件离线操作、生成逻辑与美术接入手册"><title>沙漠建筑实验室 · 公开插件手册</title><style>{CSS}</style></head>
-<body><div class="layout"><aside class="sidebar"><h2>沙漠建筑实验室</h2><p>Desert Building Lab<br>0.4.7-assets.1 · UE 5.8.2</p><nav aria-label="手册目录">{navigation}</nav><p style="margin-top:24px">本地阅读无需联网。图片及源码链接需要与仓库一起保留。</p></aside>
+<body><div class="layout"><aside class="sidebar"><h2>沙漠建筑实验室</h2><p>Desert Building Lab<br>0.4.9-ui.1 · UE 5.8.2</p><nav aria-label="手册目录">{navigation}</nav><p style="margin-top:24px">本地阅读无需联网。图片及源码链接需要与仓库一起保留。</p></aside>
 <main><div id="top" class="eyebrow">PUBLIC EDITION · OFFLINE MANUAL</div><h1>从模块到可编辑建筑</h1><p class="lead">介绍、安装、操作、规则与美术接口，整合为一份可随仓库阅读的中文手册。</p>
-<div class="notice"><p><strong>图像与验证边界：</strong>本页两张当前公开套件效果图由 Unreal SceneCapture 渲染，不是插件 UI 操作截图；另三张历史真实 UI 实拍分别标明 2026-10-05／0.4.1 或 V3，旧侧栏、美术和保存位置不代表当前 0.4.7 完整界面。模块独立小预览和 Buildings/Resources 收纳以当前文字说明为准。公开样例 204/204 项准备检查与原开发配置 264/264 项保存流程检查分别说明；新项目、真实角色／导航、游戏打包与性能仍需单独验收。</p></div>
+<div class="notice"><p><strong>图像与验证边界：</strong>新增两张 0.4.9 原生 Slate 界面截图，拍摄于 2026-10-09；来自原开发工程，美术外观与公开套件可能不同。另保留两张公开套件 SceneCapture 效果图及三张明确标注版本的历史 UI。0.4.9 的 168/168 项是实际 Slate API 回归；0.4.8 的 869 项与旧版 204/264 项记录属于历史证据，没有在本轮重跑。物理鼠标逐项操作、其他项目安装、角色导航、打包和性能不由这些记录证明。</p></div>
 {''.join(sections)}<div class="footer">手册由 <a href="../Tools/build_manual.py">Tools/build_manual.py</a> 从仓库内 Markdown 与许可生成。修改正文后重新生成。保留 Docs/Images、Source、Tools、Examples、SourceArt 和许可文件，离线链接才完整。<a href="#top">返回顶部</a></div></main></div></body></html>'''
     report = validate(document)
     OUTPUT.write_text(document, encoding="utf-8", newline="\n")

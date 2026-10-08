@@ -24,6 +24,7 @@ struct FDesertModulePreviewData
     UPROPERTY(BlueprintReadOnly, Category="Preview") FBox Bounds = FBox(ForceInit);
     UPROPERTY(BlueprintReadOnly, Category="Preview") FString Description;
     UPROPERTY(BlueprintReadOnly, Category="Preview") bool bUsesRecipe = false;
+    UPROPERTY(BlueprintReadOnly, Category="Preview") bool bWaitingForCompilation = false;
     UPROPERTY(BlueprintReadOnly, Category="Preview") int32 ResolvedVariantIndex = INDEX_NONE;
     UPROPERTY(BlueprintReadOnly, Category="Preview") TObjectPtr<UStaticMesh> SelectedMesh = nullptr;
 };

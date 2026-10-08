@@ -38,6 +38,7 @@ void ADesertBuilding::RemoveLastBlock()
 void ADesertBuilding::LoadRuleDemo()
 {
     Modify();
+    RoofDecorations.Reset();
     Cells = {FIntVector(-1,-1,0),FIntVector(0,-1,0),FIntVector(1,-1,0),
         FIntVector(-1,0,0),FIntVector(0,0,0),FIntVector(1,0,0),FIntVector(1,0,1),FIntVector(-2,0,1)};
     RoomAppearanceOverrides.Reset();
@@ -321,6 +322,9 @@ void ADesertBuilding::ResolveBlockLayout(const TSet<FIntVector>& Bodies,
     {
         const FDesertBlockPlacement& Block=Inputs[Index];
         if (!Block.bEnabled) continue;
+        const bool bAdjacentStair=Block.Type==EDesertBlockType::Stairs && Block.StairConnection==EDesertStairConnection::AdjacentFloors;
+        const bool bUpperAdjacent=bAdjacentStair && Block.Cell.Z>1;
+        const float StairBaseZ=FMath::Max(0,Block.Cell.Z-1)*FloorHeight;
         FDesertResolvedBlock& Resolved=OutBlocks.AddDefaulted_GetRef();
         Resolved.Index=Index;
         FString Error;
@@ -376,6 +380,7 @@ void ADesertBuilding::ResolveBlockLayout(const TSet<FIntVector>& Bodies,
         const bool Perimeter=NeighborWallCount>0;
         int32 Steps=15;
         if (!InBounds || Block.Facing<0 || Block.Facing>3 || (Block.Type==EDesertBlockType::Stairs && static_cast<uint8>(Block.StairLayout)>static_cast<uint8>(EDesertStairLayout::UShape))) Error=TEXT("坐标、Facing或楼梯类型超出允许范围");
+        else if(Block.Type==EDesertBlockType::Stairs && static_cast<uint8>(Block.StairConnection)>static_cast<uint8>(EDesertStairConnection::AdjacentFloors)) Error=TEXT("楼梯连接模式无效");
         else if (Bodies.Contains(Block.Cell)) Error=TEXT("组合块位置被房屋体块占用");
         else if (const TArray<int32>* Existing=Anchors.Find(Block.Cell))
         {
@@ -457,17 +462,19 @@ void ADesertBuilding::ResolveBlockLayout(const TSet<FIntVector>& Bodies,
                 const FIntVector Direction=DesertBlockRules::Directions[FMath::Clamp(Block.Facing,0,3)];
                 const FIntVector TargetBody=Block.Cell-FIntVector(0,0,1);
                 if (Bodies.Contains(TargetBody+Direction)) Error=TEXT("楼梯落点不是外露屋顶边");
-                const int32 RunCells=Block.Cell.Z*2;
-                for (int32 Distance=1; Distance<=RunCells; ++Distance)
-                    for (int32 Z=0; Z<=Block.Cell.Z; ++Z)
-                        if (Bodies.Contains(FIntVector(Block.Cell.X+Direction.X*Distance,Block.Cell.Y+Direction.Y*Distance,Z))) Error=TEXT("楼梯通路与房屋体块冲突");
+                const int32 RunCells=bAdjacentStair ? 2 : Block.Cell.Z*2;
+                // 新逐层模式按实际模型路线校验，不能把下面的承托房间误判为障碍。
+                if(!bAdjacentStair)
+                    for (int32 Distance=1; Distance<=RunCells; ++Distance)
+                        for (int32 Z=0; Z<=Block.Cell.Z; ++Z)
+                            if (Bodies.Contains(FIntVector(Block.Cell.X+Direction.X*Distance,Block.Cell.Y+Direction.Y*Distance,Z))) Error=TEXT("楼梯通路与房屋体块冲突");
                 const FVector Outward(Direction.X,Direction.Y,0);
                 Size.X=CellSize*0.4f;
                 Size.Y=CustomMesh ? 450.0f*(CellSize/300.0f) : CellSize*RunCells;
                 const float TopZ=Origin.Z;
                 Origin+=Outward*(CellSize*0.5f+Size.Y);
-                float Ground=0;
-                if (!TraceGround(Origin+FVector(0,0,FloorHeight),Ground)) Error=TEXT("楼梯低端没有检测到地面");
+                float Ground=StairBaseZ;
+                if (!bUpperAdjacent && !TraceGround(Origin+FVector(0,0,FloorHeight),Ground)) Error=TEXT("楼梯低端没有检测到地面");
                 {
                     Origin.Z=Ground;
                     Size.Z=TopZ-Ground;
@@ -485,13 +492,13 @@ void ADesertBuilding::ResolveBlockLayout(const TSet<FIntVector>& Bodies,
                 const FVector Outward(Direction.X,Direction.Y,0);
                 const float TopZ=Origin.Z;
                 Origin+=Outward*(CellSize*0.5f); // 枢轴位于出口的墙面基准线上。
-                if (!CustomMesh && Kind==EDesertModuleKind::WallStairs) Size.X*=Block.Cell.Z;
-                else if (!CustomMesh && Kind==EDesertModuleKind::SwitchbackStairs) Size.Y*=Block.Cell.Z;
+                if (!bAdjacentStair && !CustomMesh && Kind==EDesertModuleKind::WallStairs) Size.X*=Block.Cell.Z;
+                else if (!bAdjacentStair && !CustomMesh && Kind==EDesertModuleKind::SwitchbackStairs) Size.Y*=Block.Cell.Z;
                 const FVector Entry=Kind==EDesertModuleKind::WallStairs ? FVector(-Size.X*.85f,-Size.Y*.5f,0) :
                     (Kind==EDesertModuleKind::LShapeStairs ? FVector(-375,-435,0)*(CellSize/300.0f) :
                     (Kind==EDesertModuleKind::UShapeStairs ? FVector(-150,-60,0)*(CellSize/300.0f) : FVector(-Size.X*.7f,-Size.Y*.125f,0)));
-                float Ground=0;
-                if (!TraceGround(Origin+Rotation.RotateVector(Entry)+FVector(0,0,FloorHeight),Ground)) Error=TEXT("楼梯入口下方没有有效地面");
+                float Ground=StairBaseZ;
+                if (!bUpperAdjacent && !TraceGround(Origin+Rotation.RotateVector(Entry)+FVector(0,0,FloorHeight),Ground)) Error=TEXT("楼梯入口下方没有有效地面");
                 {
                     Origin.Z=Ground;
                     Size.Z=TopZ-Ground;
@@ -518,14 +525,14 @@ void ADesertBuilding::ResolveBlockLayout(const TSet<FIntVector>& Bodies,
             default: break;
             }
             const bool bDual=Kind==EDesertModuleKind::SwitchbackStairs || Kind==EDesertModuleKind::LShapeStairs || Kind==EDesertModuleKind::UShapeStairs;
-            if (Block.Cell.Z!=1) Error=TEXT("固定整梯模型只允许从地面爬升到首层屋顶；高层需要逐层连接，不能拉伸整模型假装增加踏步");
+            if (!bAdjacentStair && Block.Cell.Z!=1) Error=TEXT("旧版从地面模式的固定整梯仅连接首层；请用相邻层模式重新放置高层楼梯");
             else if (Steps<1 || Steps>128 || (bDual && (Steps<2 || Steps%2!=0)) || !FMath::IsFinite(Width) || !FMath::IsFinite(Tread))
                 Error=TEXT("Style固定梯的实际级数/净宽/踏深契约无效，双跑必须为偶数级");
             else if (Size.Z/Steps>22.0f+KINDA_SMALL_NUMBER || Width*(CellSize/300.f)<80 || Tread*(CellSize/300.f)<22)
                 Error=FString::Printf(TEXT("固定梯实际%d级：抬高%.1fcm，净宽%.1fcm，踏深%.1fcm；要求级高≤22、净宽≥80、踏深≥22，不能只改变假想Steps"),Steps,Size.Z/Steps,Width*(CellSize/300.f),Tread*(CellSize/300.f));
         }
-        if (Block.Type==EDesertBlockType::Stairs && (Kind==EDesertModuleKind::LShapeStairs || Kind==EDesertModuleKind::UShapeStairs) && Block.Cell.Z!=1)
-            Error=TEXT("L/U双跑组合只连接地面与首层屋顶；当前不自动拉长路径到多层");
+        if (Block.Type==EDesertBlockType::Stairs && !bAdjacentStair && (Kind==EDesertModuleKind::LShapeStairs || Kind==EDesertModuleKind::UShapeStairs) && Block.Cell.Z!=1)
+            Error=TEXT("旧版L/U双跑只连接地面与首层；高层请用相邻层模式，不能拉伸踏步跨层");
         if (Size.GetMax()>5000 || Size.GetMin()<1) Error=TEXT("模块尺寸超出白模配方1~5000cm范围；请减小格宽或楼梯目标层数");
         if (UStaticMesh* Mesh=CustomMesh)
         {
@@ -657,11 +664,29 @@ void ADesertBuilding::ResolveBlockLayout(const TSet<FIntVector>& Bodies,
             if (!LocalBox.Min.Equals(FVector(-225,-480,-15)*Scale,2.f) || !LocalBox.Max.Equals(FVector(75,0,300)*Scale,2.f))
                 Error=TEXT("U形模型包围盒不符合专用双跑契约；请检查300×480基准和原点");
         }
+        // 低端落脚区是通路，不是额外建筑块。U形从左侧进入低平台，不能向+Y穿进塔墙。
+        if(bAdjacentStair)
+        {
+            const float Scale=CellSize/300.f;
+            const float LandingDepth=80.f*Scale;
+            if(Kind==EDesertModuleKind::Stairs)
+                Footprints.Add(FBox(FVector(-Size.X*.5f,LocalBox.Min.Y-LandingDepth,0),FVector(Size.X*.5f,LocalBox.Min.Y,0)));
+            else
+            {
+                const float CenterY=Kind==EDesertModuleKind::LShapeStairs ? -435.f*Scale :
+                    (Kind==EDesertModuleKind::UShapeStairs ? -60.f*Scale :
+                    (Kind==EDesertModuleKind::SwitchbackStairs ? -Size.Y*.125f : (LocalBox.Min.Y+LocalBox.Max.Y)*.5f));
+                const float Width=Kind==EDesertModuleKind::SwitchbackStairs ? Size.X*.4f : FMath::Min(120.f*Scale,LocalBox.GetSize().Y);
+                Footprints.Add(FBox(FVector(LocalBox.Min.X-LandingDepth,CenterY-Width*.5f,0),FVector(LocalBox.Min.X,CenterY+Width*.5f,0)));
+            }
+        }
         TArray<FBox> ActualBounds;
         for (const FBox& Footprint : Footprints)
         {
-            FBox Bounds=Footprint.TransformBy(Placement).ExpandBy(-.5f);
-            if (Block.Type==EDesertBlockType::Stairs && Block.StairLayout!=EDesertStairLayout::OutwardLegacy) Bounds.Max.Z+=200;
+            FBox Bounds=Footprint.TransformBy(Placement);
+            Bounds.Min+=FVector(.5f,.5f,.5f); Bounds.Max-=FVector(.5f,.5f,0.f);
+            if(bUpperAdjacent) Bounds.Min.Z=FMath::Max(Bounds.Min.Z,StairBaseZ+.5f);
+            if (Block.Type==EDesertBlockType::Stairs && (bAdjacentStair || Block.StairLayout!=EDesertStairLayout::OutwardLegacy)) Bounds.Max.Z+=200;
             ActualBounds.Add(Bounds);
         }
         if (Error.IsEmpty())
@@ -673,14 +698,27 @@ void ADesertBuilding::ResolveBlockLayout(const TSet<FIntVector>& Bodies,
                     if (Bounds.Intersect(FBox(Minimum,Minimum+FVector(CellSize,CellSize,FloorHeight))))
                     { Error=TEXT("模块实际通路、平台或楼梯2m头顶空间与房屋体块冲突"); break; }
                 }
-            if (Block.Type==EDesertBlockType::Stairs && Block.StairLayout!=EDesertStairLayout::OutwardLegacy)
+            if(bUpperAdjacent)
+            {
+                // TraceGround忽略本Actor；直接使用同一次求解的房格屋顶，预览与生成一致。
+                // 检查整个矩形覆盖的每个格，避免四角有支撑但中间缺房；L形两个矩形独立检查。
+                for(const FBox& Bounds : ActualBounds)
+                    for(int32 X=FMath::FloorToInt(Bounds.Min.X/CellSize);X<=FMath::FloorToInt(Bounds.Max.X/CellSize);++X)
+                        for(int32 Y=FMath::FloorToInt(Bounds.Min.Y/CellSize);Y<=FMath::FloorToInt(Bounds.Max.Y/CellSize);++Y)
+                        {
+                            const FIntVector Support(X,Y,Block.Cell.Z-2);
+                            if(!Bodies.Contains(Support) || Bodies.Contains(Support+FIntVector(0,0,1)))
+                                Error=FString::Printf(TEXT("相邻层楼梯需要下层露台承托整段梯身、转角和入口；缺少或被占用的承托房格 %s。不能越过下一层直接落地。"),*Support.ToString());
+                        }
+            }
+            else if (Block.Type==EDesertBlockType::Stairs && (bAdjacentStair || Block.StairLayout!=EDesertStairLayout::OutwardLegacy))
                 for (const FBox& Footprint : Footprints)
                     for (float X : {Footprint.Min.X+2,Footprint.Max.X-2})
                         for (float Y : {Footprint.Min.Y+2,Footprint.Max.Y-2})
                         {
                             float Height=0;
                             if (!TraceGround(Placement.TransformPosition(FVector(X,Y,Size.Z+FloorHeight)),Height) || FMath::Abs(Height-Origin.Z)>10)
-                                Error=TEXT("楼梯每段通路/平台四角需要地面支撑且高差≤10cm；L形内空区不误作支撑要求");
+                                Error=TEXT("楼梯每段通路、平台和入口需要地面支撑且高差≤10cm；L形内空区不误作支撑要求");
                         }
         }
         if (Error.IsEmpty() && (Block.Type==EDesertBlockType::AwningBay || Block.Type==EDesertBlockType::RubbleCluster))
@@ -791,6 +829,36 @@ void ADesertBuilding::ResolveAndBuildBlocks()
             Opening.Cell=Input.Cell-FIntVector(0,0,1);
             Opening.Side=Input.Facing;
             Opening.Width=CellSize*0.5f;
+            if(Input.StairConnection==EDesertStairConnection::AdjacentFloors && Input.Cell.Z>1)
+            {
+                // Protect the entire lower terrace cells beneath both flights and the entrance.
+                // Remove only parapet edges touched by a flight/landing. Unrelated roof edges stay.
+                const int32 BodyZ=Input.Cell.Z-2;
+                for(const FBox& Bounds:Block.Check.LocalBounds)
+                {
+                    for(int32 X=FMath::FloorToInt(Bounds.Min.X/CellSize);X<=FMath::FloorToInt(Bounds.Max.X/CellSize);++X)
+                    for(int32 Y=FMath::FloorToInt(Bounds.Min.Y/CellSize);Y<=FMath::FloorToInt(Bounds.Max.Y/CellSize);++Y)
+                    {
+                        const FIntVector RoofCell(X,Y,BodyZ);
+                        if(!Occupied.Contains(RoofCell)) continue;
+                        RoofDressingBlockedCells.Add(RoofCell);
+                        const float MinX=X*CellSize,MaxX=MinX+CellSize,MinY=Y*CellSize,MaxY=MinY+CellSize;
+                        const float E=CellSize*(10.f/300.f)+2.f;
+                        const bool HitX=Bounds.Max.X>MinX && Bounds.Min.X<MaxX;
+                        const bool HitY=Bounds.Max.Y>MinY && Bounds.Min.Y<MaxY;
+                        const bool EdgeHits[4]={
+                            HitX && Bounds.Min.Y<MinY+E && Bounds.Max.Y>MinY-E,
+                            HitY && Bounds.Min.X<MaxX+E && Bounds.Max.X>MaxX-E,
+                            HitX && Bounds.Min.Y<MaxY+E && Bounds.Max.Y>MaxY-E,
+                            HitY && Bounds.Min.X<MinX+E && Bounds.Max.X>MinX-E};
+                        for(int32 Side=0;Side<4;++Side) if(EdgeHits[Side])
+                        {
+                            FDesertRoofOpening& Lower=EffectiveRoofOpenings.AddDefaulted_GetRef();
+                            Lower.Cell=RoofCell;Lower.Side=Side;Lower.Width=CellSize;
+                        }
+                    }
+                }
+            }
         }
     }
     ValidationMessages.Insert(FString::Printf(TEXT("有效体块 %d；无效房间输入 %d；有效组合块 %d；无效组合块 %d；自动支柱 %d。修改地形后请Rebuild重新检测。"),
@@ -833,7 +901,12 @@ FDesertPlacementCheck ADesertBuilding::EvaluatePlacement(bool bRoom, const FDese
             AfterBodies.Contains(Proposal.Cell) && !AfterInvalidCells.Contains(Cells.Num());
         if (!IsCellInBounds(Proposal.Cell)) Result.Reason=TEXT("房间坐标超出允许范围");
         else if (Cells.Contains(Proposal.Cell)) Result.Reason=TEXT("该单元格已有房间；请先删除或换一个格子");
-        else if (!Result.bAllowed) Result.Reason=TEXT("房间下方缺少有效承托，且无法生成四角支柱；请检查地面或支柱选项");
+        else if (!Result.bAllowed && !bAutoSupportColumns)
+            Result.Reason=TEXT("自动支柱已关闭：此格下方没有房间承托。请在右侧「建筑规则」开启「自动生成四角支柱」");
+        else if (!Result.bAllowed && !GetActorUpVector().Equals(FVector::UpVector,0.0001f))
+            Result.Reason=TEXT("建筑发生倾斜，无法生成竖直支柱；请恢复竖直，只绕Z轴旋转");
+        else if (!Result.bAllowed)
+            Result.Reason=TEXT("自动支柱已开启，但四角没有全部找到有效地面，或柱高超过5000cm；请检查地面碰撞与检测距离");
         for (const FDesertSupportSpan& Span : AfterSupports)
         {
             const bool bExisting=BeforeSupports.ContainsByPredicate([&Span](const FDesertSupportSpan& Other)

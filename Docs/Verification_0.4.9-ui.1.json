@@ -1,0 +1,260 @@
+{
+  "schema": 1,
+  "version": "0.4.9-ui.1",
+  "publication_date": "2026-10-09",
+  "source_matches_verified_live_plugin": true,
+  "source_inventory": [
+    {
+      "path": "Source/DesertBuildingLab/DesertBuilding.cpp",
+      "sha256": "34a218831532edda972bf082615e02b65d262b4f13fede1d20eecd4d283cfbf2",
+      "bytes": 64294,
+      "verified_live_sha256": "a9505f10c041700b06ac27a951a379c1cf0c15253dc505708bef08f608b26627"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuilding.h",
+      "sha256": "8e1604b26ec03584683acc932a984927f139147757a3dfa69fd6a4c8b8257d1e",
+      "bytes": 30096,
+      "verified_live_sha256": "8e1604b26ec03584683acc932a984927f139147757a3dfa69fd6a4c8b8257d1e"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingBlocks.cpp",
+      "sha256": "66e81479b6a2e27121c9e54ca22684a054d729e85420e12bebd147eaa114f11f",
+      "bytes": 67654,
+      "verified_live_sha256": "9abf4dfdf726ecccea7b191a365fd0f86520030d07c3bcf828c5f746ec63c9ce"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingDesign.cpp",
+      "sha256": "b3025665d8f17bf35a0a08a7284c2598bfc17d5470f827c91fdc6b800e9aefa0",
+      "bytes": 2020,
+      "verified_live_sha256": "b3025665d8f17bf35a0a08a7284c2598bfc17d5470f827c91fdc6b800e9aefa0"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingDesign.h",
+      "sha256": "d1cf5fe891415cec25dfef1031ce92517ab967d33d550b9eb8bc33372471f636",
+      "bytes": 3783,
+      "verified_live_sha256": "d1cf5fe891415cec25dfef1031ce92517ab967d33d550b9eb8bc33372471f636"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingLab.Build.cs",
+      "sha256": "ef035050b4504f7e03afb0baf832b2d74fb988401f7a2048e1eb81fe15e6179b",
+      "bytes": 372,
+      "verified_live_sha256": "ef035050b4504f7e03afb0baf832b2d74fb988401f7a2048e1eb81fe15e6179b"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingLabModule.cpp",
+      "sha256": "6eb3de0b535501b3ba48cde73763cadf9ddf1321800cd727fec19c7a53c8eaa9",
+      "bytes": 176,
+      "verified_live_sha256": "6eb3de0b535501b3ba48cde73763cadf9ddf1321800cd727fec19c7a53c8eaa9"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingMaterialRootComponent.cpp",
+      "sha256": "a41cb62e6335bc4fc5b602ef0e57b4de67af98b530a8481f923b06fb1d991b8d",
+      "bytes": 2399,
+      "verified_live_sha256": "a41cb62e6335bc4fc5b602ef0e57b4de67af98b530a8481f923b06fb1d991b8d"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingMaterialRootComponent.h",
+      "sha256": "1b1043ea83941578e618d41d10dc87d3e1819a3d17b077c4330d9f6645a66166",
+      "bytes": 1006,
+      "verified_live_sha256": "1b1043ea83941578e618d41d10dc87d3e1819a3d17b077c4330d9f6645a66166"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingModule.cpp",
+      "sha256": "f8a7f08e484d0ae274fcf7104e02e778cf8721083c0034b66c48babd06cbc5e5",
+      "bytes": 29336,
+      "verified_live_sha256": "56bd58f2f147f37f6a1b393b1e7a3e021c78d69dc5569d16ffe945ef7c55d818"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingModule.h",
+      "sha256": "2a7761f255c7b967c19868c3edd0a7444021c491e151d15ce537fda10a3cb63b",
+      "bytes": 9793,
+      "verified_live_sha256": "e59e96dce89de39e1a30f60eb6863d65840a10168bce95999db1bbd8b0742c21"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingRoofDecorations.cpp",
+      "sha256": "e104a1ecce8d5f6b9fe80eed983606538e1ccfbf01fa9022f519e6d806059deb",
+      "bytes": 9911,
+      "verified_live_sha256": "e104a1ecce8d5f6b9fe80eed983606538e1ccfbf01fa9022f519e6d806059deb"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingRoofDecorations.h",
+      "sha256": "6a531b62151da777f66aec5458e24832cd7894a2567bacec5b1bcbb1a6c757ad",
+      "bytes": 1888,
+      "verified_live_sha256": "6a531b62151da777f66aec5458e24832cd7894a2567bacec5b1bcbb1a6c757ad"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingRoomAppearance.cpp",
+      "sha256": "6b4c911f930bfa11fb7e9ded04a6e3bf13b094baf70340156fbf090d37737f61",
+      "bytes": 6867,
+      "verified_live_sha256": "6b4c911f930bfa11fb7e9ded04a6e3bf13b094baf70340156fbf090d37737f61"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertBuildingStyle.h",
+      "sha256": "c331c3816dc6b2cfebb1eeebbad07585da7ecee7c29e1fa8b326b76a40e58d02",
+      "bytes": 25865,
+      "verified_live_sha256": "90a7ca63801c21a0c3c1cf27bf4ac895d97873cfc59e71c8d0d986e60f973353"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertInteraction.cpp",
+      "sha256": "c84d91bdaa691febfef20bc3badf4937ba80e3b89162638f8d70e397ae65ea54",
+      "bytes": 10833,
+      "verified_live_sha256": "ccbef7baea81c14213ca29f420103ab08757ace9be80dc5032a783081111e601"
+    },
+    {
+      "path": "Source/DesertBuildingLab/DesertInteraction.h",
+      "sha256": "50d35f72e0dbd09d5dcb41d770a2104a217b17fcc47dd05ff2df67b9c5e0dd6a",
+      "bytes": 1712,
+      "verified_live_sha256": "7abe560958b815e36158469cafc1750011512161173cdaceef12ec10ea4cf58d"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingAssetCollection.cpp",
+      "sha256": "aa82dce12e0f6d795d02a46d851b26c9866abce0868c25042ce6a7ef03c4af17",
+      "bytes": 25278,
+      "verified_live_sha256": "aa82dce12e0f6d795d02a46d851b26c9866abce0868c25042ce6a7ef03c4af17"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingAssetCollection.h",
+      "sha256": "ef83a1620325fabd537475b486f565032b0bba0baaedfc3d974858657c3cd2d4",
+      "bytes": 857,
+      "verified_live_sha256": "ef83a1620325fabd537475b486f565032b0bba0baaedfc3d974858657c3cd2d4"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingDefaults.h",
+      "sha256": "0add8e824c5b13a54a028c96435df3b8356aab205a7bbd27e7e0770f20cd7e16",
+      "bytes": 1112,
+      "verified_live_sha256": "ef360c0ec98d9f43414727a4c1e92b953a673b80c414c1e92dd5a2eadee78226"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingDesignAssets.cpp",
+      "sha256": "89bdfe23f07f9406f2181c73b4232ab9b8a916459de0094d04a2a3dd8ac5b2ee",
+      "bytes": 11632,
+      "verified_live_sha256": "89bdfe23f07f9406f2181c73b4232ab9b8a916459de0094d04a2a3dd8ac5b2ee"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingDesigner.cpp",
+      "sha256": "4b09165d158ce33ebfbe054bd4a249dec0350704164720b0e7d585eb81ccbed4",
+      "bytes": 125334,
+      "verified_live_sha256": "450c365105426ba92dba7c80de6a54210e4d88dddcc789b98ab9c5b2e2c766c3"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingDesigner.h",
+      "sha256": "2b8736ba7964683b87ffbc8a88f55939a3a3c03519be4c846489448bda9b484b",
+      "bytes": 8125,
+      "verified_live_sha256": "2b8736ba7964683b87ffbc8a88f55939a3a3c03519be4c846489448bda9b484b"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingEditorLibrary.cpp",
+      "sha256": "a64e32afea4695a76252c6c115b3ad7742e6d7c43f7c1a26958b899220f825a1",
+      "bytes": 19997,
+      "verified_live_sha256": "a64e32afea4695a76252c6c115b3ad7742e6d7c43f7c1a26958b899220f825a1"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingEditorLibrary.h",
+      "sha256": "c43dc40db6b96d6a822091dfe099a82740651df162c4bd2cb5e49614a3e9a0cd",
+      "bytes": 7625,
+      "verified_live_sha256": "c43dc40db6b96d6a822091dfe099a82740651df162c4bd2cb5e49614a3e9a0cd"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingLabEditor.Build.cs",
+      "sha256": "a5e17f7403145648eeb428a1c5f6b7b5b04fa1c4292398575dc562c836206352",
+      "bytes": 612,
+      "verified_live_sha256": "a5e17f7403145648eeb428a1c5f6b7b5b04fa1c4292398575dc562c836206352"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingLabEditorModule.cpp",
+      "sha256": "dc2a448e586547c752c7dcabd1532f8baa57979c3fa398e7aa91320c138af1e2",
+      "bytes": 9081,
+      "verified_live_sha256": "dc2a448e586547c752c7dcabd1532f8baa57979c3fa398e7aa91320c138af1e2"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingModulePreviewData.cpp",
+      "sha256": "8fa2fb5a34cb62927409485a91ad2bb801d5461d9128ed5433b53e82fde66588",
+      "bytes": 12495,
+      "verified_live_sha256": "8fa2fb5a34cb62927409485a91ad2bb801d5461d9128ed5433b53e82fde66588"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingModulePreviewData.h",
+      "sha256": "e41da3e9251fd48a701cba7160bc12a8050efeb898b2780eb05617dc6f84feb9",
+      "bytes": 1750,
+      "verified_live_sha256": "e41da3e9251fd48a701cba7160bc12a8050efeb898b2780eb05617dc6f84feb9"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingModulePreviewViewport.cpp",
+      "sha256": "1d0780ce9d2713a19de963a034a253c4ea1087f86b1d76e46709a9b886381e8e",
+      "bytes": 4714,
+      "verified_live_sha256": "1d0780ce9d2713a19de963a034a253c4ea1087f86b1d76e46709a9b886381e8e"
+    },
+    {
+      "path": "Source/DesertBuildingLabEditor/DesertBuildingModulePreviewViewport.h",
+      "sha256": "26c657bc1cec4ad9d4398f59d0d9def0b026529d1e3acdd470a4fa9424017b63",
+      "bytes": 1210,
+      "verified_live_sha256": "26c657bc1cec4ad9d4398f59d0d9def0b026529d1e3acdd470a4fa9424017b63"
+    }
+  ],
+  "compile": {
+    "version": "0.4.9-ui.1",
+    "engine": "Unreal Engine 5.8.2",
+    "platform": "Win64 Editor",
+    "result": "Succeeded",
+    "raw_log_sha256": "9a9df4fc7c4ce0467b89f48bbab2e7e0a714524112af81f6a62a4a208f284d01",
+    "rerun_for_this_publication": false
+  },
+  "recorded_engine_checks": [
+    {
+      "report": "designer_auto_support_native.json",
+      "tested_version": "0.4.9-ui.1",
+      "recorded_utc": "2026-10-08T16:38:54.270542+00:00",
+      "passed": 168,
+      "total": 168,
+      "scope": "Native Slate designer API, automatic supports, selection/editing, local undo, save/load within the running editor",
+      "raw_report_sha256": "15919e3a8752b1d08a50b9591d0b9d8f4cc7a0ad22ee3d533780834476d31095",
+      "rerun_for_this_publication": false
+    },
+    {
+      "report": "adjacent_stair_native_tests.json",
+      "tested_version": "0.4.8-stairs.1",
+      "recorded_utc": null,
+      "passed": 250,
+      "total": 250,
+      "scope": "Historical adjacent-floor stair geometry, placement and linked design persistence",
+      "raw_report_sha256": "22961fa4dc21f82910cfaadc460a31532969a489d21c88688bb886299ed2969a",
+      "rerun_for_this_publication": false
+    },
+    {
+      "report": "upper_door_threshold_tests.json",
+      "tested_version": "0.4.8-stairs.1",
+      "recorded_utc": null,
+      "passed": 491,
+      "total": 491,
+      "scope": "Historical upper-door threshold geometry, collision and material inheritance",
+      "raw_report_sha256": "8f391164f653b3a71002e8372a17d218efb1ca54e9dbc8fc4c09f8b489415faf",
+      "rerun_for_this_publication": false
+    },
+    {
+      "report": "manual_roof_decorations_native.json",
+      "tested_version": "0.4.8-stairs.1",
+      "recorded_utc": "2026-10-08T15:09:00.398561+00:00",
+      "passed": 128,
+      "total": 128,
+      "scope": "Historical nonoccupying roof decoration layout and persistence",
+      "raw_report_sha256": "3fa58e9e98e64077d2012f2ed5c922988031b7600ce021f4bd58f4099eeb9f31",
+      "rerun_for_this_publication": false
+    }
+  ],
+  "historical_checks_rerun_on_049": false,
+  "wall_continuity": {
+    "status": "assessed_not_implemented",
+    "houdini_integrated": false
+  },
+  "not_verified": [
+    "Physical mouse input for every control",
+    "Disk unload/editor restart persistence in 0.4.9",
+    "PIE character traversal",
+    "NavMesh",
+    "Game packaging",
+    "Performance",
+    "Installation in another project",
+    "Final user art acceptance"
+  ],
+  "publication_boundary": "Source matches the recorded live plugin after CRLF-to-LF normalization and a single final newline. Both raw live and published hashes are recorded. No C++ logic is changed during publication. Descriptor retains public author metadata. Existing public art is unchanged. Original private report paths and test assets are excluded."
+}

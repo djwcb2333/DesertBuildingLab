@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "screenshot_count": 3,
+  "screenshot_count": 5,
   "images": [
     {
       "file": "ue-designer-valid-v0.4.1.jpg",
@@ -37,9 +37,45 @@
       "sha256": "40c67208f3a2805863c75e3571867b3b95fc43b8f51446bbe1a5a25d2b0ecf33",
       "bytes": 41734,
       "pixels_edited": false
+    },
+    {
+      "file": "ue-designer-overview-v0.4.9.png",
+      "kind": "actual Unreal Editor UI screenshot",
+      "capture_date": "2026-10-09",
+      "capture_timezone": "Asia/Hong_Kong",
+      "capture_utc": "2026-10-08T16:42:32.071160+00:00",
+      "capture_method": "Native FSlateApplication TakeScreenshot",
+      "captured_plugin_version": "0.4.9-ui.1",
+      "current_release_version_at_documentation_update": "0.4.9-ui.1",
+      "historical": false,
+      "caption": "真实虚幻界面。顶部管理素材，左侧选择模块，中间放置预览，右侧调整当前对象和建筑规则。",
+      "sha256": "de3bb95f4806d0111611b176d0c337a835f623e2dbdb5b3a18c2a40c34f58f19",
+      "bytes": 2296734,
+      "pixels_edited": false,
+      "art_boundary": "Captured in the original development project; material appearance can differ from the public independently authored replacement textures.",
+      "physical_mouse_tested": false
+    },
+    {
+      "file": "ue-designer-decoration-v0.4.9.png",
+      "kind": "actual Unreal Editor UI screenshot",
+      "capture_date": "2026-10-09",
+      "capture_timezone": "Asia/Hong_Kong",
+      "capture_utc": "2026-10-08T16:42:32.071160+00:00",
+      "capture_method": "Native FSlateApplication TakeScreenshot",
+      "captured_plugin_version": "0.4.9-ui.1",
+      "current_release_version_at_documentation_update": "0.4.9-ui.1",
+      "historical": false,
+      "caption": "真实虚幻界面。选择模式识别格子里的屋顶点缀，右侧说明正在编辑的对象；修改样式会校验后原位更新。",
+      "sha256": "c02b362a343f6dfd62e136892ee623efa4aebd75b1a4cbd93aa8fcb32fff7154",
+      "bytes": 2085388,
+      "pixels_edited": false,
+      "art_boundary": "Captured in the original development project; material appearance can differ from the public independently authored replacement textures.",
+      "physical_mouse_tested": false
     }
   ],
-  "capture_boundary": "Historical actual editor windows; current UI/layout and resource organization are documented separately.",
+  "capture_boundary": "Two actual 0.4.9 Slate screenshots plus three version-labeled historical UI screenshots. API verification is separate from physical mouse testing.",
   "new_screenshots_taken": false,
-  "new_engine_execution": false
+  "new_engine_execution": false,
+  "publication_update": "2026-10-09",
+  "publication_scope": "Copies existing verified captures; no new editor capture during GitHub publication."
 }

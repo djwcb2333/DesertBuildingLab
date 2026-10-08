@@ -22,13 +22,15 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Building Design")
     TArray<FDesertRoofOpening> RoofOpenings;
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Building Design")
+    TArray<FDesertRoofDecoration> RoofDecorations;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Building Design")
     TObjectPtr<UDesertBuildingStyle> Style = nullptr;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Building Design")
     TSoftClassPtr<ADesertBuilding> BuildingClass;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Building Design")
     int32 Revision = 1;
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Building Design")
-    int32 FormatVersion = 4;
+    int32 FormatVersion = 5;
     /** 0为旧版原位保存；1为以用户选择的目录为根的分类资源布局。 */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Asset Organization")
     int32 AssetLayoutVersion = 0;

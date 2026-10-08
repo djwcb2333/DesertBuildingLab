@@ -2,6 +2,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "DesertBuildingModule.h"
+#include "DesertBuilding.h"
 #include "DesertBuildingModulePreviewData.h"
 #include "DesertBuildingEditorLibrary.generated.h"
 class ADesertBuilding;
@@ -40,6 +41,39 @@ public:
     static bool SetBuildingDesignerPotPlacement(EDesertPotPlacement Position);
     UFUNCTION(BlueprintPure, Category="Desert Editor|Designer")
     static FDesertModulePreviewData GetBuildingDesignerPreviewData();
+    /** 与设计器右侧规则开关共用事务与校验，不静默隐藏已有悬空房间。 */
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool SetBuildingDesignerAutoSupport(bool bEnabled);
+    UFUNCTION(BlueprintPure, Category="Desert Editor|Designer")
+    static bool GetBuildingDesignerAutoSupport();
+    /** 刷新实际悬停预览并返回相同校验；不提交建筑格子。 */
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static FDesertPlacementCheck GetBuildingDesignerPlacementCheck(FIntVector Cell);
+    UFUNCTION(BlueprintPure, Category="Desert Editor|Designer")
+    static int32 GetBuildingDesignerHoverSupportCount();
+    /** 保存已载入素材的当前草稿，复用UI保存入口；空白草稿不弹出对话框。 */
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool SaveBuildingDesignerCurrentDesign();
+    UFUNCTION(BlueprintPure, Category="Desert Editor|Designer")
+    static ADesertBuilding* GetBuildingDesignerDraft();
+    UFUNCTION(BlueprintPure, Category="Desert Editor|Designer")
+    static FString GetBuildingDesignerStatusMessage();
+    /** 0放置、1选择、2删除，使用实际UI模式。 */
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool SetBuildingDesignerInteractionMode(int32 Mode);
+    UFUNCTION(BlueprintPure, Category="Desert Editor|Designer")
+    static int32 GetBuildingDesignerInteractionMode();
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool ClickBuildingDesignerCell(FIntVector Cell, bool bDelete = false);
+    /** 导出真实Slate设计器画面供操作手册使用，不模拟鼠标，不生成示意图。 */
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool CaptureBuildingDesignerScreenshot(FString PngFile);
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool StartNewBuildingDesignerDraft();
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool UndoBuildingDesignerEdit();
+    UFUNCTION(BlueprintCallable, Category="Desert Editor|Designer")
+    static bool RedoBuildingDesignerEdit();
     UFUNCTION(BlueprintCallable, Category="Desert Editor")
     static ADesertBuilding* CreateBuilding(FVector Location);
 

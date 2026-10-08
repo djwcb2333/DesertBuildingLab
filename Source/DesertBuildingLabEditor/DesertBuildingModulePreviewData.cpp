@@ -22,6 +22,31 @@ FDesertModulePreviewData DesertMakeModulePreviewData(const ADesertBuilding* Sour
     FDesertModulePreviewData Data;
     if (!Source || Facing<0 || Facing>3) {Data.Description=TEXT("没有建筑草稿，或朝向超出0..3"); return Data;}
     const UDesertBuildingStyle* Style=Source->Style.Get();
+    if(Tool==10)
+    {
+        FDesertRoofDecoration Decoration;Decoration.Cell=FIntVector(0,0,1);Decoration.Facing=Facing;Decoration.VariantIndex=VariantIndex;
+        const FVector Center(Source->CellSize*.5f,Source->CellSize*.5f,Source->FloorHeight);
+        for(const FDesertRoofDecorationPart& SourcePart:Source->GetRoofDecorationParts(Decoration))
+        {
+            if(!SourcePart.Mesh) continue;
+            if(SourcePart.Mesh->IsCompiling()) {Data.bWaitingForCompilation=true;continue;}
+            FDesertModulePreviewPart& Part=Data.Parts.AddDefaulted_GetRef();Part.Mesh=SourcePart.Mesh;Part.Transform=SourcePart.Transform;
+            Part.Transform.AddToTranslation(-Center);
+            for(int32 Slot=0;Slot<Part.Mesh->GetStaticMaterials().Num();++Slot)
+            {
+                UMaterialInterface* Material=Part.Mesh->GetMaterial(Slot);
+                if(Style) if(const TObjectPtr<UMaterialInterface>* Override=Style->ModuleMaterialOverrides.Find(TObjectPtr<UMaterialInterface>(Material)))
+                    if(IsValid(Override->Get())) Material=Override->Get();
+                Part.Materials.Add(Material);
+            }
+            Data.Bounds+=Part.Mesh->GetBoundingBox().TransformBy(Part.Transform);
+        }
+        Data.SelectedMesh=Data.Parts.IsEmpty()?nullptr:Data.Parts[0].Mesh.Get();Data.ResolvedVariantIndex=VariantIndex;
+        Data.Description=DesertRoofDecorationVariantLabel(VariantIndex)+TEXT("：独立装饰层完整组合；不占建筑格。实际屋顶合法性由主视窗预览检查。");
+        if(Data.bWaitingForCompilation) Data.Description+=TEXT("所需资源仍在编译，完成后预览会自动刷新。");
+        else if(Data.Parts.IsEmpty()) Data.Description+=TEXT("当前Style缺少所需屋顶/瓦罐资源。");
+        return Data;
+    }
     FPreviewScene Scene(FPreviewScene::ConstructionValues().SetCreatePhysicsScene(false).SetTransactional(false).SetEditor(true));
     FActorSpawnParameters Spawn; Spawn.ObjectFlags=RF_Transient;
     AActor* Model=nullptr;

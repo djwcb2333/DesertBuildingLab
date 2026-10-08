@@ -25,8 +25,25 @@ try:
     for name in ('LICENSE','ASSET_LICENSE.md','README.md','DesertBuildingLab.uplugin'):
         check('required file '+name,(ROOT/name).is_file())
     descriptor=read(ROOT/'DesertBuildingLab.uplugin')
-    check('plugin version',descriptor['VersionName']=='0.4.7-assets.1')
+    check('plugin version',descriptor['VersionName']=='0.4.9-ui.1')
     check('both runtime and editor modules',set(m['Name'] for m in descriptor['Modules'])=={'DesertBuildingLab','DesertBuildingLabEditor'})
+    verification=read(ROOT/'Docs/Verification_0.4.9-ui.1.json')
+    check('verification matches current version',verification['version']==descriptor['VersionName'])
+    recorded_sources={entry['path'] for entry in verification['source_inventory']}
+    actual_sources={p.relative_to(ROOT).as_posix() for p in (ROOT/'Source').rglob('*') if p.is_file()}
+    check('verified source inventory is complete',recorded_sources==actual_sources)
+    for entry in verification['source_inventory']:
+        p=target(entry['path'])
+        check('published source matches verified live source '+entry['path'],p.is_file() and sha(p)==entry['sha256'])
+    check('current and historical engine checks remain distinct',
+          [(r['tested_version'],r['passed'],r['total']) for r in verification['recorded_engine_checks']]==
+          [('0.4.9-ui.1',168,168),('0.4.8-stairs.1',250,250),('0.4.8-stairs.1',491,491),('0.4.8-stairs.1',128,128)]
+          and not verification['historical_checks_rerun_on_049'])
+    screenshots=read(ROOT/'Docs/Images/ui-screenshots.json')
+    check('all screenshot records counted',screenshots['screenshot_count']==len(screenshots['images']))
+    for entry in screenshots['images']:
+        p=target('Docs/Images/'+entry['file'])
+        check('actual UI screenshot hash '+entry['file'],p.is_file() and sha(p)==entry['sha256'])
     art=read(ROOT/'SourceArt/manifest.json')
     check('52 source models',len(art['models'])==52)
     check('31 source textures',len(art['textures'])==31)

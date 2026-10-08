@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "DesertBuildingModule.h"
+#include "DesertBuildingRoofDecorations.h"
 #include "DesertBuilding.generated.h"
 
 class UDesertBuildingStyle;
@@ -68,6 +69,14 @@ enum class EDesertStairLayout : uint8
     UShape UMETA(DisplayName="U形折返双跑 + 中平台")
 };
 
+/** 序列化的0保留旧楼梯从地面起步；新放置默认由界面选择相邻层。 */
+UENUM(BlueprintType)
+enum class EDesertStairConnection : uint8
+{
+    GroundLegacy = 0 UMETA(DisplayName="旧版从地面起步（兼容）"),
+    AdjacentFloors UMETA(DisplayName="相邻层 n → n+1")
+};
+
 UENUM(BlueprintType)
 enum class EDesertRoomDoorMode : uint8
 {
@@ -110,6 +119,8 @@ struct FDesertBlockPlacement
     bool bEnabled = true;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Block", meta=(EditCondition="Type == EDesertBlockType::Stairs", EditConditionHides))
     EDesertStairLayout StairLayout = EDesertStairLayout::AlongWall;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Block", meta=(EditCondition="Type == EDesertBlockType::Stairs", EditConditionHides, ToolTip="相邻层：Cell.Z是目标露台，下端位于Z-1表面；Z=1仍从地面起步。旧素材默认保持旧模式。"))
+    EDesertStairConnection StairConnection = EDesertStairConnection::GroundLegacy;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Block", meta=(ClampMin="-1", EditCondition="Type == EDesertBlockType::AwningBay || Type == EDesertBlockType::PotCluster", EditConditionHides, ToolTip="棚架或瓦罐整组：-1按Seed和格坐标稳定选择；0、1、2等指定对应Style变体数组下标。空数组保留旧模型/白模；空项或越界明确拒绝，不换用别件。"))
     int32 VariantIndex = -1;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Block", meta=(EditCondition="Type == EDesertBlockType::PotCluster", EditConditionHides, ToolTip="整组平移：自动靠外墙或裸露屋顶边；九方向相对Facing。按实际包围盒留缝并避开门前通路和楼梯出口。旧素材未存此项时维持原居中。"))
@@ -267,6 +278,17 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Building|Blocks", meta=(TitleProperty="Cell"))
     TArray<FDesertBlockPlacement> Blocks;
+    // Separate authoring layer: these never reserve building cells.
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Building|Roof Decoration", meta=(TitleProperty="Cell"))
+    TArray<FDesertRoofDecoration> RoofDecorations;
+    UFUNCTION(BlueprintPure, Category="Building|Roof Decoration")
+    FDesertRoofDecorationCheck EvaluateRoofDecoration(const FDesertRoofDecoration& Decoration) const;
+    UFUNCTION(BlueprintCallable, Category="Building|Roof Decoration")
+    bool SetRoofDecoration(FDesertRoofDecoration Decoration);
+    UFUNCTION(BlueprintCallable, Category="Building|Roof Decoration")
+    bool RemoveRoofDecoration(FIntVector Cell);
+    UFUNCTION(BlueprintPure, Category="Building|Roof Decoration")
+    TArray<FDesertRoofDecorationPart> GetRoofDecorationParts(const FDesertRoofDecoration& Decoration) const;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Building|Blocks")
     FDesertBlockPlacement SelectedBlock;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Building|Rules", meta=(ToolTip="悬空体块自动生成四角支柱；先找本栋下层屋面，否则逐柱向下检测场景地面。找不到支撑的体块不显示，并报告原因。"))
@@ -519,6 +541,7 @@ private:
         TArray<int32>& Indices, TArray<FString>& Messages) const;
     void BuildRoof(const FIntVector& Cell);
     void BuildRoofDressing(const FIntVector& Cell);
+    void BuildManualRoofDecorations();
     void BuildAwning(const FIntVector& DoorCell, int32 DoorSide);
     void BuildFoundation(const FIntVector& Cell);
     void RestoreOcclusionMaterials();

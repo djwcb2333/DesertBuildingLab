@@ -6,9 +6,10 @@ void UDesertBuildingDesign::CaptureFrom(const ADesertBuilding* Source)
     if (!Source) return;
     Cells = Source->Cells;
     RoomAppearanceOverrides = Source->RoomAppearanceOverrides;
-    FormatVersion = 4;
+    FormatVersion = 5;
     Blocks = Source->Blocks;
     RoofOpenings = Source->RoofOpenings;
+    RoofDecorations = Source->RoofDecorations;
     Style = Source->Style;
     CellSize = Source->CellSize;
     FloorHeight = Source->FloorHeight;
@@ -30,6 +31,7 @@ void UDesertBuildingDesign::ApplyTo(ADesertBuilding* Target, bool bRebuild) cons
     Target->RoomAppearanceOverrides = RoomAppearanceOverrides;
     Target->Blocks = Blocks;
     Target->RoofOpenings = RoofOpenings;
+    Target->RoofDecorations = RoofDecorations;
     Target->Style = Style;
     Target->CellSize = CellSize;
     Target->FloorHeight = FloorHeight;

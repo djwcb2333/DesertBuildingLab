@@ -1,17 +1,18 @@
 # 生成逻辑与代码结构
 
-本文说明当前实现如何把“有意义的建筑块”转成实例几何。修改规则时，应同时保护编辑预览、最终生成、保存重开和关联实例，而不只是让一个示例看起来正确。
+本文对应 `0.4.9-ui.1`，说明当前实现如何把“有意义的建筑块”转成实例几何。修改规则时，应同时保护编辑预览、最终生成、保存重开和关联实例，而不只是让一个示例看起来正确。
 
 最初的交互灵感来自 [Oskar Stålberg 的 Brick Block](https://oskarstalberg.com/game/house/index.html)（`house` 页面）：通过增减格子搭建房屋，并让邻接外观随输入更新。以下承托、占用、门窗、楼梯、组合块及保存规则是本项目面向 Unreal 场景制作编写的独立实现，未移植或收录原作代码与资源；本章描述的是本插件的实现，不推断原网页使用的底层算法。[作者官网](https://oskarstalberg.com/)。
 
 ## 制作输入和输出
 
-一栋建筑主要有三类制作输入：
+一栋建筑主要有四类制作输入：
 
 | 输入 | 职责 | 主要类型 |
 |---|---|---|
 | 房间格及门窗覆盖 | 哪些位置有房间，哪些外露面有门窗 | `Cells`、`FDesertRoomAppearance` |
 | 有语义的组合块 | 棚亭、瓦罐、篷布、楼梯、散石、墙冠的位置与朝向 | `FDesertBlockPlacement` |
+| 独立屋顶点缀 | 表面格、固定配方、朝向和启用；不参与建筑占位 | `RoofDecorations`、`FDesertRoofDecoration` |
 | 美术配置 | 每种角色使用的模型、材质和变体数组 | `UDesertBuildingStyle` |
 
 `UDesertBuildingDesign` 保存这些输入、尺寸和 Seed，并链接一份可拖入关卡的建筑蓝图。`ADesertBuilding` 使用这些输入产生组件和实例。一次保存不会把生成规则删掉，也不会把建筑变成只能整体渲染的一件网格。
@@ -41,7 +42,9 @@ flowchart LR
 
 `ResolveSupportedCells` 先按高度处理房间。正下方有效房间提供直接承托；缺少下层时，开启 `bAutoSupportColumns` 可以尝试四角支柱。
 
-支柱先寻找本栋建筑的较低屋面，再向场景地面检测。只接受可承托的朝上表面，不把墙侧面当成地面。四角必须全部成功；最大柱高和射线距离也受限制。当前自动支撑要求建筑竖直，只允许绕 Z 旋转。
+设计器固定显示 `bAutoSupportColumns`。新建默认开启、载入保留原值；关闭前用独立对象试算房间、附件和门窗，新增失效项就拒绝，不改草稿与撤销栈。
+
+支柱先寻找本栋建筑的较低屋面，再向场景地面检测。只接受可承托的朝上表面，不把墙侧面当成地面。四角必须全部成功；最大柱高和射线距离也受限制。当前自动支撑要求建筑竖直，只允许绕 Z 旋转。四根连续柱链可分层分段参与淡化，段数不是柱链数。制作地面与实际关卡分别检查，隐藏预览地板不参与承托。
 
 原始输入和有效输出分开保存。旧数据中的不合法输入可以留作诊断，但不产生几何。交互设计器新增时会先校验，无效点击不写入数组，避免用户后来加支撑时突然出现以前没显示的楼梯。
 
@@ -60,6 +63,14 @@ flowchart LR
 
 `RoomCellMesh` 是另一条快捷路线：一件整房模型代替墙片、楼板和屋顶。它自身的内部面、门窗和顶面由美术作者负责，当前插件不会自动切掉整房模型的公共面或屋顶楼梯入口。需要可靠可变拼接时优先使用墙片套件。
 
+### 上层门槛与露台
+
+有效上层外门补可碰撞门槛，顶面同本层楼板、厚度向下，归门房楼层；有同高露台时处理女儿墙开口、墙厚桥接和点缀避让，无露台不生悬空平台。它修复楼板内收在门洞暴露的真实缝隙，不是封板或材质遮挡，也不证明角色已走过。
+
+### 连续墙与 Houdini
+
+**仅评估、未实施。**没有新增任意长度连续墙、Boolean／焊接或Houdini集成。现有共享建筑坐标能连续采样材质，但固定缺口、嵌砖和顶点权重仍可能周期重复；暗带未做同机位逐层关闭对照，不能断言唯一成因。建议先对照材质层，再决定连续段控制或局部几何，不列作发布功能。
+
 ## 附件规则
 
 | 组合块 | 必要条件与当前限制 |
@@ -69,12 +80,18 @@ flowchart LR
 | 斜顶墙冠 | 有效裸露屋顶，Style 必须有对应模型；参与空间检查 |
 | 瓦罐组 | 裸露屋顶或首层外墙外围地面；自动位置靠墙／屋顶边并避开门与楼梯出口 |
 | 篷布＋支架 | 恰好一面首层邻墙，背面朝墙；后缘贴墙、最低点贴地，四角地面高差不超过 10 cm |
-| 楼梯 | 有效目标露台和外露出口；整条通路、平台、尺寸与地面承托合法 |
+| 楼梯 | 有效目标露台与外露出口；新梯接相邻表面，高层查连续下层屋顶，首层查地面；路径、平台和尺寸合法 |
 | 外围散石 | 首层外墙外围地面，避开门和楼梯，四角近似平整；手动整组放置 |
 
 组合块不仅检查锚点是否相同，还检查实际包围盒与通路区域。默认同一表面格不能占多个组合块。外侧非旧版朝外楼梯和内侧屋顶棚亭可以共享锚点，但仍要通过不重叠检查；这不是所有类型可自由叠放的通用例外。
 
 楼梯的 L 形通路使用分段空间，不能用覆盖整个 L 外框的大盒子误占内侧空区域。现代固定 L／U 模型仅支持一层高度。检查合同使用模型实际级数、净宽、踏深，约束级高不超过 22 cm、净宽至少 80 cm、踏深至少 22 cm；这些数值是工具的制作规则，不是对现实建筑法规合规性的声明。
+
+### 楼梯连接语义
+
+`StairConnection=GroundLegacy` 的序列化值0保留旧数据地面起步；新设计器明确写 `AdjacentFloors`。目标 `Cell.Z=k` 时连接 `(k−1)×FloorHeight → k×FloorHeight`，Z=1仍查实际地面，每梯跨一层。
+
+高层承托检查覆盖实际跑道、平台、后半跑和最低入口前80 cm，检查头顶与出口；80 cm不是生成平台。L内空区分段让出。删除关键承托会移除依赖梯，旧输入不静默迁移。
 
 ## 稳定随机与整组变体
 
@@ -84,13 +101,27 @@ flowchart LR
 
 瓦罐位置另由 `PotPlacement` 决定。`Automatic` 和九方向选项移动完整罐组，按实际包围盒留缝并保护通路。历史未存该字段的素材维持 `LegacyCentered=0`，升级不悄悄移动旧罐组。
 
+## 独立屋顶点缀
+
+`RoofDecorations` 保存 `Cell`、`VariantIndex=0…5`、`Facing=0…3`、`bEnabled`，不加入 `Cells/Blocks`。同格替换不叠加；六种固定配方复用Style木板与罐组，不因Seed改变。
+
+`GetRoofDecorationParts` 提供同一真实网格与变换给小预览、悬浮和生成。`EvaluateRoofDecoration` 检查有效裸露屋顶、240×240 cm安全区、高≤100 cm及通路；`SetRoofDecoration`只写合法首次输入，`RemoveRoofDecoration`明确删除。
+
+已存点缀被上层房间、合法附件、人工开口、门前露台或楼梯入口／路径覆盖时暂不输出，保留设置并可恢复；首次非法点击仍不保存未来条目。手工组优先同格全屋自动组，删除手工后自动组可能重现。点缀归目标屋顶的楼层。
+
 ## 预览与确认共用结果
 
 `EvaluatePlacement` 返回 `FDesertPlacementCheck`，其中包含：允许状态、原因、局部包围盒、支柱、最终变换、模型、变体下标和级数。预览使用这个结果画候选模块；`TryAddPlacement` 通过同一逻辑确认输入。
 
 规则不能仅在界面里写一套“绿色判断”，生成器里再写另一套。尤其篷布贴墙偏移、实际最低点对地和变体选择，必须使用同一次求解输出，否则绿色候选与点击后的模型会跳动。
 
-删除使用 `RemovePlacementAndDependents`，一并处理失去承托或冲突的依赖模块。旧无效输入可以通过 `RemoveInvalidAuthoringEntries` 清理。界面操作包在虚幻撤销事务里。
+删除使用 `RemovePlacementAndDependents`，一并处理失去承托或冲突的依赖模块。旧无效输入可以通过 `RemoveInvalidAuthoringEntries` 清理。界面操作包在虚幻撤销事务里。独立点缀走上述点缀校验入口，不挤入结构组合块检查。
+
+### 设计器状态与原位编辑
+
+`InteractionMode`（0放置、1选择、2删除）只控制UI路由，不存建筑。选择自动识别对象，同格共存优先当前类型，点击空单元格只清除选择。放置清全部选择，让右栏“新放置默认”只影响下次输入。
+
+附件变体／梯型／朝向先原位校验再替换，不合法保留原模型。撤销／重做只处理当前素材的连续草稿事务，不跨载入／新建或场景操作，不清空其他UE全局历史；恢复后读回右栏参数与小预览，无对象则清选。
 
 ## 分层、碰撞与遮挡淡化
 
@@ -127,6 +158,7 @@ flowchart LR
 | [DesertBuilding.cpp](../Source/DesertBuildingLab/DesertBuilding.cpp) | 墙、屋顶、组件、实例与重建 |
 | [DesertBuildingBlocks.cpp](../Source/DesertBuildingLab/DesertBuildingBlocks.cpp) | 支撑、附件、空间检查、预览校验与删除 |
 | [DesertBuildingRoomAppearance.cpp](../Source/DesertBuildingLab/DesertBuildingRoomAppearance.cpp) | 逐房门窗 |
+| [DesertBuildingRoofDecorations.h](../Source/DesertBuildingLab/DesertBuildingRoofDecorations.h)／[.cpp](../Source/DesertBuildingLab/DesertBuildingRoofDecorations.cpp) | 独立点缀、六种配方、避让与归层 |
 | [DesertBuildingStyle.h](../Source/DesertBuildingLab/DesertBuildingStyle.h) | 模型合同、变体与材质替换槽 |
 | [DesertBuildingDesign.h](../Source/DesertBuildingLab/DesertBuildingDesign.h) | 持久制作数据与格式字段 |
 | [DesertBuildingDesigner.cpp](../Source/DesertBuildingLabEditor/DesertBuildingDesigner.cpp) | Slate 界面、相机、操作和状态提示 |
